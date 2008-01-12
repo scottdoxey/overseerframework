@@ -11,7 +11,7 @@ $files[] = 'res/class.database.php';
 $files[] = 'res/class.template.php';
 // $files[] = 'res/class.openid.php';
 
-preg_match_all('/build([0-9]+)/', file_get_contents('project/framework.php'), $matches);
+preg_match_all('/build([0-9]+)/', file_get_contents('framework.php'), $matches);
 
 $output = '<?php
 
@@ -40,7 +40,6 @@ $output = '<?php
 #
 ###############################################################
 
-if (!headers_sent()) { header(\'Content-type: text/html; charset=utf-8\'); }
 ?>';
 
 foreach ($files as $file) { $output .= file_get_contents($file); }
