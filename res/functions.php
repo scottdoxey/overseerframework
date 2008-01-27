@@ -12,13 +12,15 @@ if (!function_exists('array_clean')) {
 	function array_clean(&$array = array(), $method = null) {
 
 		if (!is_array($array)) { return $array; }
-	
+
+		reset($array);
+
 		while (list($key, $value) = each($array)) {
-		
+
 			if (is_array($value)) { $array[$key] = array_clean($value); }
 			else if (!$value && $method == 'empty') { unset($array[$key]); }
 			else { $array[$key] = trim($value); }
-		
+
 		}
 
 		return $array;
@@ -26,7 +28,6 @@ if (!function_exists('array_clean')) {
 	}
 
 }
-
 
 ###############################################################
 #
@@ -48,7 +49,6 @@ if (!function_exists('array_move')) {
 
 }
 
-
 ###############################################################
 #
 # Function: array_walk_recursive(array $array, function $func);
@@ -66,7 +66,7 @@ if (!function_exists('array_walk_recursive')) {
 			if (!is_array($array[$key])) { $array[$key] = call_user_func($func, $value, $key); }
 			else { $array[$key] = array_walk_recursive($array[$key], $func); }
 		}
-		
+
 		reset($array);
 
 		return $array;
@@ -75,6 +75,24 @@ if (!function_exists('array_walk_recursive')) {
 
 }
 
+###############################################################
+# 
+# Function: check_referer(); 
+# Author: Neo Geek (NG)
+# 
+###############################################################
+
+if (!function_exists('check_referer')) {
+
+	function check_referer() {
+
+		if (!isset($_SERVER['HTTP_REFERER']) || $_SERVER['HTTP_REFERER'] != constant('url')) { return false; }
+
+		return true;
+
+	}
+
+}
 
 ###############################################################
 # 
@@ -89,7 +107,6 @@ if (!function_exists('endtime')) {
 
 }
 
-
 ###############################################################
 # 
 # Function: error(string $text); 
@@ -100,23 +117,22 @@ if (!function_exists('endtime')) {
 if (!function_exists('error')) {
 
 	function error($text = '') {
-		
+
 		if (!$text) { return false; } else { $text = date('Y-m-d H:i:s') . ' - ' . $text; }
-	
+
 		if (constant('error_log')) {
 			file_put_contents(is_string(constant('error_log'))?constant('error_log'):'log.txt', $text . constant('lnbr'), FILE_APPEND);
 		}
-		
+
 		if (constant('error_reporting')) {
 			echo '<p>' . preg_replace('/(^[[:alpha:] ]+:)/', '<b>\1</b>', strip_tags($text)) . '</p>';
 		}
-	
+
 		return false;
-	
+
 	}
 
 }
-
 
 ############################################################### 
 # 
@@ -127,24 +143,23 @@ if (!function_exists('error')) {
 
 if (!function_exists('file_put_contents')) { 
 
-   if (!@constant('FILE_APPEND')) { define('FILE_APPEND', true); } 
+	if (!@constant('FILE_APPEND')) { define('FILE_APPEND', true); } 
 
-   function file_put_contents($file, $contents = '', $flag = false) { 
+	function file_put_contents($file, $contents = '', $flag = false) { 
 
-      $method = $flag?'a+':'w+'; 
+		$method = $flag?'a+':'w+'; 
 
-      $file_handle = fopen(preg_replace('/\/+/', '/', $file), $method); 
+		$file_handle = fopen(preg_replace('/\/+/', '/', $file), $method); 
 
-      fwrite($file_handle, $contents); 
+		fwrite($file_handle, $contents); 
 
-      fclose($file_handle); 
+		fclose($file_handle); 
 
-      return true; 
+		return true; 
 
-   } 
+	} 
 
 }
-
 
 ############################################################### 
 # 
@@ -161,7 +176,6 @@ if (!function_exists('is_date')) {
 
 }
 
-
 ############################################################### 
 # 
 # Function: is_email(string $value); 
@@ -176,7 +190,6 @@ if (!function_exists('is_email')) {
 	} 
 
 }  
-
 
 ############################################################### 
 # 
@@ -193,7 +206,6 @@ if (!function_exists('is_empty')) {
 
 }
 
-
 ############################################################### 
 # 
 # Function: is_number(string $value); 
@@ -208,7 +220,6 @@ if (!function_exists('is_number')) {
 	} 
 
 }
-
 
 ############################################################### 
 # 
@@ -225,7 +236,6 @@ if (!function_exists('is_simple')) {
 
 } 
 
-
 ############################################################### 
 # 
 # Function: is_simple_alpha(string $value); 
@@ -240,7 +250,6 @@ if (!function_exists('is_simple_alpha')) {
 	} 
 
 } 
-
 
 ############################################################### 
 # 
@@ -257,7 +266,6 @@ if (!function_exists('is_simple_number')) {
 
 }
 
-
 ############################################################### 
 # 
 # Function: is_web_address(string $value); 
@@ -272,7 +280,6 @@ if (!function_exists('is_web_address')) {
 	} 
 
 }
-
 
 ###############################################################
 #
@@ -291,7 +298,6 @@ if (!function_exists('mysql_fetch_results')) {
 
 }
 
-
 ###############################################################
 #
 # Function: path_info([integer $offset]);
@@ -302,21 +308,20 @@ if (!function_exists('mysql_fetch_results')) {
 if (!function_exists('path_info')) {
 
 	function path_info($offset = 0) {
-	
+
 		if (isset($_SERVER['PATH_INFO'])) {
-	
+
 			$path_info = explode('/', substr($_SERVER['PATH_INFO'], 1));
-		
+
 			if (isset($offset, $path_info[$offset])) { return $path_info[$offset]; }
-	
+
 		}
-	
+
 		return false;
-	
+
 	}
 
 }
-
 
 ###############################################################
 #
@@ -328,13 +333,12 @@ if (!function_exists('path_info')) {
 if (!function_exists('primary_key')) {
 
 	function primary_key($table = '') {
-        $results = mysql_fetch_results('DESCRIBE ' . $table);
-        foreach ($results as $field) { if ($field['Key'] == 'PRI') { return $field['Field']; } }
-        return false;
+		$results = mysql_fetch_results('DESCRIBE ' . $table);
+		foreach ($results as $field) { if ($field['Key'] == 'PRI') { return $field['Field']; } }
+		return false;
 	}
 
 }
-
 
 ###############################################################
 #
@@ -354,6 +358,30 @@ if (!function_exists('print_array')) {
 
 }
 
+###############################################################
+# 
+# Function: sanitize_data([array $array]); 
+# Author: Neo Geek (NG)
+# 
+###############################################################
+
+if (!function_exists('sanitize_data')) {
+
+	function sanitize_data(&$data = array()) {
+
+		reset($data);
+
+		while (list($key, $value) = each($data)) {
+
+			$data[$key] = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($value):$value);
+
+		}
+
+		return $data;
+
+	}
+
+}
 
 ###############################################################
 #
@@ -365,17 +393,16 @@ if (!function_exists('print_array')) {
 if (!function_exists('set_location')) {
 
 	function set_location($url) {
-	
+
 		if (!headers_sent()) {
 			header('Location: ' . $url); exit;
 		}
-	
+
 		return false;
-	
+
 	}
 
 }
-
 
 ############################################################### 
 # 
@@ -385,29 +412,28 @@ if (!function_exists('set_location')) {
 ###############################################################
 
 if (!function_exists('timeago')) {
-	
+
 	function timeago($timestamp) {
-	
+
 		$diff = time() - strtotime($timestamp);
-	
+
 		if ($diff < 60) { $output = $diff . ' seconds ago'; }
 		else if (round($diff / 60) < 60) { $output = round($diff / 60) . ' minute(s) ago'; }
 		else if (round($diff / 3600) < 24) { $output = 'about ' . round($diff / 3600) . ' hour(s) ago'; }
 		else if (round($diff / 86400) < 7) { $output = round($diff / 86400) . ' day(s) ago'; }
 		else if (round($diff / 604800) < 4) { $output = round($diff / 604800) . ' week(s) ago'; }
 		else if (round($diff / 2419200)) { $output = round($diff / 2419200) . ' month(s) ago'; }
-	
+
 		preg_match('/[0-9]+/', $output, $matches);
-	
+
 		if ($matches[0] == 1) { $output = str_replace('(s)', '', $output); }
 		else { $output = str_replace('(s)', 's', $output); }
-	
+
 		return $output;
-	
+
 	}
 
 }
-
 
 ############################################################### 
 # 
@@ -417,8 +443,12 @@ if (!function_exists('timeago')) {
 ###############################################################
 
 if (!function_exists('url_query')) {
-	
+
 	function url_query($replacements = array(), $return = 'string') {
+
+		if (!is_array($replacements)) { return false; }
+		
+		reset($replacements);
 
 		$output = array();
 
@@ -443,7 +473,6 @@ if (!function_exists('url_query')) {
 	}
 
 }
-
 
 ###############################################################
 

@@ -9,7 +9,7 @@
 if (!isset($_GET['norender']) && isset($ob_template)) { ob_start('ob_template'); }
 
 function ob_template($buffer) {
-	
+
 	global $ob_template;
 
 	$regs = array();
