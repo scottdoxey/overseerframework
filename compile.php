@@ -21,7 +21,7 @@ $output = '<?php
 # Version: 0.2beta r2 build' . ($matches[1][0] +1) . '
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
-# Copyright: (c) 2007 Neo Geek, Neo Geek Labs
+# Copyright: (c) ' . date('Y') . ' Neo Geek, Neo Geek Labs
 # Timestamp: ' . date('Y-m-d H:i:s') . '
 
 # This program is free software; you can redistribute it and/or modify
