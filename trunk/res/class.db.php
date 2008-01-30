@@ -14,9 +14,9 @@ class DB {
 
 	public function Connect($server, $username, $password, $database, $cache = true) {
 
-		$resource = @mysql_connect($server, $username, $password) or error('MySQL Error: ' . mysql_error());
+		$resource = @mysql_connect($server, $username, $password, true) or error('MySQL Error: ' . mysql_error());
 
-		if ($database) { @mysql_select_db($database) or error('MySQL Error: ' . mysql_error()); }
+		if ($database) { @mysql_select_db($database, $resource) or error('MySQL Error: ' . mysql_error()); }
 
 		if ($cache) { $this->resource = $resource; }
 
