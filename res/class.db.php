@@ -10,7 +10,7 @@
 class DB {
 
 	public $resource = null;
-	protected $results = null;
+	public $results = null;
 
 	public function Connect($server, $username, $password, $database, $cache = true) {
 

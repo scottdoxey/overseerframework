@@ -3,11 +3,11 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build224
+# Version: 0.2beta r2 build226
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-01-30 00:31:20
+# Timestamp: 2008-02-03 19:04:34
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -269,7 +269,7 @@ if (!function_exists('is_email')) {
 		if (preg_match('/^[[:alnum:].]+@[[:alnum:]]+\.[[:alnum:].]+$/', (string)$value)) { return true; } else { return false; } 
 	} 
 
-}  
+}
 
 ############################################################### 
 # 
@@ -601,7 +601,7 @@ function ob_template($buffer) {
 class DB {
 
 	public $resource = null;
-	protected $results = null;
+	public $results = null;
 
 	public function Connect($server, $username, $password, $database, $cache = true) {
 
