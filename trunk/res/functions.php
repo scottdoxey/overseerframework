@@ -189,7 +189,7 @@ if (!function_exists('is_email')) {
 		if (preg_match('/^[[:alnum:].]+@[[:alnum:]]+\.[[:alnum:].]+$/', (string)$value)) { return true; } else { return false; } 
 	} 
 
-}  
+}
 
 ############################################################### 
 # 
