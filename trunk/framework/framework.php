@@ -3,11 +3,11 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build226
+# Version: 0.2beta r2 build227
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-02-03 19:04:34
+# Timestamp: 2008-02-10 17:05:22
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -210,6 +210,25 @@ if (!function_exists('error')) {
 
 		return false;
 
+	}
+
+}
+
+############################################################### 
+# 
+# Function: file_put_contents(string $table, string $field);
+# Author: Neo Geek (NG) 
+# 
+###############################################################
+
+if (!function_exists('field_type')) {
+
+	function field_type($table, $field) {
+	
+		$results = mysql_fetch_results('SHOW COLUMNS FROM `' . $table . '` WHERE `Field` = "' . $field . '"');
+		preg_match('/^[a-z]+/', $results[0]['Type'], $matches);
+		return $matches[0];
+	
 	}
 
 }

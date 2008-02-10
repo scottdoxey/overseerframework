@@ -291,6 +291,7 @@ pre {
 <li><a href="#func_check_referer">&#8250; check_referer()</a></li>
 <li><a href="#func_endtime">&#8250; endtime()</a></li>
 <li><a href="#func_error">&#8250; error()</a></li>
+<li><a href="#func_field_type">&#8250; field_type()</a></li>
 <li><a href="#func_file_put_contents">&#8250; file_put_contents()</a></li>
 <li><a href="#func_is_date">&#8250; is_date()</a></li>
 <li><a href="#func_is_email">&#8250; is_email()</a></li>
@@ -638,6 +639,23 @@ $array = array(' username', 'password');
 
 <dd class="dh">Result:</dd>
 <dd><pre>&lt;p&gt;&lt;b&gt;Error:&lt;/b&gt; This is a sample error&lt;/p&gt;</pre></dd>
+
+
+<dt id="func_field_type" class="function"><b>field_type</b>(<i>string $table, string $field</i>); <a href="#">&uarr; top</a></dt>
+<dd><p>Outputs the field type of the specified <b>$field</b> within <b>$table</b>.</p></dd>
+
+<dd class="dh">Attributes:</dd>
+
+<dd class="attr"><p>
+<b>$table</b> - The name of the table you are querying.<br />
+<b>$field</b> - The name of the field you are querying.<br />
+</p></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>echo field_type('bookmarks', 'url');</pre></dd>
+
+<dd class="dh">Result:</dd>
+<dd><pre>varchar</pre></dd>
 
 
 <dt id="func_file_put_contents" class="function"><b>file_put_contents</b>(<i>string $file <span class="optional">[, string $contents, boolean $flag]</span></i>); <a href="#">&uarr; top</a></dt>

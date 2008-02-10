@@ -136,6 +136,25 @@ if (!function_exists('error')) {
 
 ############################################################### 
 # 
+# Function: file_put_contents(string $table, string $field);
+# Author: Neo Geek (NG) 
+# 
+###############################################################
+
+if (!function_exists('field_type')) {
+
+	function field_type($table, $field) {
+	
+		$results = mysql_fetch_results('SHOW COLUMNS FROM `' . $table . '` WHERE `Field` = "' . $field . '"');
+		preg_match('/^[a-z]+/', $results[0]['Type'], $matches);
+		return $matches[0];
+	
+	}
+
+}
+
+############################################################### 
+# 
 # Function: file_put_contents(string $file [, string $contents, boolean $flag]); 
 # Author: Neo Geek (NG) 
 # 
