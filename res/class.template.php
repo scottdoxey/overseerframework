@@ -17,6 +17,7 @@ class Template {
 
 		preg_match('/<!--{header:start}-->(.*)<!--{header:end}-->/si', $template, $matches['header']);
 		preg_match('/<!--{data:start}-->(.*)<!--{data:end}-->/si', $template, $matches['data']);
+		preg_match('/<!--{nodata:start}-->(.*)<!--{nodata:end}-->/si', $template, $matches['nodata']);
 		preg_match('/<!--{footer:start}-->(.*)<!--{footer:end}-->/si', $template, $matches['footer']);
 
 		while (list($key, $value) = each($matches)) {
@@ -74,6 +75,12 @@ class Template {
 				$output .= $temp;
 
 			}
+
+		}
+
+		if (!count($data)) {
+
+			$output .= isset($template['nodata'])?$template['nodata']:'';
 
 		}
 
