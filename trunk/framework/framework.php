@@ -3,11 +3,11 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build227
+# Version: 0.2beta r2 build229
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-02-10 17:05:22
+# Timestamp: 2008-03-02 11:00:39
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -827,6 +827,7 @@ class Template {
 
 		preg_match('/<!--{header:start}-->(.*)<!--{header:end}-->/si', $template, $matches['header']);
 		preg_match('/<!--{data:start}-->(.*)<!--{data:end}-->/si', $template, $matches['data']);
+		preg_match('/<!--{nodata:start}-->(.*)<!--{nodata:end}-->/si', $template, $matches['nodata']);
 		preg_match('/<!--{footer:start}-->(.*)<!--{footer:end}-->/si', $template, $matches['footer']);
 
 		while (list($key, $value) = each($matches)) {
@@ -884,6 +885,12 @@ class Template {
 				$output .= $temp;
 
 			}
+
+		}
+
+		if (!count($data)) {
+
+			$output .= isset($template['nodata'])?$template['nodata']:'';
 
 		}
 
