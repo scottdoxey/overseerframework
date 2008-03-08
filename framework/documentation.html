@@ -4,7 +4,7 @@
 <title>Overseer Framework</title>
 <style type="text/css">
 
-/* ------- GLOBAL------- */
+/* ------- [BASE] GLOBAL------- */
 
 * { margin: 0px; padding: 0px; }
 
@@ -13,33 +13,33 @@ body {
 	font-size: 10pt;
 	font-weight: normal;
 	line-height: 14pt;
-	color: #222;
-	background: #2A3D41;
 }
 
 li {
 	list-style: none;
 }
 
-pre {
+pre, code {
 	font-family: 'Monaco', monospace;
 	font-size: 7pt;
 }
 
+a, code {
+	white-space: nowrap;
+}
 
-/* ------- CONTAINER ------- */
+
+/* ------- [BASE] CONTAINER ------- */
 
 #container {
 	min-width: 780px;
 }
 
 
-/* ------- HEADER ------- */
+/* ------- [BASE] HEADER ------- */
 
 #header {
 	padding: 20px 20px 25px;
-	border-top: 5px solid #5C832F;
-	background: #26393D;
 }
 
 #header h1 {
@@ -47,22 +47,15 @@ pre {
 	font-size: 18pt;
 	font-weight: normal;
 	line-height: 20pt;
-	color: #FFF;
-	text-shadow: 2px 2px #333;
 }
 
 
-/* ------- SIDEBAR ------- */
+/* ------- [BASE] SIDEBAR ------- */
 
 #sidebar {
 	float: left;
 	width: 200px;
 	padding: 10px;
-	background: #2A3D41;
-}
-
-#sidebar {
-	color: #DDD;
 }
 
 #sidebar ul {
@@ -71,48 +64,40 @@ pre {
 
 #sidebar ul li.header {
 	margin: 0px 0px 10px;
-	text-shadow: 2px 2px #333;
 }
 
 #sidebar ul li ul {
 	margin: 0px 0px 0px 5px;
-	border-top: 1px solid #364e3d;
+}
+
+#sidebar ul li ul li:before {
+	float: left;
+	padding: 2px 5px 0px 5px;
+	content: ' - ';
 }
 
 #sidebar ul li ul li a {
 	display: block;
 	padding: 2px 5px;
 	font-size: 8pt;
-	color: #BBB;
 	text-decoration: none;
-	border-bottom: 1px solid #364e3d;
-}
-
-#sidebar ul li ul li a:hover {
-	color: #FFF;
-	border-right: 2px solid #26393D;
-	background: #203034;
 }
 
 
-/* ------- CONTENT ------- */
+/* ------- [BASE] CONTENT ------- */
 
 #content {
-	margin: 0px 5px 0px 210px;
+	margin: 0px 10px 0px 210px;
 	padding: 15px 20px;
 	position: relative;
 	top: -12px;
-	border: 6px solid #203034;
-	background: #FFF;
 }
 
 #content h1 {
-	margin: 0px 0px 20px;
+	margin: 20px 0px 20px;
 	font-size: 16pt;
 	font-weight: normal;
 	line-height: 20pt;
-	text-shadow: 2px 2px #DDD;
-	border-bottom: 1px solid #999;
 }
 
 #content h1 a, #content dl dt a {
@@ -122,8 +107,7 @@ pre {
 }
 
 #content dl dt {
-	padding: 0px 0px 5px 0px;
-	border-bottom: 1px solid #AAA;	
+	padding: 0px 0px 5px 0px;	
 }
 
 #content p {
@@ -143,8 +127,6 @@ pre {
 #content dd.alert {
 	margin: 10px 0px 15px 0px;
 	padding: 3px 8px;
-	border: 2px solid #EB5959;
-	background: #F3AAAA;
 }
 
 #content dd.alert:before {
@@ -155,8 +137,6 @@ pre {
 #content dd.notice {
 	margin: 10px 0px 15px 0px;
 	padding: 3px 8px;
-	border: 2px solid #E9E943;
-	background: #F2F2AA;
 }
 
 #content dd.notice:before {
@@ -166,25 +146,14 @@ pre {
 
 #content dd.attr {
 	margin: 5px 0px 0px 10px;
-	color: #555;
 }
-
-#content dd.attr b {
-	color: #333;
-}
-
 #content pre {
 	margin: 5px 0px 5px;
 	padding: 3px 10px;
-	background: #C0E4C2;
 }
 
 #content pre b {
 	font-size: 8pt;
-}
-
-#content a {
-	color: #26393D;
 }
 
 #content a:hover {
@@ -194,34 +163,14 @@ pre {
 #content div.notice {
 	margin: 0px 0px 15px;
 	padding: 5px 10px;
-	color: #EEE;
-	border: 2px solid #3E631C;
-	background: #5C832F;
-}
-
-#content div.notice a {
-	color: #C0BD8D;
-}
-
-#content span.important {
-	color: #F00;
-}
-
-#content span.optional {
-	color: #666;
 }
 
 
-/* ------- FOOTER------- */
+/* ------- [BASE] FOOTER------- */
 
 #footer {
 	margin: 0px 0px 10px 210px;
-	color: #FFF;
 	text-align: center;
-}
-
-#footer a {
-	color: #FFF;
 }
 
 #footer a:hover {
@@ -229,7 +178,7 @@ pre {
 }
 
 
-/* ------- PRINT ------- */
+/* ------- [BASE] PRINT ------- */
 
 @media print {
 	
@@ -244,6 +193,103 @@ pre {
 	
 	#content, #footer { margin: 0px; }
 	
+}
+
+
+/* ------- [COLOR] GLOBAL------- */
+
+body {
+	color: #222;
+	background: #2A3D41;
+}
+
+a {
+	color: #222;
+}
+
+
+/* ------- [COLOR] HEADER ------- */
+
+#header {
+	color: #FFF;
+	text-shadow: 1px 1px #222;
+	border-top: 5px solid #203034;
+	background: #26393D;
+}
+
+/* ------- [COLOR] SIDEBAR ------- */
+
+#sidebar {
+	color: #DDD;
+	text-shadow: 1px 1px #222;
+	border-top: 2px solid #203034;
+	border-bottom: 0px solid #203034;
+	background: #2A3D41;
+}
+
+#sidebar ul li ul {
+	border-top: 1px solid #364e3d;
+}
+
+#sidebar ul li ul li a {
+	color: #CCC;
+	border-bottom: 1px solid #364e3d;
+}
+
+#sidebar ul li ul li a:hover {
+	color: #FFF;
+	background: #203034;
+}
+
+
+/* ------- [COLOR] CONTENT ------- */
+
+#content {
+	border: 6px solid #203034;
+	background: #FFF;
+}
+
+#content h1 {
+	text-shadow: 2px 2px #DDD;
+	border-bottom: 1px solid #999;
+}
+
+
+#content dl dt {
+	border-bottom: 1px solid #AAA;	
+}
+
+#content dd.alert {
+	border: 2px solid #EB5959;
+	background: #F3AAAA;
+}
+
+#content dd.notice, #content div.notice {
+	border: 2px solid #E9E943;
+	background: #F2F2AA;
+}
+
+#content dd.attr {
+	color: #555;
+}
+
+#content dd.attr b {
+	color: #333;
+}
+
+#content pre {
+	background: #C0E4C2;
+}
+
+#content span.optional {
+	color: #666;
+}
+
+
+/* ------- [COLOR] FOOTER------- */
+
+#footer, #footer a {
+	color: #FFF;
 }
 
 </style>
@@ -267,13 +313,13 @@ pre {
 <li>
 
 <ul>
-<li><a href="#const_error_log">&#8250; error_log</a></li>
-<li><a href="#const_error_reporting">&#8250; error_reporting</a></li>
-<li><a href="#const_int_microtime">&#8250; int_microtime</a></li>
-<li><a href="#const_lnbr">&#8250; lnbr</a></li>
-<li><a href="#const_maxview">&#8250; maxview</a></li>
-<li><a href="#const_page">&#8250; page</a></li>
-<li><a href="#const_url">&#8250; url</a></li>
+<li><a href="#const_error_log">error_log</a></li>
+<li><a href="#const_error_reporting">error_reporting</a></li>
+<li><a href="#const_int_microtime">int_microtime</a></li>
+<li><a href="#const_lnbr">lnbr</a></li>
+<li><a href="#const_maxview">maxview</a></li>
+<li><a href="#const_page">page</a></li>
+<li><a href="#const_url">url</a></li>
 </ul>
 
 </li>
@@ -285,30 +331,30 @@ pre {
 <li>
 
 <ul>
-<li><a href="#func_array_clean">&#8250; array_clean()</a></li>
-<li><a href="#func_array_move">&#8250; array_move()</a></li>
-<li><a href="#func_array_walk_recursive">&#8250; array_walk_recursive()</a></li>
-<li><a href="#func_check_referer">&#8250; check_referer()</a></li>
-<li><a href="#func_endtime">&#8250; endtime()</a></li>
-<li><a href="#func_error">&#8250; error()</a></li>
-<li><a href="#func_field_type">&#8250; field_type()</a></li>
-<li><a href="#func_file_put_contents">&#8250; file_put_contents()</a></li>
-<li><a href="#func_is_date">&#8250; is_date()</a></li>
-<li><a href="#func_is_email">&#8250; is_email()</a></li>
-<li><a href="#func_is_empty">&#8250; is_empty()</a></li>
-<li><a href="#func_is_number">&#8250; is_number()</a></li>
-<li><a href="#func_is_simple">&#8250; is_simple()</a></li>
-<li><a href="#func_is_simple_alpha">&#8250; is_simple_alpha()</a></li>
-<li><a href="#func_is_simple_number">&#8250; is_simple_number()</a></li>
-<li><a href="#func_is_web_address">&#8250; is_web_address()</a></li>
-<li><a href="#func_mysql_fetch_results">&#8250; mysql_fetch_results()</a></li>
-<li><a href="#func_path_info">&#8250; path_info()</a></li>
-<li><a href="#func_primary_key">&#8250; primary_key()</a></li>
-<li><a href="#func_print_array">&#8250; print_array()</a></li>
-<li><a href="#func_sanitize_data">&#8250; sanitize_data()</a></li>
-<li><a href="#func_set_location">&#8250; set_location()</a></li>
-<li><a href="#func_timeago">&#8250; timeago()</a></li>
-<li><a href="#func_url_query">&#8250; url_query()</a></li>
+<li><a href="#func_array_clean">array_clean()</a></li>
+<li><a href="#func_array_move">array_move()</a></li>
+<li><a href="#func_array_walk_recursive">array_walk_recursive()</a></li>
+<li><a href="#func_check_referer">check_referer()</a></li>
+<li><a href="#func_endtime">endtime()</a></li>
+<li><a href="#func_error">error()</a></li>
+<li><a href="#func_field_type">field_type()</a></li>
+<li><a href="#func_file_put_contents">file_put_contents()</a></li>
+<li><a href="#func_is_date">is_date()</a></li>
+<li><a href="#func_is_email">is_email()</a></li>
+<li><a href="#func_is_empty">is_empty()</a></li>
+<li><a href="#func_is_number">is_number()</a></li>
+<li><a href="#func_is_simple">is_simple()</a></li>
+<li><a href="#func_is_simple_alpha">is_simple_alpha()</a></li>
+<li><a href="#func_is_simple_number">is_simple_number()</a></li>
+<li><a href="#func_is_web_address">is_web_address()</a></li>
+<li><a href="#func_mysql_fetch_results">mysql_fetch_results()</a></li>
+<li><a href="#func_path_info">path_info()</a></li>
+<li><a href="#func_primary_key">primary_key()</a></li>
+<li><a href="#func_print_array">print_array()</a></li>
+<li><a href="#func_sanitize_data">sanitize_data()</a></li>
+<li><a href="#func_set_location">set_location()</a></li>
+<li><a href="#func_timeago">timeago()</a></li>
+<li><a href="#func_url_query">url_query()</a></li>
 
 </ul>
 
@@ -321,17 +367,17 @@ pre {
 <li>
 
 <ul>
-<li><a href="#class_database_databaselist">&#8250; $Database->DatabaseList();</a></li>
-<li><a href="#class_database_tablelist">&#8250; $Database->TableList();</a></li>
-<li><a href="#class_database_table">&#8250; $Database->Table();</a></li>
-<li><a href="#class_database_process">&#8250; $Database->Process();</a></li>
-<li><a href="#class_db_connect">&#8250; $DB->Connect();</a></li>
-<li><a href="#class_db_query">&#8250; $DB->Query();</a></li>
-<li><a href="#class_template_parse">&#8250; $Template->Parse();</a></li>
-<li><a href="#class_template_render">&#8250; $Template->Render();</a></li>
-<li><a href="#class_template_generate">&#8250; $Template->Generate();</a></li>
-<li><a href="#class_template_pagination">&#8250; $Template->Pagination();</a></li>
-<li><a href="#class_template_form">&#8250; $Template->Form();</a></li>
+<li><a href="#class_database_databaselist">$Database->DatabaseList();</a></li>
+<li><a href="#class_database_tablelist">$Database->TableList();</a></li>
+<li><a href="#class_database_table">$Database->Table();</a></li>
+<li><a href="#class_database_process">$Database->Process();</a></li>
+<li><a href="#class_db_connect">$DB->Connect();</a></li>
+<li><a href="#class_db_query">$DB->Query();</a></li>
+<li><a href="#class_template_parse">$Template->Parse();</a></li>
+<li><a href="#class_template_render">$Template->Render();</a></li>
+<li><a href="#class_template_generate">$Template->Generate();</a></li>
+<li><a href="#class_template_pagination">$Template->Pagination();</a></li>
+<li><a href="#class_template_form">$Template->Form();</a></li>
 </ul>
 
 </li>
@@ -347,12 +393,16 @@ pre {
 
 <p>The template system built into the framework utilizes PHP's output buffer functionality to capture and parse the content of a page, replace certain variables in a separate template file with that content, then render the results. This functionality is optional and will only be available if a template file is defined before the framework is called.</p>
 
+<b>Example:</b>
+
+<pre>$ob_template = file_get_contents('templates/main.tpl');</pre>
+
 
 <dl>
 
 <dt><b>Site Level Template</b> <a href="#">&uarr; top</a></dt>
 
-<dd><p>The site level template is used to easily build sites with a global template. This type of template file requires the variables %TITLE% and %CONTENT%. (The optional variable is %HEADER%.)</p></dd>
+<dd><p>The site level template is used to easily build sites with a global template. This type of template file requires the variables %TITLE% and %BODY%. (Optional variable is %HEAD%.)</p></dd>
 
 <dd class="dh">Example:</dd>
 
@@ -360,17 +410,21 @@ pre {
 &lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"&gt;
 &lt;head&gt;
 &lt;title&gt;%TITLE%&lt;/title&gt;
-%HEADER%
+%HEAD%
 &lt;/head&gt;
 
 &lt;body&gt;
 
 &lt;h1&gt;%TITLE%&lt;/h1&gt;
 
-%CONTENT%
+%BODY%
 
 &lt;/body&gt;
 &lt;/html&gt;</pre></dd>
+
+<dd><p>The %TITLE% and %BODY% variables will both be replaced by the contents of their similarly named HTML tags; &lt;title&gt; and &lt;body&gt;. Likewise, the contents of the &lt;head&gt; tag (minus the &lt;title&gt; tag) will replace the %HEAD% variable.</p></dd>
+
+<dd class="dh">Example:</dd>
 
 <dd><pre>&lt;?php
 
@@ -381,6 +435,7 @@ require_once('scripts/framework.php');
 &lt;html&gt;
 &lt;head&gt;
 &lt;title&gt;Lorem ipsum&lt;/title&gt;
+&lt;link type="text/css" rel="stylesheet" href="style.css" /&gt;
 &lt;/head&gt;
 
 &lt;body&gt;
@@ -394,6 +449,10 @@ dignissim, massa massa adipiscing nulla, volutpat rutrum nisl lacus ac erat.&lt;
 &lt;/html&gt;</pre></dd>
 
 <dt><b>Element Templates</b> <a href="#">&uarr; top</a></dt>
+
+<dd><p>Element templates are for displaying multiple, similarly structured elements of data with repeating HTML in conjunction with <a href="#class_template_parse">$Template->Parse();</a> and <a href="#class_template_render">$Template->Render();</a>. The below example shows a template that will render the contents of <code>&lt;!--{header:start|end}--&gt;</code> first, followed by either <code>&lt;!--{data:start|end}--&gt;</code> or <code>&lt;!--{nodata:start|end}--&gt;</code> and ending with <code>&lt;!--{footer:start|end}--&gt;</code>.</p></dd>
+
+<dd class="dh">Example:</dd>
 
 <dd><pre>&lt;!--{header:start}--&gt;
 
@@ -413,12 +472,61 @@ dignissim, massa massa adipiscing nulla, volutpat rutrum nisl lacus ac erat.&lt;
 
 &lt;!--{data:end}--&gt;
 
+&lt;!--{nodata:start}--&gt;
+
+&lt;p&gt;No bookmarks.&lt;/p&gt;
+
+&lt;!--{nodata:end}--&gt;
+
 
 &lt;!--{footer:start}--&gt;
 
 &lt;/div&gt;
 
 &lt;!--{footer:end}--&gt;</pre></dd>
+
+
+<dd><p>The data passed along with this template defines wether or not the <code>&lt;!--{data:start|end}--&gt;</code> or <code>&lt;!--{nodata:start|end}--&gt;</code> section of the template is used. Below is an example of data that can be passed along with element templates.</p></dd>
+
+<dd class="dh">Example:</dd>
+
+<dd><pre>$data = array();
+
+$data[] = array('url'=>'http://www.latherrinserepeat.org/',
+		'description'=>'Lather Rinse Repeat', 'tag'=>'blog');
+$data[] = array('url'=>'http://www.jemjabella.co.uk/',
+		'description'=>'Jemjabella.co.uk', 'tag'=>'blog');
+$data[] = array('url'=>'http://www.justinshattuck.com/',
+		'description'=>'Justin Shattuck', 'tag'=>'blog');
+$data[] = array('url'=>'http://chunkysoup.net/',
+		'description'=>'ChunkySoup.net', 'tag'=>'blog');
+$data[] = array('url'=>'http://ejohn.org/',
+		'description'=>'John Resig', 'tag'=>'blog');
+
+echo $Template->Render('template.tpl', $data);</pre></dd>
+
+<dd><p>Based on the number of arrays within $data (above), the contents of <code>&lt;!--{data:start|end}--&gt;</code> will be repeated four separate times, each time replacing the variables with the array's keys and values. If the array passed was empty, then the contents of <code>&lt;!--{data:start|end}--&gt;</code> will be returned. If you require that certain variables be replaced within the <code>&lt;!--{header:start|end}--&gt;</code> or <code>&lt;!--{footer:start|end}--&gt;</code> section of the template, setup the data array like the below example.</p></dd>
+
+<dd class="dh">Example:</dd>
+
+<dd><pre>$data = array();
+
+$data['header'][] = array('var'=>'All your items (4)');
+
+$data['data'][] = array('url'=>'http://www.latherrinserepeat.org/',
+			'description'=>'Lather Rinse Repeat', 'tag'=>'blog');
+$data['data'][] = array('url'=>'http://www.jemjabella.co.uk/',
+			'description'=>'Jemjabella.co.uk', 'tag'=>'blog');
+$data['data'][] = array('url'=>'http://www.justinshattuck.com/',
+			'description'=>'Justin Shattuck', 'tag'=>'blog');
+$data['data'][] = array('url'=>'http://chunkysoup.net/',
+			'description'=>'ChunkySoup.net', 'tag'=>'blog');
+$data['data'][] = array('url'=>'http://ejohn.org/',
+			'description'=>'John Resig', 'tag'=>'blog');
+
+$data['footer'][] = array('var'=>'All your items (4)');
+
+echo $Template->Render('template.tpl', $data);</pre></dd>
 
 </dl>
 
@@ -508,8 +616,6 @@ dignissim, massa massa adipiscing nulla, volutpat rutrum nisl lacus ac erat.&lt;
 
 
 </dl>
-
-<br /><br />
 
 <h1>Functions <a href="#">&uarr; top</a></h1>
 
@@ -612,7 +718,7 @@ $array = array(' username', 'password');
 <dd><p>Checks the current URL against the HTTP referer.</p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>if (!check_referer() && count($_POST)) { echo 'The HTTP referer is invalid.'; }</pre></dd>
+<dd><pre>if (!check_referer() &amp;&amp; count($_POST)) { echo 'The HTTP referer is invalid.'; }</pre></dd>
 
 
 <dt id="func_endtime" class="function"><b>endtime</b>(); <a href="#">&uarr; top</a></dt>
@@ -942,8 +1048,6 @@ Array
 
 </dl>
 
-<br /><br />
-
 <h1>Classes <a href="#">&uarr; top</a></h1>
 
 <dl>
@@ -1058,12 +1162,6 @@ Array
         (
             [id] => 60
             [url] => http://ejohn.org/
-        )
-
-    [5] => Array
-        (
-            [id] => 67
-            [url] => http://www.huddletogether.com/
         )
 
 )</pre></dd>
@@ -1289,7 +1387,7 @@ echo $output;</pre></dd>
 
 </div>
 
-<div id="footer">&copy; 2007 <a href="http://neo-geek.net/">Neo Geek</a>, Licenses: <a href="http://overseercms.com/framework/gpl.txt">GPL (source code)</a> and <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC Attribution-ShareAlike 3.0 (documentation)</a></div>
+<div id="footer">&copy; 2008 <a href="http://neo-geek.net/">Neo Geek</a>, Licenses: <a href="http://overseercms.com/framework/gpl.txt">GPL (source code)</a> and <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC Attribution-ShareAlike 3.0 (documentation)</a></div>
 
 </div>
 

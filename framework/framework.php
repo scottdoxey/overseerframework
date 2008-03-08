@@ -3,11 +3,11 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build230
+# Version: 0.2beta r2 build232
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-04 02:10:51
+# Timestamp: 2008-03-06 12:35:59
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -594,11 +594,12 @@ function ob_template($buffer) {
 	preg_match('/<title>(.*)<\/title>/si', $buffer, $regs);
 	$ob_template = str_replace('%TITLE%', trim($regs[1]), $ob_template);
 
-	preg_match('/<\/title>(.*)<\/head>/si', $buffer, $regs);
-	$ob_template = str_replace('%HEADER%', trim($regs[1]), $ob_template);
+	preg_match('/<head>(.*)<\/head>/si', $buffer, $regs);
+	$regs[1] = preg_replace('/<title>(.*)<\/title>/si', $regs[1]);
+	$ob_template = str_replace('%HEAD%', trim($regs[1]), $ob_template);
 
 	preg_match('/<body>(.*)(<\/body>)/si', $buffer, $regs);
-	$ob_template = str_replace('%CONTENT%', trim($regs[1]), $ob_template);
+	$ob_template = str_replace('%BODY%', trim($regs[1]), $ob_template);
 
 	// $ob_template = ereg_replace('%+[[:alnum:]_]+%', '', $ob_template);
 
