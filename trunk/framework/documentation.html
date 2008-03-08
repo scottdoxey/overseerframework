@@ -43,10 +43,22 @@ a, code {
 }
 
 #header h1 {
+	padding: 0px 0px 5px 0px;
 	font-family: 'Arial', sans-serif;
 	font-size: 18pt;
 	font-weight: normal;
 	line-height: 20pt;
+}
+
+#header a {
+	color: #EEE;
+}
+
+#header div.download {
+	position: absolute;
+	top: 25px;
+	right: 20px;
+	white-space: nowrap;
 }
 
 
@@ -292,6 +304,7 @@ a {
 	color: #FFF;
 }
 
+
 </style>
 </head>
 
@@ -303,9 +316,24 @@ a {
 
 <h1>Overseer Framework</h1>
 
+<div class="download">&darr; <a href="http://overseerframework.googlecode.com/svn/trunk/framework/framework.php">Download Latest Version</a></div>
+
 </div>
 
 <div id="sidebar">
+
+<ul>
+<li class="header">Templates</li>
+
+<li>
+
+<ul>
+<li><a href="#template_site_level">Site Level</a></li>
+<li><a href="#template_element">Element</a></li>
+</ul>
+
+</li>
+</ul>
 
 <ul>
 <li class="header">Constants</li>
@@ -389,7 +417,7 @@ a {
 
 <div class="notice">This framework is in the early stages of it's first beta. If you come across any issues in the documentation or the framework, please make note of it via the <a href="http://groups.google.com/group/overseer-cms/">Google Group</a>.</div>
 
-<h1>Template <a href="#">&uarr; top</a></h1>
+<h1>Templates <a href="#">&uarr; top</a></h1>
 
 <p>The template system built into the framework utilizes PHP's output buffer functionality to capture and parse the content of a page, replace certain variables in a separate template file with that content, then render the results. This functionality is optional and will only be available if a template file is defined before the framework is called.</p>
 
@@ -400,7 +428,7 @@ a {
 
 <dl>
 
-<dt><b>Site Level Template</b> <a href="#">&uarr; top</a></dt>
+<dt id="template_site_level"><b>Site Level</b> <a href="#">&uarr; top</a></dt>
 
 <dd><p>The site level template is used to easily build sites with a global template. This type of template file requires the variables %TITLE% and %BODY%. (Optional variable is %HEAD%.)</p></dd>
 
@@ -448,7 +476,7 @@ dignissim, massa massa adipiscing nulla, volutpat rutrum nisl lacus ac erat.&lt;
 &lt;/body&gt;
 &lt;/html&gt;</pre></dd>
 
-<dt><b>Element Templates</b> <a href="#">&uarr; top</a></dt>
+<dt id="template_element"><b>Element</b> <a href="#">&uarr; top</a></dt>
 
 <dd><p>Element templates are for displaying multiple, similarly structured elements of data with repeating HTML in conjunction with <a href="#class_template_parse">$Template->Parse();</a> and <a href="#class_template_render">$Template->Render();</a>. The below example shows a template that will render the contents of <code>&lt;!--{header:start|end}--&gt;</code> first, followed by either <code>&lt;!--{data:start|end}--&gt;</code> or <code>&lt;!--{nodata:start|end}--&gt;</code> and ending with <code>&lt;!--{footer:start|end}--&gt;</code>.</p></dd>
 
