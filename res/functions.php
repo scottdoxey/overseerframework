@@ -487,7 +487,7 @@ if (!function_exists('url_query')) {
 
 		if ($return == 'string') { $output = '?' . implode($output, '&amp;'); }
 
-		return $output;
+		return strlen($output)!=1?$output:'';
 
 	}
 

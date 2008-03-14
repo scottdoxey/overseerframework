@@ -3,11 +3,11 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build232
+# Version: 0.2beta r2 build239
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-06 12:35:59
+# Timestamp: 2008-03-14 12:51:51
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ if (!defined('maxview')) {
 }
 
 if (!defined('page')) {
-	define('page', isset($_SERVER['PATH_INFO'])?substr($_SERVER['PATH_INFO'], 1):'');
+	define('page', $_SERVER['SCRIPT_NAME'] . (isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:''));
 }
 
 if (!defined('url')) {
@@ -567,7 +567,7 @@ if (!function_exists('url_query')) {
 
 		if ($return == 'string') { $output = '?' . implode($output, '&amp;'); }
 
-		return $output;
+		return strlen($output)!=1?$output:'';
 
 	}
 
@@ -1022,7 +1022,7 @@ class Template {
 
 			if ($db_start == (($i-1) * $db_limit)) { $output .= ' <b>'; }
 
-			$output .= '<a href="' . url_query(array('db_start'=>(($i-1) * $db_limit))) . '">' . $i . '</a> ';
+			$output .= '<a href="' . constant('page') . '' . url_query(array('db_start'=>(($i-1) * $db_limit))) . '">' . $i . '</a> ';
 
 			if ($db_start == (($i-1) * $db_limit)) { $output .= '</b> '; }
 
