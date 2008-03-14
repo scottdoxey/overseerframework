@@ -27,7 +27,7 @@ if (!defined('maxview')) {
 }
 
 if (!defined('page')) {
-	define('page', isset($_SERVER['PATH_INFO'])?substr($_SERVER['PATH_INFO'], 1):'');
+	define('page', $_SERVER['SCRIPT_NAME'] . (isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:''));
 }
 
 if (!defined('url')) {
