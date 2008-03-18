@@ -3,11 +3,11 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build239
+# Version: 0.2beta r2 build241
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-14 12:51:51
+# Timestamp: 2008-03-18 05:45:32
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -622,6 +622,7 @@ class DB {
 
 	public $resource = null;
 	public $results = null;
+	public $instances = array('connect'=>0, 'query'=>0);
 
 	public function Connect($server, $username, $password, $database, $cache = true) {
 
@@ -630,6 +631,8 @@ class DB {
 		if ($database) { @mysql_select_db($database, $resource) or error('MySQL Error: ' . mysql_error()); }
 
 		if ($cache) { $this->resource = $resource; }
+
+		$this->instances['connect']++;
 
 		return $resource;
 
@@ -660,6 +663,8 @@ class DB {
 		}
 
 		if ($cache) { $this->results = $results; }
+
+		$this->instances['query']++;
 
 		return $results;
 
