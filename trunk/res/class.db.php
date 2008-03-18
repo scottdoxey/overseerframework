@@ -11,6 +11,7 @@ class DB {
 
 	public $resource = null;
 	public $results = null;
+	public $instances = array('connect'=>0, 'query'=>0);
 
 	public function Connect($server, $username, $password, $database, $cache = true) {
 
@@ -19,6 +20,8 @@ class DB {
 		if ($database) { @mysql_select_db($database, $resource) or error('MySQL Error: ' . mysql_error()); }
 
 		if ($cache) { $this->resource = $resource; }
+
+		$this->instances['connect']++;
 
 		return $resource;
 
@@ -49,6 +52,8 @@ class DB {
 		}
 
 		if ($cache) { $this->results = $results; }
+
+		$this->instances['query']++;
 
 		return $results;
 
