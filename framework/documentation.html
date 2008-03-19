@@ -395,17 +395,23 @@ a {
 <li>
 
 <ul>
-<li><a href="#class_database_databaselist">$Database->DatabaseList();</a></li>
-<li><a href="#class_database_tablelist">$Database->TableList();</a></li>
-<li><a href="#class_database_table">$Database->Table();</a></li>
-<li><a href="#class_database_process">$Database->Process();</a></li>
-<li><a href="#class_db_connect">$DB->Connect();</a></li>
-<li><a href="#class_db_query">$DB->Query();</a></li>
-<li><a href="#class_template_parse">$Template->Parse();</a></li>
-<li><a href="#class_template_render">$Template->Render();</a></li>
-<li><a href="#class_template_generate">$Template->Generate();</a></li>
-<li><a href="#class_template_pagination">$Template->Pagination();</a></li>
-<li><a href="#class_template_form">$Template->Form();</a></li>
+<li><a href="#class_database_resource">$Database-&gt;resource</a></li>
+<li><a href="#class_database_results">$Database-&gt;results</a></li>
+<li><a href="#class_database_databaselist">$Database-&gt;DatabaseList();</a></li>
+<li><a href="#class_database_tablelist">$Database-&gt;TableList();</a></li>
+<li><a href="#class_database_table">$Database-&gt;Table();</a></li>
+<li><a href="#class_database_process">$Database-&gt;Process();</a></li>
+<li><a href="#class_db_resource">$DB-&gt;resource</a></li>
+<li><a href="#class_db_results">$DB-&gt;results</a></li>
+<li><a href="#class_db_instances">$DB-&gt;instances</a></li>
+<li><a href="#class_db_connect">$DB-&gt;Connect();</a></li>
+<li><a href="#class_db_query">$DB-&gt;Query();</a></li>
+<li><a href="#class_template_tools">$Template-&gt;tools</a></li>
+<li><a href="#class_template_parse">$Template-&gt;Parse();</a></li>
+<li><a href="#class_template_render">$Template-&gt;Render();</a></li>
+<li><a href="#class_template_generate">$Template-&gt;Generate();</a></li>
+<li><a href="#class_template_pagination">$Template-&gt;Pagination();</a></li>
+<li><a href="#class_template_form">$Template-&gt;Form();</a></li>
 </ul>
 
 </li>
@@ -478,7 +484,7 @@ dignissim, massa massa adipiscing nulla, volutpat rutrum nisl lacus ac erat.&lt;
 
 <dt id="template_element"><b>Element</b> <a href="#">&uarr; top</a></dt>
 
-<dd><p>Element templates are for displaying multiple, similarly structured elements of data with repeating HTML in conjunction with <a href="#class_template_parse">$Template->Parse();</a> and <a href="#class_template_render">$Template->Render();</a>. The below example shows a template that will render the contents of <code>&lt;!--{header:start|end}--&gt;</code> first, followed by either <code>&lt;!--{data:start|end}--&gt;</code> or <code>&lt;!--{nodata:start|end}--&gt;</code> and ending with <code>&lt;!--{footer:start|end}--&gt;</code>.</p></dd>
+<dd><p>Element templates are for displaying multiple, similarly structured elements of data with repeating HTML in conjunction with <a href="#class_template_parse">$Template-&gt;Parse();</a> and <a href="#class_template_render">$Template-&gt;Render();</a>. The below example shows a template that will render the contents of <code>&lt;!--{header:start|end}--&gt;</code> first, followed by either <code>&lt;!--{data:start|end}--&gt;</code> or <code>&lt;!--{nodata:start|end}--&gt;</code> and ending with <code>&lt;!--{footer:start|end}--&gt;</code>.</p></dd>
 
 <dd class="dh">Example:</dd>
 
@@ -531,7 +537,7 @@ $data[] = array('url'=>'http://chunkysoup.net/',
 $data[] = array('url'=>'http://ejohn.org/',
 		'description'=>'John Resig', 'tag'=>'blog');
 
-echo $Template->Render('template.tpl', $data);</pre></dd>
+echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 
 <dd><p>Based on the number of arrays within $data (above), the contents of <code>&lt;!--{data:start|end}--&gt;</code> will be repeated four separate times, each time replacing the variables with the array's keys and values. If the array passed was empty, then the contents of <code>&lt;!--{data:start|end}--&gt;</code> will be returned. If you require that certain variables be replaced within the <code>&lt;!--{header:start|end}--&gt;</code> or <code>&lt;!--{footer:start|end}--&gt;</code> section of the template, setup the data array like the below example.</p></dd>
 
@@ -554,7 +560,7 @@ $data['data'][] = array('url'=>'http://ejohn.org/',
 
 $data['footer'][] = array('var'=>'All your items (4)');
 
-echo $Template->Render('template.tpl', $data);</pre></dd>
+echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 
 </dl>
 
@@ -614,7 +620,7 @@ echo $Template->Render('template.tpl', $data);</pre></dd>
 
 
 <dt id="const_maxview" class="constant"><b>maxview</b> <a href="#">&uarr; top</a></dt>
-<dd><p>The default value of <b>maxview</b> is <i>10</i>. This should be changed to reflect the default number of viewable items in your application (used with <a href="#class_database_table">$Database->Table()</a>).</p></dd>
+<dd><p>The default value of <b>maxview</b> is <i>10</i>. This should be changed to reflect the default number of viewable items in your application (used with <a href="#class_database_table">$Database-&gt;Table()</a>).</p></dd>
 
 <dd class="notice">It is good programming practice to check to see if a constant already exists.</dd>
 
@@ -1080,12 +1086,26 @@ Array
 
 <dl>
 
-<dt id="class_database_databaselist" class="class">$<b>Database</b>-><b>DatabaseList</b>(); <a href="#">&uarr; top</a></dt>
+<dt id="class_database_resource" class="class">$<b>Database</b>-&gt;<b>resource</b> <a href="#">&uarr; top</a></dt>
+<dd><p>Used to store the database connect resource from <a href="#class_db_connect">$DB-&gt;Connect</a> or <a href="#class_db_resource">$DB-&gt;resource</a>.</p></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>$Database-&gt;resource = <a href="#class_db_resource">$DB-&gt;resource</a>;</pre></dd>
+
+
+<dt id="class_database_results" class="class">$<b>Database</b>-&gt;<b>results</b> <a href="#">&uarr; top</a></dt>
+<dd><p>Automatically stores the results of <a href="#class_database_databaselist">$Database-&gt;DatabaseList()</a>, <a href="#class_database_tablelist">$Database-&gt;TableList()</a> and <a href="#class_database_table">$Database-&gt;Table()</a>.</p></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre><a href="#func_print_array">print_array</a>($Database-&gt;results);</pre></dd>
+
+
+<dt id="class_database_databaselist" class="class">$<b>Database</b>-&gt;<b>DatabaseList</b>(); <a href="#">&uarr; top</a></dt>
 <dd><p>Returns an array of available databases.</p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$DB->Connect('localhost', 'root', 'root', 'test');
-<a href="#func_print_array">print_array</a>($Database->DatabaseList());</pre></dd>
+<dd><pre>$DB-&gt;Connect('localhost', 'root', 'root', 'test');
+<a href="#func_print_array">print_array</a>($Database-&gt;DatabaseList());</pre></dd>
 
 <dd class="dh">Result:</dd>
 <dd><pre>Array
@@ -1113,7 +1133,7 @@ Array
 )</pre></dd>
 
 
-<dt id="class_database_tablelist" class="class">$<b>Database</b>-><b>TableList</b>(string $database); <a href="#">&uarr; top</a></dt>
+<dt id="class_database_tablelist" class="class">$<b>Database</b>-&gt;<b>TableList</b>(string $database); <a href="#">&uarr; top</a></dt>
 <dd><p>Returns an array of tables in a certain database.</p></dd>
 
 <dd class="dh">Attributes:</dd>
@@ -1124,8 +1144,8 @@ Array
 
 
 <dd class="dh">Example:</dd>
-<dd><pre>$DB->Connect('localhost', 'root', 'root', 'test');
-<a href="#func_print_array">print_array</a>($Database->TableList('test'));</pre></dd>
+<dd><pre>$DB-&gt;Connect('localhost', 'root', 'root', 'test');
+<a href="#func_print_array">print_array</a>($Database-&gt;TableList('test'));</pre></dd>
 
 <dd class="dh">Result:</dd>
 <dd><pre>Array
@@ -1143,7 +1163,7 @@ Array
 )</pre></dd>
 
 
-<dt id="class_database_table" class="class">$<b>Database</b>-><b>Table</b>(string $database, string $table, <span class="optional">[, string $fields, string $clause]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_database_table" class="class">$<b>Database</b>-&gt;<b>Table</b>(string $database, string $table, <span class="optional">[, string $fields, string $clause]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Returns an array of values in a table. Additional attributes allows for filtering of values.</p></dd>
 
 <dd class="dh">Attributes:</dd>
@@ -1156,8 +1176,8 @@ Array
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$DB->Connect('localhost', 'root', 'root', 'test');
-<a href="#func_print_array">print_array</a>($Database->Table('test', 'bookmarks', 'id, url', 'WHERE `tag` = "blog"'));</pre></dd>
+<dd><pre>$DB-&gt;Connect('localhost', 'root', 'root', 'test');
+<a href="#func_print_array">print_array</a>($Database-&gt;Table('test', 'bookmarks', 'id, url', 'WHERE `tag` = "blog"'));</pre></dd>
 
 <dd class="dh">Result:</dd>
 <dd><pre>Array
@@ -1195,7 +1215,7 @@ Array
 )</pre></dd>
 
 
-<dt id="class_database_process" class="class">$<b>Database</b>-><b>Process</b>(string $database, string $table, array $variables); <a href="#">&uarr; top</a></dt>
+<dt id="class_database_process" class="class">$<b>Database</b>-&gt;<b>Process</b>(string $database, string $table, array $variables); <a href="#">&uarr; top</a></dt>
 <dd><p>Saves information to a specific table with varaibles passed through <b>$variables</b> as an array.</p></dd>
 
 <dd class="notice">The $variables attribute must contain the primary key of the table being modified if processing an update. If not, the values will be added as a new database record.</dd>
@@ -1209,12 +1229,34 @@ Array
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$DB->Connect('localhost', 'root', 'root', 'test');
-$Database->Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
+<dd><pre>$DB-&gt;Connect('localhost', 'root', 'root', 'test');
+$Database-&gt;Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
 
 
-<dt id="class_db_connect" class="class">$<b>DB</b>-><b>Connect</b>(string $server, string $username, string $password <span class="optional">[, string $database, boolean $cache]</span>); <a href="#">&uarr; top</a></dt>
-<dd><p>Connects to a database with the specified information. Cache allows the connection to be stored for use with other functions such as <a href="#class_db_query">$DB->Query()</a>.</p></dd>
+<dt id="class_db_resource" class="class">$<b>DB</b>-&gt;<b>resource</b> <a href="#">&uarr; top</a></dt>
+<dd><p>Used to store the database connect resource from <a href="#class_db_connect">$DB-&gt;Connect</a>.</p></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>$DB-&gt;resource = <a href="#class_db_connect">$DB-&gt;Connect</a>;</pre></dd>
+
+
+<dt id="class_db_results" class="class">$<b>DB</b>-&gt;<b>results</b> <a href="#">&uarr; top</a></dt>
+<dd><p>Automatically stores the results of <a href="#class_db_query">$DB-&gt;Query()</a>.</p></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre><a href="#func_print_array">print_array</a>($DB-&gt;results);</pre></dd>
+
+
+<dt id="class_db_instances" class="class">$<b>DB</b>-&gt;<b>instances</b> <a href="#">&uarr; top</a></dt>
+<dd><p>Stores the number of instances of both <a href="#class_db_connect">$DB-&gt;Connect</a> and <a href="#class_db_query">$DB-&gt;Query</a>.</p></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>echo '$DB-&gt;Connect was called ' . $DB-&gt;instances['connect'] . ' time(s).&lt;br /&gt;';
+echo '$DB-&gt;Query was called ' . $DB-&gt;instances['query'] . ' time(s).&lt;br /&gt;';</pre></dd>
+
+
+<dt id="class_db_connect" class="class">$<b>DB</b>-&gt;<b>Connect</b>(string $server, string $username, string $password <span class="optional">[, string $database, boolean $cache]</span>); <a href="#">&uarr; top</a></dt>
+<dd><p>Connects to a database with the specified information. Cache allows the connection to be stored for use with other functions such as <a href="#class_db_query">$DB-&gt;Query()</a>.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
@@ -1224,15 +1266,15 @@ $Database->Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
 <b>$username</b> - The username you are connecting with.<br />
 <b>$password</b> - The password you are connecting with.<br />
 <b>$table</b> - The name of the table you are querying. Default value is <i>null</i>.<br />
-<b>$cache</b> - Boolean for storing the resource of this connect statement in the DB class. Default value is <i>true</i>. Can be accessed through the $DB->resouce variable.<br />
+<b>$cache</b> - Boolean for storing the resource of this connect statement in the DB class. Default value is <i>true</i>. Can be accessed through the $DB-&gt;resouce variable.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$DB->Connect('localhost', 'root', 'root', 'test');</pre></dd>
+<dd><pre>$DB-&gt;Connect('localhost', 'root', 'root', 'test');</pre></dd>
 
 
-<dt id="class_db_query" class="class">$<b>DB</b>-><b>Query</b>(string $query <span class="optional">[, resource $resource, string $return, boolean $cache]</span>); <a href="#">&uarr; top</a></dt>
-<dd><p>Runs a query on the default (specified in <a href="#class_db_connect">$DB->Connect</a>) or alternate database. Returns an array of results by default. Alternate returns are a basic boolean or the MySQL resource.</p></dd>
+<dt id="class_db_query" class="class">$<b>DB</b>-&gt;<b>Query</b>(string $query <span class="optional">[, resource $resource, string $return, boolean $cache]</span>); <a href="#">&uarr; top</a></dt>
+<dd><p>Runs a query on the default (specified in <a href="#class_db_connect">$DB-&gt;Connect</a>) or alternate database. Returns an array of results by default. Alternate returns are a basic boolean or the MySQL resource.</p></dd>
 
 <dd class="notice">The $return variable is <i>array</i> by default. Alternative values are <i>resource</i> and <i>boolean</i>.</dd>
 
@@ -1240,14 +1282,14 @@ $Database->Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
 
 <dd class="attr"><p>
 <b>$query</b> - MySQL query.<br />
-<b>$resource</b> - Use a specific <a href="#class_db_connect">$DB->Connect</a> resource or the default one stored in the DB class.<br />
+<b>$resource</b> - Use a specific <a href="#class_db_connect">$DB-&gt;Connect</a> resource or the default one stored in the DB class.<br />
 <b>$queryreturn</b> - MySQL query.<br />
-<b>$cache</b> - Boolean for storing the results of this query in the DB class. Default value is <i>true</i>. Can be accessed through the $DB->results variable.<br />
+<b>$cache</b> - Boolean for storing the results of this query in the DB class. Default value is <i>true</i>. Can be accessed through the $DB-&gt;results variable.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$DB->Connect('localhost', 'root', 'root', 'test');
-<a href="#func_print_array">print_array</a>($DB->Query('SELECT `id`, `url` FROM `test`.`bookmarks` LIMIT 5'));</pre></dd>
+<dd><pre>$DB-&gt;Connect('localhost', 'root', 'root', 'test');
+<a href="#func_print_array">print_array</a>($DB-&gt;Query('SELECT `id`, `url` FROM `test`.`bookmarks` LIMIT 5'));</pre></dd>
 
 <dd class="dh">Result:</dd>
 <dd><pre>Array
@@ -1285,8 +1327,22 @@ $Database->Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
 )</pre></dd>
 
 
-<dt id="class_template_parse" class="class">$<b>Template</b>-><b>Parse</b>(string $template); <a href="#">&uarr; top</a></dt>
-<dd><p>Parses template files/strings. Notice: <a href="#class_template_render">$Template->Render()</a> automatically parses a template file passed through the first attribute.</p></dd>
+<dt id="class_template_tools" class="class">$<b>Template</b>-&gt;<b>tools</b> <a href="#">&uarr; top</a></dt>
+<dd><p>Appends HTML content into columns at the end of rows generated by <a href="#class_template_generate">$Template-&gt;Generate</a>.</p></dd>
+
+<dd class="notice">The below code must come before <a href="#class_template_generate">$Template-&gt;Generate()</a> and should be cleared before calling <a href="#class_template_generate">$Template-&gt;Generate()</a> again if the same tools are not needed.</dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>$Template-&gt;tools[] = array('View', '&lt;a href="?p=view&amp;id=%ID%"&gt;View&lt;/a&gt;');
+$Template-&gt;tools[] = array('Edit', '&lt;a href="?p=edit&amp;id=%ID%"&gt;Edit&lt;/a&gt;');
+$Template-&gt;tools[] = array('Delete', '&lt;a href="?p=del&amp;id=%ID%"&gt;Delete&lt;/a&gt;');</pre></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>$Template-&gt;tools = array();</pre></dd>
+
+
+<dt id="class_template_parse" class="class">$<b>Template</b>-&gt;<b>Parse</b>(string $template); <a href="#">&uarr; top</a></dt>
+<dd><p>Parses template files/strings. Notice: <a href="#class_template_render">$Template-&gt;Render()</a> automatically parses a template file passed through the first attribute.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
@@ -1295,7 +1351,7 @@ $Database->Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre><a href="#func_print_array">print_array</a>($Template->Parse('templates/custom/bookmarks.tpl'));</pre></dd>
+<dd><pre><a href="#func_print_array">print_array</a>($Template-&gt;Parse('templates/custom/bookmarks.tpl'));</pre></dd>
 
 <dd class="dh">Result:</dd>
 <dd><pre>Array
@@ -1323,7 +1379,7 @@ $Database->Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
 )</pre></dd>
 
 
-<dt id="class_template_render" class="class">$<b>Template</b>-><b>Render</b>(string $template <span class="optional">[, array $data]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_template_render" class="class">$<b>Template</b>-&gt;<b>Render</b>(string $template <span class="optional">[, array $data]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Renders a template based on data passed through the <b>$data</b> attribute.</p></dd>
 
 <dd class="dh">Attributes:</dd>
@@ -1334,39 +1390,35 @@ $Database->Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$results = $DB->Query('SELECT `id`, `url` FROM `test`.`bookmarks`');
-echo $Template->Render('templates/custom/bookmarks.tpl', $results);</pre></dd>
+<dd><pre>$results = $DB-&gt;Query('SELECT `id`, `url` FROM `test`.`bookmarks`');
+echo $Template-&gt;Render('templates/custom/bookmarks.tpl', $results);</pre></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>$results['header'][0] = array('variable'=>'replacement');
-$results['data'] = $DB->Query('SELECT `id`, `url` FROM `test`.`bookmarks`');
+$results['data'] = $DB-&gt;Query('SELECT `id`, `url` FROM `test`.`bookmarks`');
 $results['footer'][0] = array('variable'=>'replacement');
-echo $Template->Render('templates/custom/bookmarks.tpl', $results);</pre></dd>
+echo $Template-&gt;Render('templates/custom/bookmarks.tpl', $results);</pre></dd>
 
 
-<dt id="class_template_generate" class="class">$<b>Template</b>-><b>Generate</b>(array $data <span class="optional">[, boolean $sortable, boolean $render]</span>); <a href="#">&uarr; top</a></dt>
-<dd><p>Similar to <a href="#class_template_render">$Template->Render()</a>, but this function creates a tabulator template on the fly.</p></dd>
+<dt id="class_template_generate" class="class">$<b>Template</b>-&gt;<b>Generate</b>(array $data <span class="optional">[, boolean $sortable, boolean $render]</span>); <a href="#">&uarr; top</a></dt>
+<dd><p>Similar to <a href="#class_template_render">$Template-&gt;Render()</a>, but this function creates a tabulator template on the fly.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$data</b> - Array of data to built template with and replace template specific variables in the $template if $render is <i>true</i>. <a href="#class_template_render">See $Template->Render for more info</a>.<br />
+<b>$data</b> - Array of data to built template with and replace template specific variables in the $template if $render is <i>true</i>. <a href="#class_template_render">See $Template-&gt;Render for more info</a>.<br />
 <b>$sortable</b> - Allow for manual sorting of table values.<br />
 <b>$render</b> - Render generated template with data supplied.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$results = $DB->Query('SELECT `id`, `url` FROM `test`.`bookmarks`');
-echo $Template->Generate($results, true, true);</pre></dd>
+<dd><pre>$results = $DB-&gt;Query('SELECT `id`, `url` FROM `test`.`bookmarks`');
+echo $Template-&gt;Generate($results, true, true);</pre></dd>
 
-<dd class="notice">You can add tools to the end of each generated row by adding an array (below) to $Template->tools before calling <a href="#class_template_generate">$Template->Generate()</a>.</dd>
-
-<dd><pre>$Template->tools[] = array('View', '&lt;a href="?p=view&amp;id=%ID%"&gt;View&lt;/a&gt;');
-$Template->tools[] = array('Edit', '&lt;a href="?p=edit&amp;id=%ID%"&gt;Edit&lt;/a&gt;');
-$Template->tools[] = array('Delete', '&lt;a href="?p=del&amp;id=%ID%"&gt;Delete&lt;/a&gt;');</pre></dd>
+<dd class="notice">You can add tools to the end of each generated row by adding an array (below) to <a href="#class_template_tools">$Template-&gt;tools</a> before calling <a href="#class_template_generate">$Template-&gt;Generate()</a>.</dd>
 
 
-<dt id="class_template_pagination" class="class">$<b>Template</b>-><b>Pagination</b>(<span class="optional">[number $total_rows, boolean $single_page_display]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_template_pagination" class="class">$<b>Template</b>-&gt;<b>Pagination</b>(<span class="optional">[number $total_rows, boolean $single_page_display]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Outputs pagination based on the number passed through <b>$total_rows</b>.</p></dd>
 
 <dd class="notice">The math behind the pagination relies on both the <a href="#const_maxview">maxview</a> constant and the number passed through $total_rows.</dd>
@@ -1379,15 +1431,15 @@ $Template->tools[] = array('Delete', '&lt;a href="?p=del&amp;id=%ID%"&gt;Delete&
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$results = $DB->Query('SELECT `id`, `url` FROM `test`.`bookmarks`');
-echo $Template->Pagination(count($results), false);</pre></dd>
+<dd><pre>$results = $DB-&gt;Query('SELECT `id`, `url` FROM `test`.`bookmarks`');
+echo $Template-&gt;Pagination(count($results), false);</pre></dd>
 
 
-<dt id="class_template_form" class="class">$<b>Template</b>-><b>Form</b>(string $database, string $table <span class="optional">[, array $data, array $fields]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_template_form" class="class">$<b>Template</b>-&gt;<b>Form</b>(string $database, string $table <span class="optional">[, array $data, array $fields]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Creates a form based on the table specified. Optional predefined data and fields can also be passed through the function.</p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>echo $Template->Form('test', 'bookmarks');</pre></dd>
+<dd><pre>echo $Template-&gt;Form('test', 'bookmarks');</pre></dd>
 
 <dd class="notice">Elements in the form output can easily be replaced by regular expressions (see below). An example of usage would be replacing an input box with a select box.</dd>
 
@@ -1401,13 +1453,13 @@ echo $Template->Pagination(count($results), false);</pre></dd>
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$output = $Template->Form('test', 'bookmarks');
+<dd><pre>$output = $Template-&gt;Form('test', 'bookmarks');
 $output = preg_replace('/(&lt;label(.*)&gt;)Url(:&lt;\/label&gt;)/U',
 '\1&lt;acronym title="Uniform Resource Locator"&gt;URL&lt;/acronym&gt;\3', $output);
 echo $output;</pre></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$output = $Template->Form('test', 'bookmarks');
+<dd><pre>$output = $Template-&gt;Form('test', 'bookmarks');
 $output = preg_replace('/&lt;input name="active" (.*)\/&gt;/U', $form_active_select, $output);
 echo $output;</pre></dd>
 
