@@ -209,7 +209,7 @@ class Template {
 
 		for ($i = 1; $i <= ceil($total_rows / $db_limit); $i++) {
 
-			if ($db_start == (($i-1) * $db_limit)) { $output .= ' <b>'; }
+			if ($db_start == (($i-1) * $db_limit)) { $output .= '<b>'; }
 
 			$output .= '<a href="' . constant('page') . '' . url_query(array('db_start'=>(($i-1) * $db_limit))) . '">' . $i . '</a> ';
 

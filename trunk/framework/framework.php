@@ -3,11 +3,11 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build241
+# Version: 0.2beta r2 build242
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-18 05:45:32
+# Timestamp: 2008-03-21 15:34:04
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1025,7 +1025,7 @@ class Template {
 
 		for ($i = 1; $i <= ceil($total_rows / $db_limit); $i++) {
 
-			if ($db_start == (($i-1) * $db_limit)) { $output .= ' <b>'; }
+			if ($db_start == (($i-1) * $db_limit)) { $output .= '<b>'; }
 
 			$output .= '<a href="' . constant('page') . '' . url_query(array('db_start'=>(($i-1) * $db_limit))) . '">' . $i . '</a> ';
 
