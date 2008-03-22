@@ -198,7 +198,7 @@ class Template {
 
 		if (!$total_rows) { return false; }
 
-		$output .= '<p class="pagination">' . constant('lnbr');
+		$output .= '<div class="pagination">' . constant('lnbr');
 
 		$output .= '<b>Page:</b> ' . constant('lnbr');
 
@@ -219,7 +219,7 @@ class Template {
 
 		}
 
-		$output .= '</p>' . str_repeat(constant('lnbr'), 2);
+		$output .= '</div>' . str_repeat(constant('lnbr'), 2);
 
 		if (!$single_page_display && $total_rows <= constant('maxview')) { return false; }
 
