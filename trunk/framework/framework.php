@@ -3,11 +3,11 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build242
+# Version: 0.2beta r2 build244
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-21 15:34:04
+# Timestamp: 2008-03-21 16:17:04
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1014,7 +1014,7 @@ class Template {
 
 		if (!$total_rows) { return false; }
 
-		$output .= '<p class="pagination">' . constant('lnbr');
+		$output .= '<div class="pagination">' . constant('lnbr');
 
 		$output .= '<b>Page:</b> ' . constant('lnbr');
 
@@ -1035,7 +1035,7 @@ class Template {
 
 		}
 
-		$output .= '</p>' . str_repeat(constant('lnbr'), 2);
+		$output .= '</div>' . str_repeat(constant('lnbr'), 2);
 
 		if (!$single_page_display && $total_rows <= constant('maxview')) { return false; }
 
