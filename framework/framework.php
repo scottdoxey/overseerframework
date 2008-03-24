@@ -3,11 +3,11 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build244
+# Version: 0.2beta r2 build245
 # Author: Neo Geek {neo@neo-geek.net}
 # Website: http://neo-geek.net/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-21 16:17:04
+# Timestamp: 2008-03-23 17:37:03
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -55,6 +55,10 @@ if (!defined('maxview')) {
 
 if (!defined('page')) {
 	define('page', $_SERVER['SCRIPT_NAME'] . (isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:''));
+}
+
+if (!defined('script')) {
+	define('script', preg_replace('/(' . str_replace('/', '\/', isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:'') . ')?(\?.*)?$/', '', $_SERVER['REQUEST_URI']));
 }
 
 if (!defined('url')) {

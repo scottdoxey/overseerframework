@@ -30,6 +30,10 @@ if (!defined('page')) {
 	define('page', $_SERVER['SCRIPT_NAME'] . (isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:''));
 }
 
+if (!defined('script')) {
+	define('script', preg_replace('/(' . str_replace('/', '\/', isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:'') . ')?(\?.*)?$/', '', $_SERVER['REQUEST_URI']));
+}
+
 if (!defined('url')) {
 	define('url', 'http://' . $_SERVER['SERVER_NAME'] . ($_SERVER['SERVER_PORT'] != '80'?':' . $_SERVER['SERVER_PORT']:'') . $_SERVER['REQUEST_URI']);
 }
