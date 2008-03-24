@@ -347,6 +347,7 @@ a {
 <li><a href="#const_lnbr">lnbr</a></li>
 <li><a href="#const_maxview">maxview</a></li>
 <li><a href="#const_page">page</a></li>
+<li><a href="#const_script">script</a></li>
 <li><a href="#const_url">url</a></li>
 </ul>
 
@@ -638,6 +639,15 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo constant('page');</pre></dd>
+
+
+<dt id="const_script" class="constant"><b>script</b> <a href="#">&uarr; top</a></dt>
+<dd><p>The default value of <b>script</b> is the value of <b>$_SERVER['REQUEST_URI']</b> minus <b>$_SERVER['PATH_INFO']</b> if it exists and any GET data.</p></dd>
+
+<dd class="alert">The preset value of this constant should not be changed!</dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>echo constant('script');</pre></dd>
 
 
 <dt id="const_url" class="constant"><b>url</b> <a href="#">&uarr; top</a></dt>
