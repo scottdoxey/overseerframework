@@ -3,11 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build245
+# Version: 0.2beta r2 build247
 # Author: Neo Geek {neo@neo-geek.net}
-# Website: http://neo-geek.net/
+# Author's Website: http://neo-geek.net/
+# Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-23 17:37:03
+# Timestamp: 2008-03-26 08:18:06
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -815,6 +816,61 @@ class Database {
 ###############################################################
 
 $Database = new Database;
+
+###############################################################
+
+
+
+###############################################################
+#
+# Class: GFX
+# Author: Neo Geek (NG)
+#
+###############################################################
+
+class GFX
+{
+	
+	public function Resize($image, $width = 100, $height = 100, $output = null) {
+		
+		if (!is_file($image)) { return false; }
+		
+		$properties = getimagesize($image);
+		
+		$cache = md5(serialize(func_get_args()) . serialize($properties)) . '.' . substr($properties['mime'], 6);
+		
+		if (is_dir($output) && is_file($output . $cache)) { return $output . $cache; }
+		
+		if ($properties['mime'] == 'image/jpeg') { $original = imagecreatefromjpeg($image); }
+		else if ($properties['mime'] == 'image/gif') { $original = imagecreatefromgif($image); }
+		else if ($properties['mime'] == 'image/png') { $original = imagecreatefrompng($image); }
+		
+		$new = imagecreatetruecolor($width, $height);
+		
+		$ratio = $properties[0]/$properties[1];
+		
+		if ($width/$height < $ratio) { $width = $height*$ratio; } else { $height = $width/$ratio; }
+		
+		$offset_x = ($width-func_get_arg(1)) / 2;
+		$offset_y = ($height-func_get_arg(2)) / 2;
+		
+		imagecopyresampled($new, $original, -$offset_x, -$offset_y, 0, 0, $width, $height, $properties[0], $properties[1]);
+		
+		if (!$output) { header('Content-type: ' . $properties['mime']); } else if (is_dir($output)) { $output .= $cache; }
+		
+		if ($properties['mime'] == 'image/jpeg') { imagejpeg($new, $output, 100); }
+		else if ($properties['mime'] == 'image/gif') { imagegif($new, $output); }
+		else if ($properties['mime'] == 'image/png') { imagepng($new, $output); }
+		
+		return $output;
+		
+	}
+	
+}
+
+###############################################################
+
+$GFX = new GFX;
 
 ###############################################################
 
