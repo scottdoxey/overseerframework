@@ -8,8 +8,9 @@ $files[] = 'res/functions.php';
 $files[] = 'res/template.php';
 $files[] = 'res/class.db.php';
 $files[] = 'res/class.database.php';
-$files[] = 'res/class.template.php';
+$files[] = 'res/class.gfx.php';
 // $files[] = 'res/class.openid.php';
+$files[] = 'res/class.template.php';
 
 preg_match_all('/build([0-9]+)/', file_get_contents('framework.php'), $matches);
 
@@ -20,7 +21,8 @@ $output = '<?php
 # Name: Overseer Framework
 # Version: 0.2beta r2 build' . ($matches[1][0] +1) . '
 # Author: Neo Geek {neo@neo-geek.net}
-# Website: http://neo-geek.net/
+# Author\'s Website: http://neo-geek.net/
+# Framework\'s Website: http://overseercms.com/framework/
 # Copyright: (c) ' . date('Y') . ' Neo Geek, Neo Geek Labs
 # Timestamp: ' . date('Y-m-d H:i:s') . '
 

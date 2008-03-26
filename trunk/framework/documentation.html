@@ -407,6 +407,7 @@ a {
 <li><a href="#class_db_instances">$DB-&gt;instances</a></li>
 <li><a href="#class_db_connect">$DB-&gt;Connect();</a></li>
 <li><a href="#class_db_query">$DB-&gt;Query();</a></li>
+<li><a href="#class_gfx_resize">$GFX-&gt;Resize();</a></li>
 <li><a href="#class_template_tools">$Template-&gt;tools</a></li>
 <li><a href="#class_template_parse">$Template-&gt;Parse();</a></li>
 <li><a href="#class_template_render">$Template-&gt;Render();</a></li>
@@ -1335,6 +1336,23 @@ echo '$DB-&gt;Query was called ' . $DB-&gt;instances['query'] . ' time(s).&lt;br
         )
 
 )</pre></dd>
+
+
+<dt id="class_gfx_resize" class="class">$<b>GFX</b>-&gt;<b>Resize</b>(string $image <span class="optional">[, integer $width, integer $height, string $output]</span>); <a href="#">&uarr; top</a></dt>
+<dd><p>Resizes and crops JPG, GIF, and PNG image files on the fly using the built in PHP <a href="http://php.net/gd/">GD library</a>.</p></dd>
+
+<dd class="notice">This function requires the <a href="http://php.net/gd/">GD library</a> in order to function correctly. Use the <a href="http://php.net/gdinfo/">gdinfo()</a> function to see if the <a href="http://php.net/gd/">GD library</a> is installed and what version the server is running.</dd>
+
+<dd class="dh">Attributes:</dd>
+
+<dd class="attr"><p>
+<b>$width</b> - The width of the new resized image. Does not need to be proportional to the <b>$height</b>.<br />
+<b>$height</b> - The height of the new resized image. Does not need to be proportional to the <b>$width</b>.<br />
+<b>$output</b> - The folder where the resized images will be stored. If this attribute contains a value, the function will return a URL to the resized image. If this attribute is left blank, the function will output the image. For this to work the function must be called on a page that doesn't output anything minus the result of this function.
+</p></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>$GFX-&gt;Resize('images/test.png', 100, 100, 'cache/');</pre></dd>
 
 
 <dt id="class_template_tools" class="class">$<b>Template</b>-&gt;<b>tools</b> <a href="#">&uarr; top</a></dt>
