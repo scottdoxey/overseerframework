@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build247
+# Version: 0.2beta r2 build249
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-26 08:18:06
+# Timestamp: 2008-03-27 09:31:08
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -162,7 +162,7 @@ if (!function_exists('array_walk_recursive')) {
 
 ###############################################################
 # 
-# Function: check_referer(); 
+# Function: check_referer();
 # Author: Neo Geek (NG)
 # 
 ###############################################################
@@ -181,7 +181,46 @@ if (!function_exists('check_referer')) {
 
 ###############################################################
 # 
-# Function: endtime(string $text); 
+# Function: dir_get_contents([string $dir, string $filter]);
+# Author: Neo Geek (NG)
+# 
+###############################################################
+
+if (!function_exists('dir_get_contents')) {
+
+	function dir_get_contents($dir = '/', $filter = '') {
+	
+		if (!is_dir($dir)) { return false; }
+	
+		$structure = array();
+	
+		$open_dir = opendir($dir);
+	
+		while ($name = @readdir($open_dir)) {
+		
+			if (is_dir($dir . $name) && !in_array($name, array('.', '..')) && preg_match($filter, $dir . $name . '/')) {
+				$structure[] = array('name'=>$name, 'type'=>'dir', 'contents'=>dir_get_contents($dir . $name . '/', $filter));
+			} else if (is_file($dir . $name) && preg_match($filter, $dir . $name)) {
+				$structure[] = array('name'=>$name, 'type'=>'file', 'url'=>$dir . $name);
+			}
+		
+		}
+	
+		$type = array();
+	
+		while (list($key, $value) = each($structure)) { $type[$key] = $value['type']; }
+	
+		array_multisort($type, SORT_ASC, $structure);
+	
+		return $structure;
+	
+	}
+
+}
+
+###############################################################
+# 
+# Function: endtime(string $text);
 # Author: Neo Geek (NG)
 # 
 ###############################################################
@@ -194,7 +233,7 @@ if (!function_exists('endtime')) {
 
 ###############################################################
 # 
-# Function: error(string $text); 
+# Function: error(string $text);
 # Author: Neo Geek (NG)
 # 
 ###############################################################
@@ -219,10 +258,10 @@ if (!function_exists('error')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
 # Function: file_put_contents(string $table, string $field);
-# Author: Neo Geek (NG) 
+# Author: Neo Geek (NG)
 # 
 ###############################################################
 
@@ -238,12 +277,12 @@ if (!function_exists('field_type')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
-# Function: file_put_contents(string $file [, string $contents, boolean $flag]); 
-# Author: Neo Geek (NG) 
+# Function: file_put_contents(string $file [, string $contents, boolean $flag]);
+# Author: Neo Geek (NG)
 # 
-############################################################### 
+###############################################################
 
 if (!function_exists('file_put_contents')) { 
 
@@ -265,12 +304,12 @@ if (!function_exists('file_put_contents')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
-# Function: is_date(string $value); 
+# Function: is_date(string $value);
 # Author: Neo Geek (NG)
 # 
-############################################################### 
+###############################################################
 
 if (!function_exists('is_date')) { 
 
@@ -280,12 +319,12 @@ if (!function_exists('is_date')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
-# Function: is_email(string $value); 
+# Function: is_email(string $value);
 # Author: Neo Geek (NG)
 # 
-############################################################### 
+###############################################################
 
 if (!function_exists('is_email')) { 
 
@@ -295,12 +334,12 @@ if (!function_exists('is_email')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
-# Function: is_empty(string $value); 
+# Function: is_empty(string $value);
 # Author: Neo Geek (NG)
 # 
-############################################################### 
+###############################################################
 
 if (!function_exists('is_empty')) { 
 
@@ -310,12 +349,12 @@ if (!function_exists('is_empty')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
-# Function: is_number(string $value); 
+# Function: is_number(string $value);
 # Author: Neo Geek (NG)
 # 
-############################################################### 
+###############################################################
 
 if (!function_exists('is_number')) { 
 
@@ -325,12 +364,12 @@ if (!function_exists('is_number')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
-# Function: is_simple(string $value); 
+# Function: is_simple(string $value);
 # Author: Neo Geek (NG)
 # 
-############################################################### 
+###############################################################
 
 if (!function_exists('is_simple')) { 
 
@@ -340,12 +379,12 @@ if (!function_exists('is_simple')) {
 
 } 
 
-############################################################### 
+###############################################################
 # 
-# Function: is_simple_alpha(string $value); 
+# Function: is_simple_alpha(string $value);
 # Author: Neo Geek (NG)
 # 
-############################################################### 
+###############################################################
 
 if (!function_exists('is_simple_alpha')) { 
 
@@ -355,12 +394,12 @@ if (!function_exists('is_simple_alpha')) {
 
 } 
 
-############################################################### 
+###############################################################
 # 
-# Function: is_simple_number(string $value); 
+# Function: is_simple_number(string $value);
 # Author: Neo Geek (NG)
 # 
-############################################################### 
+###############################################################
 
 if (!function_exists('is_simple_number')) { 
 
@@ -370,12 +409,12 @@ if (!function_exists('is_simple_number')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
-# Function: is_web_address(string $value); 
+# Function: is_web_address(string $value);
 # Author: Neo Geek (NG)
 # 
-############################################################### 
+###############################################################
 
 if (!function_exists('is_web_address')) { 
 
@@ -464,7 +503,7 @@ if (!function_exists('print_array')) {
 
 ###############################################################
 # 
-# Function: sanitize_data([array $array]); 
+# Function: sanitize_data([array $array]);
 # Author: Neo Geek (NG)
 # 
 ###############################################################
@@ -508,9 +547,9 @@ if (!function_exists('set_location')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
-# Function: timeago(timestamp $timestamp); 
+# Function: timeago(timestamp $timestamp);
 # Author: Neo Geek (NG)
 # 
 ###############################################################
@@ -539,9 +578,9 @@ if (!function_exists('timeago')) {
 
 }
 
-############################################################### 
+###############################################################
 # 
-# Function: url_query(array $replacements, string $return); 
+# Function: url_query(array $replacements, string $return);
 # Author: Neo Geek (NG)
 # 
 ###############################################################

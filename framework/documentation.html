@@ -364,6 +364,7 @@ a {
 <li><a href="#func_array_move">array_move()</a></li>
 <li><a href="#func_array_walk_recursive">array_walk_recursive()</a></li>
 <li><a href="#func_check_referer">check_referer()</a></li>
+<li><a href="#func_dir_get_contents">dir_get_contents()</a></li>
 <li><a href="#func_endtime">endtime()</a></li>
 <li><a href="#func_error">error()</a></li>
 <li><a href="#func_field_type">field_type()</a></li>
@@ -764,6 +765,20 @@ $array = array(' username', 'password');
 
 <dd class="dh">Example:</dd>
 <dd><pre>if (!check_referer() &amp;&amp; count($_POST)) { echo 'The HTTP referer is invalid.'; }</pre></dd>
+
+
+<dt id="func_dir_get_contents" class="function"><b>dir_get_contents</b>(<span class="optional">[string $dir, string $filter]</span>); <a href="#">&uarr; top</a></dt>
+<dd><p>Returns a multi-dimensional array of all the files and directories recursively in a specific directory.</p></dd>
+
+<dd class="dh">Attributes:</dd>
+
+<dd class="attr"><p>
+<b>$dir</b> - Directory to search.<br />
+<b>$filter</b> - Use a regular expression to filter the results of the search.
+</p></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>$photos = dir_get_contents('photos/', '/(\/$|\.(jpg|jpeg|gif|png)$)/');</pre></dd>
 
 
 <dt id="func_endtime" class="function"><b>endtime</b>(); <a href="#">&uarr; top</a></dt>
