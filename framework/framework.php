@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build249
+# Version: 0.2beta r2 build257
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-27 09:31:08
+# Timestamp: 2008-03-27 14:58:02
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -147,12 +147,12 @@ if (!function_exists('array_walk_recursive')) {
 
 		if (!is_array($array) || !function_exists($func)) { return $array; }
 
+		reset($array);
+
 		while (list($key, $value) = each($array)) {
 			if (!is_array($array[$key])) { $array[$key] = call_user_func($func, $value, $key); }
 			else { $array[$key] = array_walk_recursive($array[$key], $func); }
 		}
-
-		reset($array);
 
 		return $array;
 
@@ -188,7 +188,7 @@ if (!function_exists('check_referer')) {
 
 if (!function_exists('dir_get_contents')) {
 
-	function dir_get_contents($dir = '/', $filter = '') {
+	function dir_get_contents($dir = '/', $filter = '', $sort = SORT_ASC) {
 	
 		if (!is_dir($dir)) { return false; }
 	
@@ -198,9 +198,9 @@ if (!function_exists('dir_get_contents')) {
 	
 		while ($name = @readdir($open_dir)) {
 		
-			if (is_dir($dir . $name) && !in_array($name, array('.', '..')) && preg_match($filter, $dir . $name . '/')) {
-				$structure[] = array('name'=>$name, 'type'=>'dir', 'contents'=>dir_get_contents($dir . $name . '/', $filter));
-			} else if (is_file($dir . $name) && preg_match($filter, $dir . $name)) {
+			if (is_dir($dir . $name) && !in_array($name, array('.', '..')) && (($filter && preg_match($filter, $dir . $name . '/')) || !$filter)) {
+				$structure[] = array('name'=>$name, 'type'=>'dir', 'url'=>$dir . $name . '/', 'contents'=>dir_get_contents($dir . $name . '/', $filter, $sort));
+			} else if (is_file($dir . $name) && (($filter && preg_match($filter, $dir . $name)) || !$filter)) {
 				$structure[] = array('name'=>$name, 'type'=>'file', 'url'=>$dir . $name);
 			}
 		
@@ -210,7 +210,7 @@ if (!function_exists('dir_get_contents')) {
 	
 		while (list($key, $value) = each($structure)) { $type[$key] = $value['type']; }
 	
-		array_multisort($type, SORT_ASC, $structure);
+		array_multisort($type, SORT_DESC, $structure);
 	
 		return $structure;
 	

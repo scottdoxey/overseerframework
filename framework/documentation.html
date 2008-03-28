@@ -767,18 +767,19 @@ $array = array(' username', 'password');
 <dd><pre>if (!check_referer() &amp;&amp; count($_POST)) { echo 'The HTTP referer is invalid.'; }</pre></dd>
 
 
-<dt id="func_dir_get_contents" class="function"><b>dir_get_contents</b>(<span class="optional">[string $dir, string $filter]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="func_dir_get_contents" class="function"><b>dir_get_contents</b>(<span class="optional">[string $dir, string $filter, constant $sort]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Returns a multi-dimensional array of all the files and directories recursively in a specific directory.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
 <b>$dir</b> - Directory to search.<br />
-<b>$filter</b> - Use a regular expression to filter the results of the search.
+<b>$filter</b> - Use a regular expression to filter the results of the search.<br />
+<b>$sort</b> - Direction to sort the file types. (SORT_ASC or SORT_DESC)
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>$photos = dir_get_contents('photos/', '/(\/$|\.(jpg|jpeg|gif|png)$)/');</pre></dd>
+<dd><pre>$photos = dir_get_contents('photos/', '/(\/$|\.(jpg|jpeg|gif|png)$)/', SORT_ASC);</pre></dd>
 
 
 <dt id="func_endtime" class="function"><b>endtime</b>(); <a href="#">&uarr; top</a></dt>
