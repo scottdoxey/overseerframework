@@ -1,5 +1,25 @@
 <?php
 
+if (!function_exists('file_put_contents')) { 
+
+	if (!@constant('FILE_APPEND')) { define('FILE_APPEND', true); } 
+
+	function file_put_contents($file, $contents = '', $flag = false) { 
+
+		$method = $flag?'a+':'w+'; 
+
+		$file_handle = fopen(preg_replace('/\/+/', '/', $file), $method); 
+
+		fwrite($file_handle, $contents); 
+
+		fclose($file_handle); 
+
+		return true; 
+
+	} 
+
+}
+
 header('Content-type: text/plain');
 
 $files = array();
@@ -47,6 +67,10 @@ $output = '<?php
 foreach ($files as $file) { $output .= file_get_contents($file); }
 
 $output = str_replace('?><?php', '', $output);
+
+# PHP Backwards Compatibility
+$output = preg_replace('/(public|private) \$/', 'var $', $output);
+$output = preg_replace('/(public|private) function /', 'function ', $output);
 
 file_put_contents('framework/framework.php', $output);
 file_put_contents('framework/framework.phps', $output);

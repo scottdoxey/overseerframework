@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build257
+# Version: 0.2beta r2 build263
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-27 14:58:02
+# Timestamp: 2008-03-30 12:53:33
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ if (function_exists('date_default_timezone_set')) {
 
 if (!function_exists('array_clean')) {
 
-	function array_clean(&$array = array(), $method = null) {
+	function array_clean(&$array, $method = null) {
 
 		if (!is_array($array)) { return $array; }
 
@@ -433,7 +433,7 @@ if (!function_exists('is_web_address')) {
 
 if (!function_exists('mysql_fetch_results')) {
 
-	function mysql_fetch_results($query = '', &$results = array()) {
+	function mysql_fetch_results($query = '', $results = array()) {
 		$result = @mysql_query($query) or error('MySQL Error: ' . mysql_error());
 		while ($row = @mysql_fetch_assoc($result)) { $results[] = $row; }
 		return $results;
@@ -510,7 +510,7 @@ if (!function_exists('print_array')) {
 
 if (!function_exists('sanitize_data')) {
 
-	function sanitize_data(&$data = array()) {
+	function sanitize_data(&$data) {
 
 		reset($data);
 
@@ -664,11 +664,11 @@ function ob_template($buffer) {
 
 class DB {
 
-	public $resource = null;
-	public $results = null;
-	public $instances = array('connect'=>0, 'query'=>0);
+	var $resource = null;
+	var $results = null;
+	var $instances = array('connect'=>0, 'query'=>0);
 
-	public function Connect($server, $username, $password, $database, $cache = true) {
+	function Connect($server, $username, $password, $database, $cache = true) {
 
 		$resource = @mysql_connect($server, $username, $password, true) or error('MySQL Error: ' . mysql_error());
 
@@ -682,7 +682,7 @@ class DB {
 
 	}
 
-	public function Query($query, $resource = null, $return = 'array', $cache = true) {
+	function Query($query, $resource = null, $return = 'array', $cache = true) {
 
 		if (is_resource($resource)) { $result = @mysql_query($query, $resource) or error('MySQL Error: ' . mysql_error()); }
 		else if (is_resource($this->resource)) { $result = @mysql_query($query, $this->resource) or error('MySQL Error: ' . mysql_error()); }
@@ -733,10 +733,10 @@ $DB = new DB;
 
 class Database {
 
-	public $resource = null;
-	public $results = null;
+	var $resource = null;
+	var $results = null;
 
-	public function DatabaseList() {
+	function DatabaseList() {
 
 		global $DB;
 
@@ -756,7 +756,7 @@ class Database {
 
 	}
 
-	public function TableList($database) {
+	function TableList($database) {
 
 		global $DB;
 
@@ -778,7 +778,7 @@ class Database {
 
 	}
 
-	public function Table($database, $table, $fields = '*', $clause = null) {
+	function Table($database, $table, $fields = '*', $clause = null) {
 
 		global $DB;
 
@@ -804,7 +804,7 @@ class Database {
 
 	}
 
-	public function Process($database, $table, $variables = array()) {
+	function Process($database, $table, $variables = array()) {
 
 		global $DB;
 
@@ -870,7 +870,7 @@ $Database = new Database;
 class GFX
 {
 	
-	public function Resize($image, $width = 100, $height = 100, $output = null) {
+	function Resize($image, $width = 100, $height = 100, $output = null) {
 		
 		if (!is_file($image)) { return false; }
 		
@@ -924,9 +924,9 @@ $GFX = new GFX;
 
 class Template {
 
-	public $tools = array();
+	var $tools = array();
 
-	public function Parse($template = '') {
+	function Parse($template = '') {
 
 		if (is_file($template)) { $template = file_get_contents($template); }
 
@@ -945,7 +945,7 @@ class Template {
 
 	}
 
-	public function Render($template, $data) {
+	function Render($template, $data) {
 
 		if (isset($data['header'])) { $data_header = $data['header']; unset($data['header']); }
 		if (isset($data['footer'])) { $data_footer = $data['footer']; unset($data['footer']); }
@@ -1021,7 +1021,7 @@ class Template {
 
 	}
 
-	public function Generate($data, $sortable = true, $render = true) {
+	function Generate($data, $sortable = true, $render = true) {
 
 		$output = '';
 
@@ -1105,7 +1105,7 @@ class Template {
 
 	}
 
-	public function Pagination($total_rows = 0, $single_page_display = true) {
+	function Pagination($total_rows = 0, $single_page_display = true) {
 
 		global $DB;
 

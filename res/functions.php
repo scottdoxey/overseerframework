@@ -9,7 +9,7 @@
 
 if (!function_exists('array_clean')) {
 
-	function array_clean(&$array = array(), $method = null) {
+	function array_clean(&$array, $method = null) {
 
 		if (!is_array($array)) { return $array; }
 
@@ -348,7 +348,7 @@ if (!function_exists('is_web_address')) {
 
 if (!function_exists('mysql_fetch_results')) {
 
-	function mysql_fetch_results($query = '', &$results = array()) {
+	function mysql_fetch_results($query = '', $results = array()) {
 		$result = @mysql_query($query) or error('MySQL Error: ' . mysql_error());
 		while ($row = @mysql_fetch_assoc($result)) { $results[] = $row; }
 		return $results;
@@ -425,7 +425,7 @@ if (!function_exists('print_array')) {
 
 if (!function_exists('sanitize_data')) {
 
-	function sanitize_data(&$data = array()) {
+	function sanitize_data(&$data) {
 
 		reset($data);
 
