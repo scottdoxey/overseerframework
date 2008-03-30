@@ -367,7 +367,7 @@ if (!function_exists('path_info')) {
 
 	function path_info($offset = 0) {
 
-		if (isset($_SERVER['PATH_INFO'])) {
+		if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO'] != $_SERVER['SCRIPT_NAME']) {
 
 			$path_info = explode('/', substr($_SERVER['PATH_INFO'], 1));
 
