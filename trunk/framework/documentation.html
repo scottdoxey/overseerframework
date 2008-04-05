@@ -119,7 +119,7 @@ a, code {
 }
 
 #content dl dt {
-	padding: 0px 0px 5px 0px;	
+	padding: 0px 0px 5px 0px;
 }
 
 #content p {
@@ -193,18 +193,18 @@ a, code {
 /* ------- [BASE] PRINT ------- */
 
 @media print {
-	
+
 	* {
 		color: #333 !important;
 		text-shadow: none !important;
 		border: 0px none !important;
 		background: transparent !important;
 	}
-	
+
 	#sidebar { display: none; }
-	
+
 	#content, #footer { margin: 0px; }
-	
+
 }
 
 
@@ -268,7 +268,7 @@ a {
 
 
 #content dl dt {
-	border-bottom: 1px solid #AAA;	
+	border-bottom: 1px solid #AAA;
 }
 
 #content dd.alert {
@@ -367,6 +367,7 @@ a {
 <li><a href="#func_dir_get_contents">dir_get_contents()</a></li>
 <li><a href="#func_endtime">endtime()</a></li>
 <li><a href="#func_error">error()</a></li>
+<li><a href="#func_fetch_remote_file">fetch_remote_file()</a></li>
 <li><a href="#func_field_type">field_type()</a></li>
 <li><a href="#func_file_put_contents">file_put_contents()</a></li>
 <li><a href="#func_is_date">is_date()</a></li>
@@ -691,7 +692,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
     [1] => value1
     [2] => value2
     [3] => value2
-    [4] => 
+    [4] =>
 )</pre></dd>
 
 <dd class="dh">Example:</dd>
@@ -806,6 +807,19 @@ $array = array(' username', 'password');
 
 <dd class="dh">Result:</dd>
 <dd><pre>&lt;p&gt;&lt;b&gt;Error:&lt;/b&gt; This is a sample error&lt;/p&gt;</pre></dd>
+
+
+<dt id="func_fetch_remote_file" class="function"><b>fetch_remote_file</b>(<i>string $file</i>); <a href="#">&uarr; top</a></dt>
+<dd><p>Retrieves the contents of a remote file. Alternative to using <b>file_get_contents()</b> when <a href="http://us3.php.net/manual/en/ref.filesystem.php#ini.allow-url-fopen">allow_url_fopen</a> is disabled.</p></dd>
+
+<dd class="dh">Attributes:</dd>
+
+<dd class="attr"><p>
+<b>$file</b> - The remote file's URL.<br />
+</p></dd>
+
+<dd class="dh">Example:</dd>
+<dd><pre>echo fetch_remote_file('http://www.google.com/favicon.ico');</pre></dd>
 
 
 <dt id="func_field_type" class="function"><b>field_type</b>(<i>string $table, string $field</i>); <a href="#">&uarr; top</a></dt>
@@ -1400,12 +1414,12 @@ $Template-&gt;tools[] = array('Delete', '&lt;a href="?p=del&amp;id=%ID%"&gt;Dele
 <dd class="dh">Result:</dd>
 <dd><pre>Array
 (
-    [header] => 
+    [header] =>
 
 &lt;div&gt;
 
 
-    [data] => 
+    [data] =>
 
 &lt;div class=&quot;bookmark&quot;&gt;
 
@@ -1415,7 +1429,7 @@ $Template-&gt;tools[] = array('Delete', '&lt;a href="?p=del&amp;id=%ID%"&gt;Dele
 &lt;/div&gt;
 
 
-    [footer] => 
+    [footer] =>
 
 &lt;/div&gt;
 
