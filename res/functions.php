@@ -198,9 +198,9 @@ if (!function_exists('fetch_remote_file')) {
 
 			preg_match('/HTTP\/[0-9\.]{1,3} ([0-9]{3})/', $buffer, $http);
 			preg_match('/Location: (.*)/', $buffer, $redirect);
-			
+
 			if (isset($redirect[1]) && $file != trim($redirect[1])) { return fetch_remote_file(trim($redirect[1])); }
-			
+
 			if (isset($http[1]) && $http[1] == 200) { return substr($buffer, strpos($buffer, "\r\n\r\n") +4); } else { return false; }
 
 		} else { return false; }
