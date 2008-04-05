@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build263
+# Version: 0.2beta r2 build265
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-03-30 12:53:33
+# Timestamp: 2008-04-03 11:04:31
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -245,7 +245,7 @@ if (!function_exists('error')) {
 		if (!$text) { return false; } else { $text = date('Y-m-d H:i:s') . ' - ' . $text; }
 
 		if (constant('error_log')) {
-			file_put_contents(is_string(constant('error_log'))?constant('error_log'):'log.txt', $text . constant('lnbr'), FILE_APPEND);
+			file_put_contents(is_string(constant('error_log'))?constant('error_log'):'log.txt', $text . PHP_EOL, FILE_APPEND);
 		}
 
 		if (constant('error_reporting')) {
@@ -253,6 +253,40 @@ if (!function_exists('error')) {
 		}
 
 		return false;
+
+	}
+
+}
+
+###############################################################
+# 
+# Function: fetch_remote_file(string $file);
+# Author: Neo Geek (NG)
+# 
+###############################################################
+
+if (!function_exists('fetch_remote_file')) {
+
+	function fetch_remote_file($file) {
+
+		$path = parse_url($file);
+
+		if ($fs = @fsockopen($path['host'], isset($path['port'])?$path['port']:80)) {
+
+			$header = 'GET ' . $path['path'] . ' HTTP/1.0' . PHP_EOL;
+			$header .= 'Host: ' . $path['host'] . str_repeat(PHP_EOL, 2);
+
+			fwrite($fs, $header);
+
+			$buffer = '';
+
+			while ($tmp = fread($fs, 1024)) { $buffer .= $tmp; }
+
+			preg_match('/Content-Length: ([0-9]+)/', $buffer, $matches);
+
+			if ($matches[1] > 0) { return substr($buffer, -$matches[1]); } else { return false; }
+
+		} else { return false; }
 
 	}
 
@@ -286,13 +320,11 @@ if (!function_exists('field_type')) {
 
 if (!function_exists('file_put_contents')) { 
 
-	if (!@constant('FILE_APPEND')) { define('FILE_APPEND', true); } 
+	if (!@constant('FILE_APPEND')) { define('FILE_APPEND', true); }
 
-	function file_put_contents($file, $contents = '', $flag = false) { 
+	function file_put_contents($file, $contents = '', $flag = false) {
 
-		$method = $flag?'a+':'w+'; 
-
-		$file_handle = fopen(preg_replace('/\/+/', '/', $file), $method); 
+		$file_handle = fopen(preg_replace('/\/+/', '/', $file), $flag?'a+':'w+'); 
 
 		fwrite($file_handle, $contents); 
 
@@ -452,7 +484,7 @@ if (!function_exists('path_info')) {
 
 	function path_info($offset = 0) {
 
-		if (isset($_SERVER['PATH_INFO'])) {
+		if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO'] != $_SERVER['SCRIPT_NAME']) {
 
 			$path_info = explode('/', substr($_SERVER['PATH_INFO'], 1));
 
@@ -1034,10 +1066,10 @@ class Template {
 
 		if ($db_sort_order == 'asc') { $db_sort_order = 'desc'; } else { $db_sort_order = 'asc'; }
 
-		$output .= '<!--{header:start}-->' . str_repeat(constant('lnbr'), 2);
-		$output .= '<table cellspacing="3" cellpadding="2" border="1">' . str_repeat(constant('lnbr'), 2);
+		$output .= '<!--{header:start}-->' . str_repeat(PHP_EOL, 2);
+		$output .= '<table cellspacing="3" cellpadding="2" border="1">' . str_repeat(PHP_EOL, 2);
 
-		$output .= '<tr>' . constant('lnbr');
+		$output .= '<tr>' . PHP_EOL;
 
 		while (list($key, $value) = each($data[0])) {
 
@@ -1053,9 +1085,9 @@ class Template {
 				if ($db_sort_by == $key && $db_sort_order == 'asc') { $output .= ' <span class="sort_desc">&darr;</span>'; }
 				else if ($db_sort_by == $key && $db_sort_order == 'desc') { $output .= ' <span class="sort_asc">&uarr;</span>'; }
 
-				$output .= '</th>' . constant('lnbr');
+				$output .= '</th>' . PHP_EOL;
 
-			} else { $output .= '<th>' . $key . '</th>' . constant('lnbr'); }
+			} else { $output .= '<th>' . $key . '</th>' . PHP_EOL; }
 
 		}
 
@@ -1063,23 +1095,23 @@ class Template {
 
 		while (list($key, $value) = each($this->tools)) {
 
-			$output .= '<th>' . $value[0] . '</th>' . constant('lnbr');
+			$output .= '<th>' . $value[0] . '</th>' . PHP_EOL;
 
 		}
 
-		$output .= '</tr>' . str_repeat(constant('lnbr'), 2);
+		$output .= '</tr>' . str_repeat(PHP_EOL, 2);
 
-		$output .= '<!--{header:end}-->' . str_repeat(constant('lnbr'), 2);
+		$output .= '<!--{header:end}-->' . str_repeat(PHP_EOL, 2);
 
-		$output .= '<!--{data:start}-->' . str_repeat(constant('lnbr'), 2);
+		$output .= '<!--{data:start}-->' . str_repeat(PHP_EOL, 2);
 
-		$output .= '<tr>' . constant('lnbr');
+		$output .= '<tr>' . PHP_EOL;
 
 		reset($data[0]);
 
 		while (list($key, $value) = each($data[0])) {
 
-			$output .= '<td>%' . strtoupper($key) . '%</td>' . constant('lnbr');
+			$output .= '<td>%' . strtoupper($key) . '%</td>' . PHP_EOL;
 
 		}
 
@@ -1087,16 +1119,16 @@ class Template {
 
 		while (list($key, $value) = each($this->tools)) {
 
-			$output .= '<td class="tools">' . $value[1] . '</td>' . constant('lnbr');
+			$output .= '<td class="tools">' . $value[1] . '</td>' . PHP_EOL;
 
 		}
 
-		$output .= '</tr>' . str_repeat(constant('lnbr'), 2);
+		$output .= '</tr>' . str_repeat(PHP_EOL, 2);
 
-		$output .= '<!--{data:end}-->' . str_repeat(constant('lnbr'), 2);
+		$output .= '<!--{data:end}-->' . str_repeat(PHP_EOL, 2);
 
-		$output .= '<!--{footer:start}-->' . str_repeat(constant('lnbr'), 2);
-		$output .= '</table>' . str_repeat(constant('lnbr'), 2);
+		$output .= '<!--{footer:start}-->' . str_repeat(PHP_EOL, 2);
+		$output .= '</table>' . str_repeat(PHP_EOL, 2);
 		$output .= '<!--{footer:end}-->';
 
 		if ($render) { return $this->Render($output, $data); }
@@ -1113,9 +1145,9 @@ class Template {
 
 		if (!$total_rows) { return false; }
 
-		$output .= '<div class="pagination">' . constant('lnbr');
+		$output .= '<div class="pagination">' . PHP_EOL;
 
-		$output .= '<b>Page:</b> ' . constant('lnbr');
+		$output .= '<b>Page:</b> ' . PHP_EOL;
 
 		if (!is_number($total_rows)) { $total_rows = count($total_rows); }
 
@@ -1130,11 +1162,11 @@ class Template {
 
 			if ($db_start == (($i-1) * $db_limit)) { $output .= '</b> '; }
 
-			$output .= constant('lnbr');
+			$output .= PHP_EOL;
 
 		}
 
-		$output .= '</div>' . str_repeat(constant('lnbr'), 2);
+		$output .= '</div>' . str_repeat(PHP_EOL, 2);
 
 		if (!$single_page_display && $total_rows <= constant('maxview')) { return false; }
 
@@ -1154,7 +1186,7 @@ class Template {
 
 		$action = str_replace('&', '&amp;', substr($_SERVER['REQUEST_URI'], strrpos($_SERVER['REQUEST_URI'], '/') +1));
 
-		$output .= '<form action="' . $action . '" method="post">' . str_repeat(constant('lnbr'), 2);
+		$output .= '<form action="' . $action . '" method="post">' . str_repeat(PHP_EOL, 2);
 
 		while ($row = @mysql_fetch_assoc($columns)) {
 
@@ -1167,22 +1199,22 @@ class Template {
 
 			if ($row['Key'] != 'PRI') {
 
-				$output .= '<label for="txt_' . $row['Field'] . '">' . ucwords(str_replace('_', ' ', $row['Field'])) . ':</label> ' . constant('lnbr');
+				$output .= '<label for="txt_' . $row['Field'] . '">' . ucwords(str_replace('_', ' ', $row['Field'])) . ':</label> ' . PHP_EOL;
 
 				if (in_array($type[0], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
 
-					$output .= '<textarea name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" cols="40" rows="5">' . htmlentities($value) . '</textarea><br />' . str_repeat(constant('lnbr'), 2);
+					$output .= '<textarea name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" cols="40" rows="5">' . htmlentities($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
 
 				} else {
 
-					$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="text" value="' . htmlentities($value) . '" size="40" /><br />' . str_repeat(constant('lnbr'), 2);
+					$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="text" value="' . htmlentities($value) . '" size="40" /><br />' . str_repeat(PHP_EOL, 2);
 
 				}
 
 			} else {
 
-				$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="hidden" value="' . ($value?$value:0) . '" />' . str_repeat(constant('lnbr'), 2);
+				$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="hidden" value="' . ($value?$value:0) . '" />' . str_repeat(PHP_EOL, 2);
 
 				$primary_key = array('name'=>$row['Field'], 'value'=>$value);
 
@@ -1190,12 +1222,12 @@ class Template {
 
 		}
 
-		$output .= '<label>&nbsp;</label>' . constant('lnbr');
+		$output .= '<label>&nbsp;</label>' . PHP_EOL;
 		if (isset($primary_key['value']) && $primary_key['value'] != 0) { $output .= '<button type="submit">Save</button> '; }
 		else { $output .= '<button type="submit">Add</button> '; }
-		$output .= '<button type="reset">Reset</button>' . str_repeat(constant('lnbr'), 2);
+		$output .= '<button type="reset">Reset</button>' . str_repeat(PHP_EOL, 2);
 
-		$output .= '</form>' . str_repeat(constant('lnbr'), 2);
+		$output .= '</form>' . str_repeat(PHP_EOL, 2);
 
 		return $output;
 

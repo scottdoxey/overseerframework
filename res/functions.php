@@ -4,7 +4,7 @@
 #
 # Function: array_clean(array $array [, string $method]);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('array_clean')) {
@@ -33,7 +33,7 @@ if (!function_exists('array_clean')) {
 #
 # Function: array_move(array $array [, integer $key, integer $offset]);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('array_move')) {
@@ -53,7 +53,7 @@ if (!function_exists('array_move')) {
 #
 # Function: array_walk_recursive(array $array, function $func);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('array_walk_recursive')) {
@@ -76,10 +76,10 @@ if (!function_exists('array_walk_recursive')) {
 }
 
 ###############################################################
-# 
+#
 # Function: check_referer();
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('check_referer')) {
@@ -95,49 +95,49 @@ if (!function_exists('check_referer')) {
 }
 
 ###############################################################
-# 
+#
 # Function: dir_get_contents([string $dir, string $filter]);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('dir_get_contents')) {
 
 	function dir_get_contents($dir = '/', $filter = '', $sort = SORT_ASC) {
-	
+
 		if (!is_dir($dir)) { return false; }
-	
+
 		$structure = array();
-	
+
 		$open_dir = opendir($dir);
-	
+
 		while ($name = @readdir($open_dir)) {
-		
+
 			if (is_dir($dir . $name) && !in_array($name, array('.', '..')) && (($filter && preg_match($filter, $dir . $name . '/')) || !$filter)) {
 				$structure[] = array('name'=>$name, 'type'=>'dir', 'url'=>$dir . $name . '/', 'contents'=>dir_get_contents($dir . $name . '/', $filter, $sort));
 			} else if (is_file($dir . $name) && (($filter && preg_match($filter, $dir . $name)) || !$filter)) {
 				$structure[] = array('name'=>$name, 'type'=>'file', 'url'=>$dir . $name);
 			}
-		
+
 		}
-	
+
 		$type = array();
-	
+
 		while (list($key, $value) = each($structure)) { $type[$key] = $value['type']; }
-	
+
 		array_multisort($type, SORT_DESC, $structure);
-	
+
 		return $structure;
-	
+
 	}
 
 }
 
 ###############################################################
-# 
+#
 # Function: endtime(string $text);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('endtime')) {
@@ -147,10 +147,10 @@ if (!function_exists('endtime')) {
 }
 
 ###############################################################
-# 
+#
 # Function: error(string $text);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('error')) {
@@ -160,7 +160,7 @@ if (!function_exists('error')) {
 		if (!$text) { return false; } else { $text = date('Y-m-d H:i:s') . ' - ' . $text; }
 
 		if (constant('error_log')) {
-			file_put_contents(is_string(constant('error_log'))?constant('error_log'):'log.txt', $text . constant('lnbr'), FILE_APPEND);
+			file_put_contents(is_string(constant('error_log'))?constant('error_log'):'log.txt', $text . PHP_EOL, FILE_APPEND);
 		}
 
 		if (constant('error_reporting')) {
@@ -174,168 +174,202 @@ if (!function_exists('error')) {
 }
 
 ###############################################################
-# 
+#
+# Function: fetch_remote_file(string $file);
+# Author: Neo Geek (NG)
+#
+###############################################################
+
+if (!function_exists('fetch_remote_file')) {
+
+	function fetch_remote_file($file) {
+
+		$path = parse_url($file);
+
+		if ($fs = @fsockopen($path['host'], isset($path['port'])?$path['port']:80)) {
+
+			$header = "GET " . $path['path'] . " HTTP/1.0\r\nHost: " . $path['host'] . "\r\n\r\n";
+
+			fwrite($fs, $header);
+
+			$buffer = '';
+
+			while ($tmp = fread($fs, 1024)) { $buffer .= $tmp; }
+
+			preg_match('/HTTP\/[0-9\.]{1,3} ([0-9]{3})/', $buffer, $http);
+			preg_match('/Location: (.*)/', $buffer, $redirect);
+			
+			if (isset($redirect[1]) && $file != trim($redirect[1])) { return fetch_remote_file(trim($redirect[1])); }
+			
+			if (isset($http[1]) && $http[1] == 200) { return substr($buffer, strpos($buffer, "\r\n\r\n") +4); } else { return false; }
+
+		} else { return false; }
+
+	}
+
+}
+
+###############################################################
+#
 # Function: file_put_contents(string $table, string $field);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('field_type')) {
 
 	function field_type($table, $field) {
-	
+
 		$results = mysql_fetch_results('SHOW COLUMNS FROM `' . $table . '` WHERE `Field` = "' . $field . '"');
 		preg_match('/^[a-z]+/', $results[0]['Type'], $matches);
 		return $matches[0];
-	
+
 	}
 
 }
 
 ###############################################################
-# 
+#
 # Function: file_put_contents(string $file [, string $contents, boolean $flag]);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
-if (!function_exists('file_put_contents')) { 
+if (!function_exists('file_put_contents')) {
 
-	if (!@constant('FILE_APPEND')) { define('FILE_APPEND', true); } 
+	if (!@constant('FILE_APPEND')) { define('FILE_APPEND', true); }
 
-	function file_put_contents($file, $contents = '', $flag = false) { 
+	function file_put_contents($file, $contents = '', $flag = false) {
 
-		$method = $flag?'a+':'w+'; 
+		$file_handle = fopen(preg_replace('/\/+/', '/', $file), $flag?'a+':'w+');
 
-		$file_handle = fopen(preg_replace('/\/+/', '/', $file), $method); 
+		fwrite($file_handle, $contents);
 
-		fwrite($file_handle, $contents); 
+		fclose($file_handle);
 
-		fclose($file_handle); 
+		return true;
 
-		return true; 
-
-	} 
+	}
 
 }
 
 ###############################################################
-# 
+#
 # Function: is_date(string $value);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
-if (!function_exists('is_date')) { 
+if (!function_exists('is_date')) {
 
-	function is_date($value) { 
-		if (preg_match('/^([0-9]{2})(-|/)([0-9]{2})(-|/)([0-9]{2,4})$/', (string)$value)) { return true; } else { return false; } 
-	} 
+	function is_date($value) {
+		if (preg_match('/^([0-9]{2})(-|/)([0-9]{2})(-|/)([0-9]{2,4})$/', (string)$value)) { return true; } else { return false; }
+	}
 
 }
 
 ###############################################################
-# 
+#
 # Function: is_email(string $value);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
-if (!function_exists('is_email')) { 
+if (!function_exists('is_email')) {
 
-	function is_email($value) { 
-		if (preg_match('/^[[:alnum:].]+@[[:alnum:]]+\.[[:alnum:].]+$/', (string)$value)) { return true; } else { return false; } 
-	} 
+	function is_email($value) {
+		if (preg_match('/^[[:alnum:].]+@[[:alnum:]]+\.[[:alnum:].]+$/', (string)$value)) { return true; } else { return false; }
+	}
 
 }
 
 ###############################################################
-# 
+#
 # Function: is_empty(string $value);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
-if (!function_exists('is_empty')) { 
+if (!function_exists('is_empty')) {
 
 	function is_empty($value) {
 		if (!isset($value)) { return true; } else { return false; }
-	} 
-
-}
-
-###############################################################
-# 
-# Function: is_number(string $value);
-# Author: Neo Geek (NG)
-# 
-###############################################################
-
-if (!function_exists('is_number')) { 
-
-	function is_number($value) { 
-		if (preg_match('/^[.0-9]+$/', (string)$value)) { return true; } else { return false; } 
-	} 
-
-}
-
-###############################################################
-# 
-# Function: is_simple(string $value);
-# Author: Neo Geek (NG)
-# 
-###############################################################
-
-if (!function_exists('is_simple')) { 
-
-	function is_simple($value) { 
-		if (preg_match('/^[[:alnum:]_]+$/', (string)$value)) { return true; } else { return false; } 
-	} 
-
-} 
-
-###############################################################
-# 
-# Function: is_simple_alpha(string $value);
-# Author: Neo Geek (NG)
-# 
-###############################################################
-
-if (!function_exists('is_simple_alpha')) { 
-
-	function is_simple_alpha($value) { 
-		if (preg_match('/^[[:alnum:]]+$/', (string)$value)) { return true; } else { return false; } 
-	} 
-
-} 
-
-###############################################################
-# 
-# Function: is_simple_number(string $value);
-# Author: Neo Geek (NG)
-# 
-###############################################################
-
-if (!function_exists('is_simple_number')) { 
-
-	function is_simple_number($value) { 
-		if (preg_match('/^[0-9]+$/', (string)$value)) { return true; } else { return false; } 
 	}
 
 }
 
 ###############################################################
-# 
-# Function: is_web_address(string $value);
+#
+# Function: is_number(string $value);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
-if (!function_exists('is_web_address')) { 
+if (!function_exists('is_number')) {
 
-	function is_web_address($value) { 
-		if (preg_match('/^(http://)+[[:alnum:]]+\.+[[:alnum:]]/', (string)$value)) { return true; } else { return false; } 
-	} 
+	function is_number($value) {
+		if (preg_match('/^[.0-9]+$/', (string)$value)) { return true; } else { return false; }
+	}
+
+}
+
+###############################################################
+#
+# Function: is_simple(string $value);
+# Author: Neo Geek (NG)
+#
+###############################################################
+
+if (!function_exists('is_simple')) {
+
+	function is_simple($value) {
+		if (preg_match('/^[[:alnum:]_]+$/', (string)$value)) { return true; } else { return false; }
+	}
+
+}
+
+###############################################################
+#
+# Function: is_simple_alpha(string $value);
+# Author: Neo Geek (NG)
+#
+###############################################################
+
+if (!function_exists('is_simple_alpha')) {
+
+	function is_simple_alpha($value) {
+		if (preg_match('/^[[:alnum:]]+$/', (string)$value)) { return true; } else { return false; }
+	}
+
+}
+
+###############################################################
+#
+# Function: is_simple_number(string $value);
+# Author: Neo Geek (NG)
+#
+###############################################################
+
+if (!function_exists('is_simple_number')) {
+
+	function is_simple_number($value) {
+		if (preg_match('/^[0-9]+$/', (string)$value)) { return true; } else { return false; }
+	}
+
+}
+
+###############################################################
+#
+# Function: is_web_address(string $value);
+# Author: Neo Geek (NG)
+#
+###############################################################
+
+if (!function_exists('is_web_address')) {
+
+	function is_web_address($value) {
+		if (preg_match('/^(http://)+[[:alnum:]]+\.+[[:alnum:]]/', (string)$value)) { return true; } else { return false; }
+	}
 
 }
 
@@ -360,7 +394,7 @@ if (!function_exists('mysql_fetch_results')) {
 #
 # Function: path_info([integer $offset]);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('path_info')) {
@@ -417,10 +451,10 @@ if (!function_exists('print_array')) {
 }
 
 ###############################################################
-# 
+#
 # Function: sanitize_data([array $array]);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('sanitize_data')) {
@@ -445,7 +479,7 @@ if (!function_exists('sanitize_data')) {
 #
 # Function: set_location(string $url);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('set_location')) {
@@ -463,10 +497,10 @@ if (!function_exists('set_location')) {
 }
 
 ###############################################################
-# 
+#
 # Function: timeago(timestamp $timestamp);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('timeago')) {
@@ -494,10 +528,10 @@ if (!function_exists('timeago')) {
 }
 
 ###############################################################
-# 
+#
 # Function: url_query(array $replacements, string $return);
 # Author: Neo Geek (NG)
-# 
+#
 ###############################################################
 
 if (!function_exists('url_query')) {
@@ -505,7 +539,7 @@ if (!function_exists('url_query')) {
 	function url_query($replacements = array(), $return = 'string') {
 
 		if (!is_array($replacements)) { return false; }
-		
+
 		reset($replacements);
 
 		$output = array();
