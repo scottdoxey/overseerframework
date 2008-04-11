@@ -45,6 +45,8 @@ class DB {
 
 			$results = @mysql_affected_rows();
 
+			@mysql_free_result($result);
+
 		} else {
 
 			$results = $result;
@@ -56,6 +58,15 @@ class DB {
 		$this->instances['query']++;
 
 		return $results;
+
+	}
+
+	public function Close($resource = null) {
+
+		if (is_resource($resource)) { @mysql_close($resource) or error('MySQL Error: ' . mysql_error()); }
+		else if (is_resource($this->resource)) { @mysql_close($this->resource) or error('MySQL Error: ' . mysql_error()); }
+
+		return false;
 
 	}
 
