@@ -51,6 +51,24 @@ if (!function_exists('array_move')) {
 
 ###############################################################
 #
+# Function: array_sort(array $array, flag $flags);
+# Author: Neo Geek (NG)
+#
+###############################################################
+
+if (!function_exists('array_sort')) {
+
+	function array_sort(&$array, $flags = null) {
+
+		sort($array, $flags);
+		return $array;
+
+	}
+
+}
+
+###############################################################
+#
 # Function: array_walk_recursive(array $array, function $func);
 # Author: Neo Geek (NG)
 #

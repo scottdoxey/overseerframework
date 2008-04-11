@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build268
+# Version: 0.2beta r2 build269
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-04-05 17:32:09
+# Timestamp: 2008-04-11 17:44:17
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -128,6 +128,24 @@ if (!function_exists('array_move')) {
 		$value = array_slice($array, $key, 1);
 		unset($array[$key]);
 		array_splice($array, $offset, 0, $value);
+		return $array;
+
+	}
+
+}
+
+###############################################################
+#
+# Function: array_sort(array $array, flag $flags);
+# Author: Neo Geek (NG)
+#
+###############################################################
+
+if (!function_exists('array_sort')) {
+
+	function array_sort(&$array, $flags = null) {
+
+		sort($array, $flags);
 		return $array;
 
 	}
@@ -734,6 +752,8 @@ class DB {
 
 			$results = @mysql_affected_rows();
 
+			@mysql_free_result($result);
+
 		} else {
 
 			$results = $result;
@@ -745,6 +765,15 @@ class DB {
 		$this->instances['query']++;
 
 		return $results;
+
+	}
+
+	function Close($resource = null) {
+
+		if (is_resource($resource)) { @mysql_close($resource) or error('MySQL Error: ' . mysql_error()); }
+		else if (is_resource($this->resource)) { @mysql_close($this->resource) or error('MySQL Error: ' . mysql_error()); }
+
+		return false;
 
 	}
 
