@@ -182,7 +182,7 @@ if (!function_exists('error')) {
 		}
 
 		if (constant('error_reporting')) {
-			echo '<p>' . preg_replace('/(^[[:alpha:] ]+:)/', '<b>\1</b>', strip_tags($text)) . '</p>';
+			echo '<p>' . preg_replace('/(^[[:alpha:] ]+:)/', '<strong>\1</strong>', strip_tags($text)) . '</p>';
 		}
 
 		return false;

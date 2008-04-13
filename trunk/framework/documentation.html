@@ -164,7 +164,7 @@ a, code {
 	padding: 3px 10px;
 }
 
-#content pre b {
+#content pre strong {
 	font-size: 8pt;
 }
 
@@ -285,7 +285,7 @@ a {
 	color: #555;
 }
 
-#content dd.attr b {
+#content dd.attr strong {
 	color: #333;
 }
 
@@ -433,14 +433,14 @@ a {
 
 <p>The template system built into the framework utilizes PHP's output buffer functionality to capture and parse the content of a page, replace certain variables in a separate template file with that content, then render the results. This functionality is optional and will only be available if a template file is defined before the framework is called.</p>
 
-<b>Example:</b>
+<strong>Example:</strong>
 
 <pre>$ob_template = file_get_contents('templates/main.tpl');</pre>
 
 
 <dl>
 
-<dt id="template_site_level"><b>Site Level</b> <a href="#">&uarr; top</a></dt>
+<dt id="template_site_level"><strong>Site Level</strong> <a href="#">&uarr; top</a></dt>
 
 <dd><p>The site level template is used to easily build sites with a global template. This type of template file requires the variables %TITLE% and %BODY%. (Optional variable is %HEAD%.)</p></dd>
 
@@ -488,7 +488,7 @@ dignissim, massa massa adipiscing nulla, volutpat rutrum nisl lacus ac erat.&lt;
 &lt;/body&gt;
 &lt;/html&gt;</pre></dd>
 
-<dt id="template_element"><b>Element</b> <a href="#">&uarr; top</a></dt>
+<dt id="template_element"><strong>Element</strong> <a href="#">&uarr; top</a></dt>
 
 <dd><p>Element templates are for displaying multiple, similarly structured elements of data with repeating HTML in conjunction with <a href="#class_template_parse"><code>$Template-&gt;Parse();</code></a> and <a href="#class_template_render"><code>$Template-&gt;Render();</code></a>. The below example shows a template that will render the contents of <code>&lt;!--{header:start|end}--&gt;</code> first, followed by either <code>&lt;!--{data:start|end}--&gt;</code> or <code>&lt;!--{nodata:start|end}--&gt;</code> and ending with <code>&lt;!--{footer:start|end}--&gt;</code>.</p></dd>
 
@@ -578,8 +578,8 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dl>
 
 
-<dt id="const_error_log" class="constant"><b>error_log</b> <a href="#">&uarr; top</a></dt>
-<dd><p>The default value of <code>error_log</code> is <i>false</i>. This should remain false if you don't want errors to be logged. Replacing <i>false</i> with a file name will send all errors to that file.</p></dd>
+<dt id="const_error_log" class="constant"><strong>error_log</strong> <a href="#">&uarr; top</a></dt>
+<dd><p>The default value of <code>error_log</code> is <em>false</em>. This should remain false if you don't want errors to be logged. Replacing <em>false</em> with a file name will send all errors to that file.</p></dd>
 
 <dd class="notice">It is good programming practice to check to see if a constant already exists.</dd>
 
@@ -590,8 +590,8 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd><pre>echo constant(error_log);</pre></dd>
 
 
-<dt id="const_error_reporting" class="constant"><b>error_reporting</b> <a href="#">&uarr; top</a></dt>
-<dd><p>The default value of <code>error_reporting</code> is <i>false</i>. This should remain false if you don't want errors to display.</p></dd>
+<dt id="const_error_reporting" class="constant"><strong>error_reporting</strong> <a href="#">&uarr; top</a></dt>
+<dd><p>The default value of <code>error_reporting</code> is <em>false</em>. This should remain false if you don't want errors to display.</p></dd>
 
 <dd class="notice">It is good programming practice to check to see if a constant already exists.</dd>
 
@@ -602,7 +602,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd><pre>echo constant('error_reporting');</pre></dd>
 
 
-<dt id="const_int_microtime" class="constant"><b>int_microtime</b> <a href="#">&uarr; top</a></dt>
+<dt id="const_int_microtime" class="constant"><strong>int_microtime</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>The default value of <code>int_microtime</code> is the Unix timestamp (with microseconds) of the time your application starts (used with <a href="#func_endtime"><code>endtime()</code></a>).</p></dd>
 
 <dd class="alert">The preset value of this constant should not be changed!</dd>
@@ -611,7 +611,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd><pre>echo constant('int_microtime');</pre></dd>
 
 
-<dt id="const_lnbr" class="constant"><b>lnbr</b> <a href="#">&uarr; top</a></dt>
+<dt id="const_lnbr" class="constant"><strong>lnbr</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>The default value of <code>lnbr</code> is <code>PHP_EOL</code>. This built in PHP constant reflects the new-line character of the server.</p></dd>
 
 <dd class="notice">It is good programming practice to check to see if a constant already exists.</dd>
@@ -625,8 +625,8 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd><pre>echo constant('lnbr');</pre></dd>
 
 
-<dt id="const_maxview" class="constant"><b>maxview</b> <a href="#">&uarr; top</a></dt>
-<dd><p>The default value of <code>maxview</code> is <i>10</i>. This should be changed to reflect the default number of viewable items in your application (used with <a href="#class_database_table"><code>$Database-&gt;Table()</code></a>).</p></dd>
+<dt id="const_maxview" class="constant"><strong>maxview</strong> <a href="#">&uarr; top</a></dt>
+<dd><p>The default value of <code>maxview</code> is <em>10</em>. This should be changed to reflect the default number of viewable items in your application (used with <a href="#class_database_table"><code>$Database-&gt;Table()</code></a>).</p></dd>
 
 <dd class="notice">It is good programming practice to check to see if a constant already exists.</dd>
 
@@ -637,7 +637,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd><pre>echo constant('maxview');</pre></dd>
 
 
-<dt id="const_page" class="constant"><b>page</b> <a href="#">&uarr; top</a></dt>
+<dt id="const_page" class="constant"><strong>page</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>The default value of <code>page</code> is the value of <code>$_SERVER['SCRIPT_NAME']</code> plus <code>$_SERVER['PATH_INFO']</code> if it exists.</p></dd>
 
 <dd class="alert">The preset value of this constant should not be changed!</dd>
@@ -646,7 +646,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd><pre>echo constant('page');</pre></dd>
 
 
-<dt id="const_script" class="constant"><b>script</b> <a href="#">&uarr; top</a></dt>
+<dt id="const_script" class="constant"><strong>script</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>The default value of <code>script</code> is the value of <code>$_SERVER['REQUEST_URI']</code> minus <code>$_SERVER['PATH_INFO']</code> if it exists and any GET data.</p></dd>
 
 <dd class="alert">The preset value of this constant should not be changed!</dd>
@@ -655,7 +655,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd><pre>echo constant('script');</pre></dd>
 
 
-<dt id="const_url" class="constant"><b>url</b> <a href="#">&uarr; top</a></dt>
+<dt id="const_url" class="constant"><strong>url</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>The default value of <code>url</code> is the address of the page your are currently on.</dd>
 
 <dd class="alert">The preset value of this constant should not be changed!</dd>
@@ -673,14 +673,14 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dl>
 
 
-<dt id="func_array_clean" class="function"><b>array_clean</b>(<i>array $array</i> <span class="optional">[, string $method]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="func_array_clean" class="function"><strong>array_clean</strong>(<em>array $array</em> <span class="optional">[, string $method]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Cleans values of an array (recursively) by either trimming values or clearing empty </p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$array</b> - Array to be processed.<br />
-<b>$method</b> - Default value is <i>null</i>. Alternate value is <i>'empty'</i>.<br />
+<strong>$array</strong> - Array to be processed.<br />
+<strong>$method</strong> - Default value is <em>null</em>. Alternate value is <em>'empty'</em>.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -711,7 +711,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 )</pre></dd>
 
 
-<dt id="func_array_move" class="function"><b>array_move</b>(<i>array $array, integer $key, integer $offset</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_array_move" class="function"><strong>array_move</strong>(<em>array $array, integer $key, integer $offset</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Used to easily move values of an array.</p></dd>
 
 <dd class="alert">Only variables can be passed by reference for the first attribute.</dd>
@@ -719,9 +719,9 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$array</b> - Array to be modified.<br />
-<b>$key</b> - The key of the array value you want to move.<br />
-<b>$offset</b> - The position you want to move the array value to.<br />
+<strong>$array</strong> - Array to be modified.<br />
+<strong>$key</strong> - The key of the array value you want to move.<br />
+<strong>$offset</strong> - The position you want to move the array value to.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -738,7 +738,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 )</pre></dd>
 
 
-<dt id="func_array_sort" class="function"><b>array_sort</b>(<i>array $array <span class="optional">[, int $flag]</span></i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_array_sort" class="function"><strong>array_sort</strong>(<em>array $array <span class="optional">[, int $flag]</span></em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Sorts and returns an array.</p></dd>
 
 <dd class="alert">Only variables can be passed by reference for the first attribute.</dd>
@@ -746,8 +746,8 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$array</b> - Array to be modified.<br />
-<b>$flag</b> - Default value is <i>null</i>. Alternate values are <code>SORT_REGULAR</code>,  <code>SORT_NUMERIC</code>,  <code>SORT_STRING</code>, and  <code>SORT_LOCALE_STRING</code>. <a href="http://us2.php.net/sort">More info on function <code>sort()</code></a><br />
+<strong>$array</strong> - Array to be modified.<br />
+<strong>$flag</strong> - Default value is <em>null</em>. Alternate values are <code>SORT_REGULAR</code>,  <code>SORT_NUMERIC</code>,  <code>SORT_STRING</code>, and  <code>SORT_LOCALE_STRING</code>. <a href="http://us2.php.net/sort">More info on function <code>sort()</code></a><br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -764,7 +764,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 )</pre></dd>
 
 
-<dt id="func_array_walk_recursive" class="function"><b>array_walk_recursive</b>(<i>array $array, function $func</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_array_walk_recursive" class="function"><strong>array_walk_recursive</strong>(<em>array $array, function $func</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Runs a function on each value of the array recursively.</p></dd>
 
 <dd class="alert">Only variables can be passed by reference for the first attribute.</dd>
@@ -772,8 +772,8 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$array</b> - Array to be modified.<br />
-<b>$func</b> - Function each value of the array will be passed through.<br />
+<strong>$array</strong> - Array to be modified.<br />
+<strong>$func</strong> - Function each value of the array will be passed through.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -789,29 +789,29 @@ $array = array(' username', 'password');
 )</pre></dd>
 
 
-<dt id="func_check_referer" class="function"><b>check_referer</b>(); <a href="#">&uarr; top</a></dt>
+<dt id="func_check_referer" class="function"><strong>check_referer</strong>(); <a href="#">&uarr; top</a></dt>
 <dd><p>Checks the current URL against the HTTP referer.</p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>if (!check_referer() &amp;&amp; count($_POST)) { echo 'The HTTP referer is invalid.'; }</pre></dd>
 
 
-<dt id="func_dir_get_contents" class="function"><b>dir_get_contents</b>(<span class="optional">[string $dir, string $filter, constant $sort]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="func_dir_get_contents" class="function"><strong>dir_get_contents</strong>(<span class="optional">[string $dir, string $filter, constant $sort]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Returns a multi-dimensional array of all the files and directories recursively in a specific directory.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$dir</b> - Directory to search.<br />
-<b>$filter</b> - Use a regular expression to filter the results of the search.<br />
-<b>$sort</b> - Direction to sort the file types. (<code>SORT_ASC</code> or <code>SORT_DESC</code>)
+<strong>$dir</strong> - Directory to search.<br />
+<strong>$filter</strong> - Use a regular expression to filter the results of the search.<br />
+<strong>$sort</strong> - Direction to sort the file types. (<code>SORT_ASC</code> or <code>SORT_DESC</code>)
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>$photos = dir_get_contents('photos/', '/(\/$|\.(jpg|jpeg|gif|png)$)/', SORT_ASC);</pre></dd>
 
 
-<dt id="func_endtime" class="function"><b>endtime</b>(); <a href="#">&uarr; top</a></dt>
+<dt id="func_endtime" class="function"><strong>endtime</strong>(); <a href="#">&uarr; top</a></dt>
 <dd><p>Outputs time elapsed since script started.</p></dd>
 
 <dd class="dh">Example:</dd>
@@ -821,13 +821,13 @@ $array = array(' username', 'password');
 <dd><pre>Script took 0.016 second(s) to run.</pre></dd>
 
 
-<dt id="func_error" class="function"><b>error</b>(<i>string $text</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_error" class="function"><strong>error</strong>(<em>string $text</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Used by functions to output or log errors (based on the <a href="#const_error_reporting"><code>error_reporting</code></a> and <a href="#const_error_log"><code>error_log</code></a> constants).</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$text</b> - Text to send to the error buffer.<br />
+<strong>$text</strong> - Text to send to the error buffer.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -837,27 +837,27 @@ $array = array(' username', 'password');
 <dd><pre>&lt;p&gt;&lt;b&gt;Error:&lt;/b&gt; This is a sample error&lt;/p&gt;</pre></dd>
 
 
-<dt id="func_fetch_remote_file" class="function"><b>fetch_remote_file</b>(<i>string $file</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_fetch_remote_file" class="function"><strong>fetch_remote_file</strong>(<em>string $file</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Retrieves the contents of a remote file. Alternative to using <code>file_get_contents()</code> when <a href="http://us3.php.net/manual/en/ref.filesystem.php#ini.allow-url-fopen">allow_url_fopen</a> is disabled.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$file</b> - The remote file's URL.<br />
+<strong>$file</strong> - The remote file's URL.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo fetch_remote_file('http://www.google.com/favicon.ico');</pre></dd>
 
 
-<dt id="func_field_type" class="function"><b>field_type</b>(<i>string $table, string $field</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_field_type" class="function"><strong>field_type</strong>(<em>string $table, string $field</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Outputs the field type of the specified <code>$field</code> within <code>$table</code>.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$table</b> - The name of the table you are querying.<br />
-<b>$field</b> - The name of the field you are querying.<br />
+<strong>$table</strong> - The name of the table you are querying.<br />
+<strong>$field</strong> - The name of the field you are querying.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -867,132 +867,132 @@ $array = array(' username', 'password');
 <dd><pre>varchar</pre></dd>
 
 
-<dt id="func_file_put_contents" class="function"><b>file_put_contents</b>(<i>string $file <span class="optional">[, string $contents, int $flag]</span></i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_file_put_contents" class="function"><strong>file_put_contents</strong>(<em>string $file <span class="optional">[, string $contents, int $flag]</span></em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Writes contents to specified file. Use the constant <code>FILE_APPEND</code> in the last attribute to append the contents to already existing files.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$file</b> - File you want to put contents into to.<br />
-<b>$contents</b> - Contents to be put into file.<br />
-<b>$flag</b> - Default value is <i>null</i>. Alternate value is <code>FILE_APPEND</code>.<br />
+<strong>$file</strong> - File you want to put contents into to.<br />
+<strong>$contents</strong> - Contents to be put into file.<br />
+<strong>$flag</strong> - Default value is <em>null</em>. Alternate value is <code>FILE_APPEND</code>.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>file_put_contents('log.txt', 'This is a test', FILE_APPEND);</pre></dd>
 
 
-<dt id="func_is_date" class="function"><b>is_date</b>(<i>string $value</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_is_date" class="function"><strong>is_date</strong>(<em>string $value</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Validates a date. Returns boolean.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$value</b> - String to validate.<br />
+<strong>$value</strong> - String to validate.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo is_date('0000-00-00')?'Valid':'Invalid';</pre></dd>
 
 
-<dt id="func_is_email" class="function"><b>is_email</b>(<i>string $value</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_is_email" class="function"><strong>is_email</strong>(<em>string $value</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Validates an email. Returns boolean.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$value</b> - String to validate.<br />
+<strong>$value</strong> - String to validate.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo is_date('username@domain.com')?'Valid':'Invalid';</pre></dd>
 
 
-<dt id="func_is_empty" class="function"><b>is_empty</b>(<i>string $value</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_is_empty" class="function"><strong>is_empty</strong>(<em>string $value</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Validates empty variables. Returns boolean.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$value</b> - String to validate.<br />
+<strong>$value</strong> - String to validate.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo is_empty('')?'Empty':'Not Empty';</pre></dd>
 
-<dt id="func_is_number" class="function"><b>is_number</b>(<i>string $value</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_is_number" class="function"><strong>is_number</strong>(<em>string $value</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Validates a number. Returns boolean.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$value</b> - String to validate.<br />
+<strong>$value</strong> - String to validate.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo is_number(10.1)?'Valid':'Invalid';</pre></dd>
 
 
-<dt id="func_is_simple" class="function"><b>is_simple</b>(<i>string $value</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_is_simple" class="function"><strong>is_simple</strong>(<em>string $value</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Validates a simple string. Returns boolean.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$value</b> - String to validate.<br />
+<strong>$value</strong> - String to validate.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo is_simple('value')?'Valid':'Invalid';</pre></dd>
 
 
-<dt id="func_is_simple_alpha" class="function"><b>is_simple_alpha</b>(<i>string $value</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_is_simple_alpha" class="function"><strong>is_simple_alpha</strong>(<em>string $value</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Validates a simple alpha string. Returns boolean.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$value</b> - String to validate.<br />
+<strong>$value</strong> - String to validate.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo is_simple_alpha('just1value')?'Valid':'Invalid';</pre></dd>
 
 
-<dt id="func_is_simple_number" class="function"><b>is_simple_number</b>(<i>string $value</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_is_simple_number" class="function"><strong>is_simple_number</strong>(<em>string $value</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Validates a simple number. Returns boolean.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$value</b> - String to validate.<br />
+<strong>$value</strong> - String to validate.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo is_simple_number(10)?'Valid':'Invalid';</pre></dd>
 
 
-<dt id="func_is_web_address" class="function"><b>is_web_address</b>(<i>string $value</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_is_web_address" class="function"><strong>is_web_address</strong>(<em>string $value</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Validates a web address. Returns boolean.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$value</b> - String to validate.<br />
+<strong>$value</strong> - String to validate.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>echo is_web_address('http://overseercms.com/')?'Valid':'Invalid';</pre></dd>
 
 
-<dt id="func_mysql_fetch_results" class="function"><b>mysql_fetch_results</b>(<i>string $query <span class="optional">[, array $results]</span></i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_mysql_fetch_results" class="function"><strong>mysql_fetch_results</strong>(<em>string $query <span class="optional">[, array $results]</span></em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Returns the results of a MySQL query as an array.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$query</b> - MySQL query.<br />
-<b>$results</b> - Array to be returned with appended results.<br />
+<strong>$query</strong> - MySQL query.<br />
+<strong>$results</strong> - Array to be returned with appended results.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1034,29 +1034,29 @@ $array = array(' username', 'password');
 )</pre></dd>
 
 
-<dt id="func_path_info" class="function"><b>path_info</b>(<i><span class="optional">[integer $offset]</span></i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_path_info" class="function"><strong>path_info</strong>(<em><span class="optional">[integer $offset]</span></em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Outputs the different parts of the <code>$_SERVER['PATH_INFO']</code> variable.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$offset</b> - Key of the path_info variable to be returned.<br />
+<strong>$offset</strong> - Key of the path_info variable to be returned.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
-<dd><pre>echo path_info(1); // URL: http://neo-geek.net/index.php/journal/<b>1</b></pre></dd>
+<dd><pre>echo path_info(1); // URL: http://neo-geek.net/index.php/journal/<strong>1</strong></pre></dd>
 
 <dd class="dh">Result:</dd>
 <dd><pre>1</pre></dd>
 
 
-<dt id="func_primary_key" class="function"><b>primary_key</b>(<i>string $table</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_primary_key" class="function"><strong>primary_key</strong>(<em>string $table</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Outputs the primary key of the specified <code>$table</code>.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$table</b> - The name of the table you are querying.<br />
+<strong>$table</strong> - The name of the table you are querying.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1066,7 +1066,7 @@ $array = array(' username', 'password');
 <dd><pre>id</pre></dd>
 
 
-<dt id="func_print_array" class="function"><b>print_array</b>(<i>array $array <span class="optional">[, array $array2, ..., array $array10]</span></i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_print_array" class="function"><strong>print_array</strong>(<em>array $array <span class="optional">[, array $array2, ..., array $array10]</span></em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Used to output multiple arrays surrounded by a <code>&lt;pre&gt;</code> tag.</p></dd>
 
 <dd class="dh">Attributes:</dd>
@@ -1090,39 +1090,39 @@ Array
 )</pre></dd>
 
 
-<dt id="func_sanitize_data" class="function"><b>sanitize_data</b>(array $data); <a href="#">&uarr; top</a></dt>
+<dt id="func_sanitize_data" class="function"><strong>sanitize_data</strong>(array $data); <a href="#">&uarr; top</a></dt>
 <dd><p>Cleans the data being passed for use in a MySQL query.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$data</b> - Array to be processed.<br />
+<strong>$data</strong> - Array to be processed.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>sanitize_data($_POST);</pre></dd>
 
 
-<dt id="func_set_location" class="function"><b>set_location</b>(<i>string $url</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_set_location" class="function"><strong>set_location</strong>(<em>string $url</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Changes the location of the page by use of the <code>header()</code> function in PHP. This function checks for previously sent headers and exists the script directly after setting the location.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$url</b> - URL to set the header location to.<br />
+<strong>$url</strong> - URL to set the header location to.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>set_location('/admin.php/dashboard');</pre></dd>
 
 
-<dt id="func_timeago" class="function"><b>timeago</b>(<i>timestamp $timestamp</i>); <a href="#">&uarr; top</a></dt>
-<dd><p>Returns the time passed in "<i>n</i> day(s) ago."</p></dd>
+<dt id="func_timeago" class="function"><strong>timeago</strong>(<em>timestamp $timestamp</em>); <a href="#">&uarr; top</a></dt>
+<dd><p>Returns the time passed in "<em>n</em> day(s) ago."</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$timestamp</b> - Timestamp you want to find the time passed from.<br />
+<strong>$timestamp</strong> - Timestamp you want to find the time passed from.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1132,14 +1132,14 @@ Array
 <dd><pre>3 days ago</pre></dd>
 
 
-<dt id="func_url_query" class="function"><b>url_query</b>(<i>array $replacements, string $return</i>); <a href="#">&uarr; top</a></dt>
+<dt id="func_url_query" class="function"><strong>url_query</strong>(<em>array $replacements, string $return</em>); <a href="#">&uarr; top</a></dt>
 <dd><p>Allows for simple modification of the current addresses query variables.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$replacements</b> - Array of replacement query variables.<br />
-<b>$return</b> - Default value is <i>'string'</i>. Alternate value is <i>null</i> which returns the query variables as an array.<br />
+<strong>$replacements</strong> - Array of replacement query variables.<br />
+<strong>$return</strong> - Default value is <em>'string'</em>. Alternate value is <em>null</em> which returns the query variables as an array.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1155,21 +1155,21 @@ Array
 
 <dl>
 
-<dt id="class_database_resource" class="class">$<b>Database</b>-&gt;<b>resource</b> <a href="#">&uarr; top</a></dt>
+<dt id="class_database_resource" class="class">$<strong>Database</strong>-&gt;<strong>resource</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>Used to store the database connect resource from <a href="#class_db_connect"><code>$DB-&gt;Connect</code></a> or <a href="#class_db_resource"><code>$DB-&gt;resource</code></a>.</p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>$Database-&gt;resource = <a href="#class_db_resource">$DB-&gt;resource</a>;</pre></dd>
 
 
-<dt id="class_database_results" class="class">$<b>Database</b>-&gt;<b>results</b> <a href="#">&uarr; top</a></dt>
+<dt id="class_database_results" class="class">$<strong>Database</strong>-&gt;<strong>results</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>Automatically stores the results of <a href="#class_database_databaselist"><code>$Database-&gt;DatabaseList()</code></a>, <a href="#class_database_tablelist"><code>$Database-&gt;TableList()</code></a> and <a href="#class_database_table"><code>$Database-&gt;Table()</code></a>.</p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre><a href="#func_print_array">print_array</a>($Database-&gt;results);</pre></dd>
 
 
-<dt id="class_database_databaselist" class="class">$<b>Database</b>-&gt;<b>DatabaseList</b>(); <a href="#">&uarr; top</a></dt>
+<dt id="class_database_databaselist" class="class">$<strong>Database</strong>-&gt;<strong>DatabaseList</strong>(); <a href="#">&uarr; top</a></dt>
 <dd><p>Returns an array of available databases.</p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1202,13 +1202,13 @@ Array
 )</pre></dd>
 
 
-<dt id="class_database_tablelist" class="class">$<b>Database</b>-&gt;<b>TableList</b>(string $database); <a href="#">&uarr; top</a></dt>
+<dt id="class_database_tablelist" class="class">$<strong>Database</strong>-&gt;<strong>TableList</strong>(string $database); <a href="#">&uarr; top</a></dt>
 <dd><p>Returns an array of tables in a certain database.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$database</b> - Database you are connecting to.<br />
+<strong>$database</strong> - Database you are connecting to.<br />
 </p></dd>
 
 
@@ -1232,16 +1232,16 @@ Array
 )</pre></dd>
 
 
-<dt id="class_database_table" class="class">$<b>Database</b>-&gt;<b>Table</b>(string $database, string $table, <span class="optional">[, string $fields, string $clause]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_database_table" class="class">$<strong>Database</strong>-&gt;<strong>Table</strong>(string $database, string $table, <span class="optional">[, string $fields, string $clause]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Returns an array of values in a table. Additional attributes allows for filtering of values.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$database</b> - The name of the database you are connecting to.<br />
-<b>$table</b> - The name of the table you are querying.<br />
-<b>$fields (optional)</b> - The fields (comma separated) that you would like returned.<br />
-<b>$clause (optional)</b> - A simple where clause allowing for narrowing of the results.<br />
+<strong>$database</strong> - The name of the database you are connecting to.<br />
+<strong>$table</strong> - The name of the table you are querying.<br />
+<strong>$fields (optional)</strong> - The fields (comma separated) that you would like returned.<br />
+<strong>$clause (optional)</strong> - A simple where clause allowing for narrowing of the results.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1284,7 +1284,7 @@ Array
 )</pre></dd>
 
 
-<dt id="class_database_process" class="class">$<b>Database</b>-&gt;<b>Process</b>(string $database, string $table, array $variables); <a href="#">&uarr; top</a></dt>
+<dt id="class_database_process" class="class">$<strong>Database</strong>-&gt;<strong>Process</strong>(string $database, string $table, array $variables); <a href="#">&uarr; top</a></dt>
 <dd><p>Saves information to a specific table with varaibles passed through <code>$variables</code> as an array.</p></dd>
 
 <dd class="notice">The $variables attribute must contain the primary key of the table being modified if processing an update. If not, the values will be added as a new database record.</dd>
@@ -1292,9 +1292,9 @@ Array
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$database</b> - The name of the database you are connecting to.<br />
-<b>$table</b> - The name of the table you are querying.<br />
-<b>$variables</b> - The values (including tables primary key) that you want to update.<br />
+<strong>$database</strong> - The name of the database you are connecting to.<br />
+<strong>$table</strong> - The name of the table you are querying.<br />
+<strong>$variables</strong> - The values (including tables primary key) that you want to update.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1302,21 +1302,21 @@ Array
 $Database-&gt;Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
 
 
-<dt id="class_db_resource" class="class">$<b>DB</b>-&gt;<b>resource</b> <a href="#">&uarr; top</a></dt>
+<dt id="class_db_resource" class="class">$<strong>DB</strong>-&gt;<strong>resource</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>Used to store the database connect resource from <a href="#class_db_connect"><code>$DB-&gt;Connect</code></a>.</p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>$DB-&gt;resource = <a href="#class_db_connect"><code>$DB-&gt;Connect</code></a>;</pre></dd>
 
 
-<dt id="class_db_results" class="class">$<b>DB</b>-&gt;<b>results</b> <a href="#">&uarr; top</a></dt>
+<dt id="class_db_results" class="class">$<strong>DB</strong>-&gt;<strong>results</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>Automatically stores the results of <a href="#class_db_query"><code>$DB-&gt;Query()</code></a>.</p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre><a href="#func_print_array">print_array</a>($DB-&gt;results);</pre></dd>
 
 
-<dt id="class_db_instances" class="class">$<b>DB</b>-&gt;<b>instances</b> <a href="#">&uarr; top</a></dt>
+<dt id="class_db_instances" class="class">$<strong>DB</strong>-&gt;<strong>instances</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>Stores the number of instances of both <a href="#class_db_connect"><code>$DB-&gt;Connect</code></a> and <a href="#class_db_query"><code>$DB-&gt;Query</code></a>.</p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1324,36 +1324,36 @@ $Database-&gt;Process('test', 'bookmarks', array('shared'=>'no'));</pre></dd>
 echo '$DB-&gt;Query was called ' . $DB-&gt;instances['query'] . ' time(s).&lt;br /&gt;';</pre></dd>
 
 
-<dt id="class_db_connect" class="class">$<b>DB</b>-&gt;<b>Connect</b>(string $server, string $username, string $password <span class="optional">[, string $database, boolean $cache]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_db_connect" class="class">$<strong>DB</strong>-&gt;<strong>Connect</strong>(string $server, string $username, string $password <span class="optional">[, string $database, boolean $cache]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Connects to a database with the specified information. Cache allows the connection to be stored for use with other functions such as <a href="#class_db_query"><code>$DB-&gt;Query()</code></a>.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$server</b> - The name or IP address of the server you are connecting to.<br />
-<b>$database</b> - The name of the database you are connecting to.<br />
-<b>$username</b> - The username you are connecting with.<br />
-<b>$password</b> - The password you are connecting with.<br />
-<b>$table</b> - The name of the table you are querying. Default value is <i>null</i>.<br />
-<b>$cache</b> - Boolean for storing the resource of this connect statement in the DB class. Default value is <i>true</i>. Can be accessed through the $DB-&gt;resouce variable.<br />
+<strong>$server</strong> - The name or IP address of the server you are connecting to.<br />
+<strong>$database</strong> - The name of the database you are connecting to.<br />
+<strong>$username</strong> - The username you are connecting with.<br />
+<strong>$password</strong> - The password you are connecting with.<br />
+<strong>$table</strong> - The name of the table you are querying. Default value is <em>null</em>.<br />
+<strong>$cache</strong> - Boolean for storing the resource of this connect statement in the DB class. Default value is <em>true</em>. Can be accessed through the $DB-&gt;resouce variable.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>$DB-&gt;Connect('localhost', 'root', 'root', 'test');</pre></dd>
 
 
-<dt id="class_db_query" class="class">$<b>DB</b>-&gt;<b>Query</b>(string $query <span class="optional">[, resource $resource, string $return, boolean $cache]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_db_query" class="class">$<strong>DB</strong>-&gt;<strong>Query</strong>(string $query <span class="optional">[, resource $resource, string $return, boolean $cache]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Runs a query on the default (specified in <a href="#class_db_connect"><code>$DB-&gt;Connect</code></a>) or alternate database. Returns an array of results by default. Alternate returns are a basic boolean or the MySQL resource.</p></dd>
 
-<dd class="notice">The $return variable is <i>array</i> by default. Alternative values are <i>resource</i> and <i>boolean</i>.</dd>
+<dd class="notice">The $return variable is <em>array</em> by default. Alternative values are <em>resource</em> and <em>boolean</em>.</dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$query</b> - MySQL query.<br />
-<b>$resource</b> - Use a specific <a href="#class_db_connect"><code>$DB-&gt;Connect</code></a> resource or the default one stored in the DB class.<br />
-<b>$queryreturn</b> - MySQL query.<br />
-<b>$cache</b> - Boolean for storing the results of this query in the DB class. Default value is <i>true</i>. Can be accessed through the $DB-&gt;results variable.<br />
+<strong>$query</strong> - MySQL query.<br />
+<strong>$resource</strong> - Use a specific <a href="#class_db_connect"><code>$DB-&gt;Connect</code></a> resource or the default one stored in the DB class.<br />
+<strong>$queryreturn</strong> - MySQL query.<br />
+<strong>$cache</strong> - Boolean for storing the results of this query in the DB class. Default value is <em>true</em>. Can be accessed through the $DB-&gt;results variable.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1396,20 +1396,20 @@ echo '$DB-&gt;Query was called ' . $DB-&gt;instances['query'] . ' time(s).&lt;br
 )</pre></dd>
 
 
-<dt id="class_db_close" class="class">$<b>DB</b>-&gt;<b>Close</b>(<span class="optional">[resource $resource]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_db_close" class="class">$<strong>DB</strong>-&gt;<strong>Close</strong>(<span class="optional">[resource $resource]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Closed a MySQL connection created by <a href="#class_db_query"><code>$DB-&gt;Connect()</code></a> or a resource passed through function.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$resource</b> - Use a specific <a href="#class_db_connect"><code>$DB-&gt;Connect</code></a> resource or the default one stored in the DB class.<br />
+<strong>$resource</strong> - Use a specific <a href="#class_db_connect"><code>$DB-&gt;Connect</code></a> resource or the default one stored in the DB class.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>$DB-&gt;Close();</pre></dd>
 
 
-<dt id="class_gfx_resize" class="class">$<b>GFX</b>-&gt;<b>Resize</b>(string $image <span class="optional">[, integer $width, integer $height, string $output]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_gfx_resize" class="class">$<strong>GFX</strong>-&gt;<strong>Resize</strong>(string $image <span class="optional">[, integer $width, integer $height, string $output]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Resizes and crops JPG, GIF, and PNG image files on the fly using the built in PHP <a href="http://php.net/gd/">GD library</a>.</p></dd>
 
 <dd class="notice">This function requires the <a href="http://php.net/gd/">GD library</a> in order to function correctly. Use the <a href="http://php.net/gdinfo/"><code>gdinfo()</code></a> function to see if the <a href="http://php.net/gd/">GD library</a> is installed and what version the server is running.</dd>
@@ -1417,16 +1417,16 @@ echo '$DB-&gt;Query was called ' . $DB-&gt;instances['query'] . ' time(s).&lt;br
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$width</b> - The width of the new resized image. Does not need to be proportional to the <code>$height</code>.<br />
-<b>$height</b> - The height of the new resized image. Does not need to be proportional to the <code>$width</code>.<br />
-<b>$output</b> - The folder where the resized images will be stored. If this attribute contains a value, the function will return a URL to the resized image. If this attribute is left blank, the function will output the image. For this to work the function must be called on a page that doesn't output anything minus the result of this function.
+<strong>$width</strong> - The width of the new resized image. Does not need to be proportional to the <code>$height</code>.<br />
+<strong>$height</strong> - The height of the new resized image. Does not need to be proportional to the <code>$width</code>.<br />
+<strong>$output</strong> - The folder where the resized images will be stored. If this attribute contains a value, the function will return a URL to the resized image. If this attribute is left blank, the function will output the image. For this to work the function must be called on a page that doesn't output anything minus the result of this function.
 </p></dd>
 
 <dd class="dh">Example:</dd>
 <dd><pre>$GFX-&gt;Resize('images/test.png', 100, 100, 'cache/');</pre></dd>
 
 
-<dt id="class_template_tools" class="class">$<b>Template</b>-&gt;<b>tools</b> <a href="#">&uarr; top</a></dt>
+<dt id="class_template_tools" class="class">$<strong>Template</strong>-&gt;<strong>tools</strong> <a href="#">&uarr; top</a></dt>
 <dd><p>Appends HTML content into columns at the end of rows generated by <a href="#class_template_generate"><code>$Template-&gt;Generate</code></a>.</p></dd>
 
 <dd class="notice">The below code must come before <a href="#class_template_generate"><code>$Template-&gt;Generate()</code></a> and should be cleared before calling <a href="#class_template_generate"><code>$Template-&gt;Generate()</code></a> again if the same tools are not needed.</dd>
@@ -1440,13 +1440,13 @@ $Template-&gt;tools[] = array('Delete', '&lt;a href="?p=del&amp;id=%ID%"&gt;Dele
 <dd><pre>$Template-&gt;tools = array();</pre></dd>
 
 
-<dt id="class_template_parse" class="class">$<b>Template</b>-&gt;<b>Parse</b>(string $template); <a href="#">&uarr; top</a></dt>
+<dt id="class_template_parse" class="class">$<strong>Template</strong>-&gt;<strong>Parse</strong>(string $template); <a href="#">&uarr; top</a></dt>
 <dd><p>Parses template files/strings. Notice: <a href="#class_template_render"><code>$Template-&gt;Render()</code></a> automatically parses a template file passed through the first attribute.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$template</b> - Template file or string to be parsed.<br />
+<strong>$template</strong> - Template file or string to be parsed.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1478,14 +1478,14 @@ $Template-&gt;tools[] = array('Delete', '&lt;a href="?p=del&amp;id=%ID%"&gt;Dele
 )</pre></dd>
 
 
-<dt id="class_template_render" class="class">$<b>Template</b>-&gt;<b>Render</b>(string $template <span class="optional">[, array $data]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_template_render" class="class">$<strong>Template</strong>-&gt;<strong>Render</strong>(string $template <span class="optional">[, array $data]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Renders a template based on data passed through the <code>$data</code> attribute.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$template</b> - Template file or string to be parsed.<br />
-<b>$data</b> - Array of data to replace template specific variables in the <code>$template</code>. Can also specify header and footer specific arrays for replacement.<br />
+<strong>$template</strong> - Template file or string to be parsed.<br />
+<strong>$data</strong> - Array of data to replace template specific variables in the <code>$template</code>. Can also specify header and footer specific arrays for replacement.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1499,15 +1499,15 @@ $results['footer'][0] = array('variable'=>'replacement');
 echo $Template-&gt;Render('templates/custom/bookmarks.tpl', $results);</pre></dd>
 
 
-<dt id="class_template_generate" class="class">$<b>Template</b>-&gt;<b>Generate</b>(array $data <span class="optional">[, boolean $sortable, boolean $render]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_template_generate" class="class">$<strong>Template</strong>-&gt;<strong>Generate</strong>(array $data <span class="optional">[, boolean $sortable, boolean $render]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Similar to <a href="#class_template_render"><code>$Template-&gt;Render()</code></a>, but this function creates a tabulator template on the fly.</p></dd>
 
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$data</b> - Array of data to built template with and replace template specific variables in the <code>$template</code> if <code>$render</code> is <i>true</i>. <a href="#class_template_render">See <code>$Template-&gt;Render</code> for more info</a>.<br />
-<b>$sortable</b> - Allow for manual sorting of table values.<br />
-<b>$render</b> - Render generated template with data supplied.<br />
+<strong>$data</strong> - Array of data to built template with and replace template specific variables in the <code>$template</code> if <code>$render</code> is <em>true</em>. <a href="#class_template_render">See <code>$Template-&gt;Render</code> for more info</a>.<br />
+<strong>$sortable</strong> - Allow for manual sorting of table values.<br />
+<strong>$render</strong> - Render generated template with data supplied.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1517,7 +1517,7 @@ echo $Template-&gt;Generate($results, true, true);</pre></dd>
 <dd class="notice">You can add tools to the end of each generated row by adding an array (below) to <a href="#class_template_tools"><code>$Template-&gt;tools</code></a> before calling <a href="#class_template_generate"><code>$Template-&gt;Generate()</code></a>.</dd>
 
 
-<dt id="class_template_pagination" class="class">$<b>Template</b>-&gt;<b>Pagination</b>(<span class="optional">[number $total_rows, boolean $single_page_display]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_template_pagination" class="class">$<strong>Template</strong>-&gt;<strong>Pagination</strong>(<span class="optional">[number $total_rows, boolean $single_page_display]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Outputs pagination based on the number passed through <code>$total_rows</code>.</p></dd>
 
 <dd class="notice">The math behind the pagination relies on both the <a href="#const_maxview"><code>maxview</code></a> constant and the number passed through <code>$total_rows</code>.</dd>
@@ -1525,8 +1525,8 @@ echo $Template-&gt;Generate($results, true, true);</pre></dd>
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$total_rows</b> - Number of total rows to be paginated with.<br />
-<b>$single_page_display</b> - Boolean to show or hide pagination if there is only one page.<br />
+<strong>$total_rows</strong> - Number of total rows to be paginated with.<br />
+<strong>$single_page_display</strong> - Boolean to show or hide pagination if there is only one page.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1534,7 +1534,7 @@ echo $Template-&gt;Generate($results, true, true);</pre></dd>
 echo $Template-&gt;Pagination(count($results), false);</pre></dd>
 
 
-<dt id="class_template_form" class="class">$<b>Template</b>-&gt;<b>Form</b>(string $database, string $table <span class="optional">[, array $data, array $fields]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_template_form" class="class">$<strong>Template</strong>-&gt;<strong>Form</strong>(string $database, string $table <span class="optional">[, array $data, array $fields]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Creates a form based on the table specified. Optional predefined data and fields can also be passed through the function.</p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1545,10 +1545,10 @@ echo $Template-&gt;Pagination(count($results), false);</pre></dd>
 <dd class="dh">Attributes:</dd>
 
 <dd class="attr"><p>
-<b>$database</b> - The name of the database you are connecting to.<br />
-<b>$table</b> - The name of the table you are building a form with.<br />
-<b>$data</b> - Predefined values for displayed fields.<br />
-<b>$fields</b> - An array which can allow for only certain fields to display.<br />
+<strong>$database</strong> - The name of the database you are connecting to.<br />
+<strong>$table</strong> - The name of the table you are building a form with.<br />
+<strong>$data</strong> - Predefined values for displayed fields.<br />
+<strong>$fields</strong> - An array which can allow for only certain fields to display.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>

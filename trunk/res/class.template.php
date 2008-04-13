@@ -200,7 +200,7 @@ class Template {
 
 		$output .= '<div class="pagination">' . PHP_EOL;
 
-		$output .= '<b>Page:</b> ' . PHP_EOL;
+		$output .= '<strong>Page:</strong> ' . PHP_EOL;
 
 		if (!is_number($total_rows)) { $total_rows = count($total_rows); }
 
@@ -209,11 +209,11 @@ class Template {
 
 		for ($i = 1; $i <= ceil($total_rows / $db_limit); $i++) {
 
-			if ($db_start == (($i-1) * $db_limit)) { $output .= '<b>'; }
+			if ($db_start == (($i-1) * $db_limit)) { $output .= '<strong>'; }
 
 			$output .= '<a href="' . constant('page') . '' . url_query(array('db_start'=>(($i-1) * $db_limit))) . '">' . $i . '</a> ';
 
-			if ($db_start == (($i-1) * $db_limit)) { $output .= '</b> '; }
+			if ($db_start == (($i-1) * $db_limit)) { $output .= '</strong> '; }
 
 			$output .= PHP_EOL;
 
@@ -256,12 +256,12 @@ class Template {
 
 				if (in_array($type[0], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
 
-					$output .= '<textarea name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" cols="40" rows="5">' . htmlentities($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
+					$output .= '<textarea name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
 
 				} else {
 
-					$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="text" value="' . htmlentities($value) . '" size="40" /><br />' . str_repeat(PHP_EOL, 2);
+					$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="text" value="' . htmlspecialchars($value) . '" size="40" /><br />' . str_repeat(PHP_EOL, 2);
 
 				}
 

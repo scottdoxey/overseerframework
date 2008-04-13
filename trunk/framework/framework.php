@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build269
+# Version: 0.2beta r2 build271
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-04-11 17:44:17
+# Timestamp: 2008-04-12 18:21:02
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -267,7 +267,7 @@ if (!function_exists('error')) {
 		}
 
 		if (constant('error_reporting')) {
-			echo '<p>' . preg_replace('/(^[[:alpha:] ]+:)/', '<b>\1</b>', strip_tags($text)) . '</p>';
+			echo '<p>' . preg_replace('/(^[[:alpha:] ]+:)/', '<strong>\1</strong>', strip_tags($text)) . '</p>';
 		}
 
 		return false;
@@ -1178,7 +1178,7 @@ class Template {
 
 		$output .= '<div class="pagination">' . PHP_EOL;
 
-		$output .= '<b>Page:</b> ' . PHP_EOL;
+		$output .= '<strong>Page:</strong> ' . PHP_EOL;
 
 		if (!is_number($total_rows)) { $total_rows = count($total_rows); }
 
@@ -1187,11 +1187,11 @@ class Template {
 
 		for ($i = 1; $i <= ceil($total_rows / $db_limit); $i++) {
 
-			if ($db_start == (($i-1) * $db_limit)) { $output .= '<b>'; }
+			if ($db_start == (($i-1) * $db_limit)) { $output .= '<strong>'; }
 
 			$output .= '<a href="' . constant('page') . '' . url_query(array('db_start'=>(($i-1) * $db_limit))) . '">' . $i . '</a> ';
 
-			if ($db_start == (($i-1) * $db_limit)) { $output .= '</b> '; }
+			if ($db_start == (($i-1) * $db_limit)) { $output .= '</strong> '; }
 
 			$output .= PHP_EOL;
 
@@ -1234,12 +1234,12 @@ class Template {
 
 				if (in_array($type[0], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
 
-					$output .= '<textarea name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" cols="40" rows="5">' . htmlentities($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
+					$output .= '<textarea name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
 
 				} else {
 
-					$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="text" value="' . htmlentities($value) . '" size="40" /><br />' . str_repeat(PHP_EOL, 2);
+					$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="text" value="' . htmlspecialchars($value) . '" size="40" /><br />' . str_repeat(PHP_EOL, 2);
 
 				}
 
