@@ -1,22 +1,22 @@
 <?php
 
-if (!function_exists('file_put_contents')) { 
+if (!function_exists('file_put_contents')) {
 
-	if (!@constant('FILE_APPEND')) { define('FILE_APPEND', true); } 
+	if (!@constant('FILE_APPEND')) { define('FILE_APPEND', true); }
 
-	function file_put_contents($file, $contents = '', $flag = false) { 
+	function file_put_contents($file, $contents = '', $flag = false) {
 
-		$method = $flag?'a+':'w+'; 
+		$method = $flag?'a+':'w+';
 
-		$file_handle = fopen(preg_replace('/\/+/', '/', $file), $method); 
+		$file_handle = fopen(preg_replace('/\/+/', '/', $file), $method);
 
-		fwrite($file_handle, $contents); 
+		fwrite($file_handle, $contents);
 
-		fclose($file_handle); 
+		fclose($file_handle);
 
-		return true; 
+		return true;
 
-	} 
+	}
 
 }
 
@@ -29,7 +29,7 @@ $files[] = 'res/template.php';
 $files[] = 'res/class.db.php';
 $files[] = 'res/class.database.php';
 $files[] = 'res/class.gfx.php';
-// $files[] = 'res/class.openid.php';
+#$files[] = 'res/class.openid.php';
 $files[] = 'res/class.template.php';
 
 preg_match_all('/build([0-9]+)/', file_get_contents('framework.php'), $matches);

@@ -7,61 +7,43 @@
 #
 ###############################################################
 
-class OpenID
-{
+class OpenID {
 
-	var $settings = array();
-	var $server_info = array();
+	function Request($url = '', $options = array(), $query = '') {
 
-	function Request($url = '', $query = '?') {
+		$url = preg_replace(array('/([^:])\/+/', '/\/$/'), array('\1/', ''), $url);
 
-		if (!$url) { return false; }
+		$contents = @file_get_contents($url);
 
-		if (!isset($this->settings['openid.identity'])) { $this->settings['openid.identity'] = $url; }
-		if (!isset($this->settings['openid.mode'])) { $this->settings['openid.mode'] = 'checkid_setup'; }
-		if (!isset($this->settings['openid.trust_root'])) { $this->settings['openid.trust_root'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; }
-		if (!isset($this->settings['openid.return_to'])) { $this->settings['openid.return_to'] = $this->settings['openid.trust_root']; }
+		preg_match('/<link.*(?:rel=["\']openid.server["\'].*href=["\'](.*)["\']|href=["\'](.*)["\'].*rel=["\']openid.server["\']).*>/U', $contents, $server);
+		preg_match('/<link.*(?:rel=["\']openid.delegate["\'].*href=["\'](.*)["\']|href=["\'](.*)["\'].*rel=["\']openid.delegate["\']).*>/U', $contents, $delegate);
 
-		while (list($key, $value) = each($this->settings)) {
-			if (is_array($value)) { $value = implode(',', $value); }
-			$query .= $key . '=' . urlencode($value) . '&';
-		}
+		if (isset($delegate[1])) { return OpenID::Request($delegate[1]); } else if (!isset($server[1])) { return false; }
 
-		preg_match_all('/<link (.*)>/U', file_get_contents($url), $links);
+		setcookie('openid', $server[1]);
 
-		if (isset($links[1])) {
+		if (!isset($options['openid.identity'])) { $options['openid.identity'] = $url; }
+		if (!isset($options['openid.mode'])) { $options['openid.mode'] = 'checkid_setup'; }
+		if (!isset($options['openid.trust_root'])) { $options['openid.trust_root'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; }
+		if (!isset($options['openid.return_to'])) { $options['openid.return_to'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; }
 
-			foreach ($links[1] as $link) {
+		while (list($key, $value) = each($options)) { $query .= $key . '=' . urlencode($value) . '&'; }
 
-				preg_match('/rel="(.*)"/U', $link, $tmp_rel);
-				preg_match('/href="(.*)"/U', $link, $tmp_href);
-
-				if (isset($tmp_rel[1]) && $tmp_rel[1] == 'openid.server') { $this->server_info['openid.server'] = $tmp_href[1]; }
-
-			}
-
-		}
-
-		if (isset($this->server_info['openid.server'])) { header('Location: ' . $this->server_info['openid.server'] . $query); }
+		header('Location: ' . $server[1] . (preg_match('/\?/', $server[1])?'&':'?') . $query); exit;
 
 		return false;
 
 	}
 
-	function Validate() {
-
-		if (!isset($_GET['openid_op_endpoint'])) { return false; }
+	function Verify($query = '') {
 
 		$_GET['openid_mode'] = 'check_authentication';
 
-		$query = $_GET['openid_op_endpoint'] . '?';
+		while (list($key, $value) = each($_GET)) { $query .= preg_replace('/(openid|sreg)_/', '\1.', $key) . '=' . urlencode($value) . '&'; }
 
-		while (list($key, $value) = each($_GET)) {
-			$key = preg_replace(array('/(openid)_/', '/(sreg)_/'), '\1.', $key);
-			$query .= $key . '=' . urlencode($value) . '&';
-		}
+		$results = @fopen($_COOKIE['openid'], 'rb', false, @stream_context_create(array('http'=>array('method'=>'POST', 'content'=>$query))));
 
-		if (preg_match('/true/', file_get_contents($query), $matches)) { return true; }
+		if (preg_match('/true/', @stream_get_contents($results))) { return $_GET; }
 
 		return false;
 
