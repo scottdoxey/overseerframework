@@ -113,10 +113,10 @@ class Database {
 		if (!count($updates)) { return error('MySQL Error: None of the included key/value sets can update this table.'); }
 
 		if (isset($variables[$primary_key])) {
-			$results = $DB->Query('SELECT COUNT(`' . $primary_key . '`) AS `row_count` FROM `' . $database . '`.`' . $table . '` WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . '', $resource, 'array', false);
+			$results = $DB->Query('SELECT `' . $primary_key . '` FROM `' . $database . '`.`' . $table . '` WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . '', $resource, 'array', false);
 		}
 
-		if (!isset($results) || $results[0]['row_count'] == 0) {
+		if (!isset($results) || !count($results)) {
 			$sql = 'INSERT INTO ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ');
 		} else {
 			$sql = 'UPDATE ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ') . ' WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . '';
