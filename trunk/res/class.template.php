@@ -198,7 +198,7 @@ class Template {
 
 		if (!$total_rows) { return false; }
 
-		$output .= '<div class="pagination">' . PHP_EOL;
+		$output .= '<p class="pagination">' . PHP_EOL;
 
 		$output .= '<strong>Page:</strong> ' . PHP_EOL;
 
@@ -219,7 +219,7 @@ class Template {
 
 		}
 
-		$output .= '</div>' . str_repeat(PHP_EOL, 2);
+		$output .= '</p>' . str_repeat(PHP_EOL, 2);
 
 		if (!$single_page_display && $total_rows <= constant('maxview')) { return false; }
 

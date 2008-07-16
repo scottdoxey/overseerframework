@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build272
+# Version: 0.2beta r2 build277
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-06-27 14:47:08
+# Timestamp: 2008-07-16 18:37:55
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -55,11 +55,11 @@ if (!defined('maxview')) {
 }
 
 if (!defined('page')) {
-	define('page', $_SERVER['SCRIPT_NAME'] . (isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:''));
+	define('page', preg_replace('/\/+/', '/', $_SERVER['PHP_SELF']));
 }
 
 if (!defined('script')) {
-	define('script', preg_replace('/(' . str_replace('/', '\/', isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:'') . ')?(\?.*)?$/', '', $_SERVER['REQUEST_URI']));
+	define('script', $_SERVER['SCRIPT_NAME']);
 }
 
 if (!defined('url')) {
@@ -1176,7 +1176,7 @@ class Template {
 
 		if (!$total_rows) { return false; }
 
-		$output .= '<div class="pagination">' . PHP_EOL;
+		$output .= '<p class="pagination">' . PHP_EOL;
 
 		$output .= '<strong>Page:</strong> ' . PHP_EOL;
 
@@ -1197,7 +1197,7 @@ class Template {
 
 		}
 
-		$output .= '</div>' . str_repeat(PHP_EOL, 2);
+		$output .= '</p>' . str_repeat(PHP_EOL, 2);
 
 		if (!$single_page_display && $total_rows <= constant('maxview')) { return false; }
 
