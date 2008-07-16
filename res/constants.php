@@ -27,11 +27,11 @@ if (!defined('maxview')) {
 }
 
 if (!defined('page')) {
-	define('page', $_SERVER['SCRIPT_NAME'] . (isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:''));
+	define('page', preg_replace('/\/+/', '/', $_SERVER['PHP_SELF']));
 }
 
 if (!defined('script')) {
-	define('script', preg_replace('/(' . str_replace('/', '\/', isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:'') . ')?(\?.*)?$/', '', $_SERVER['REQUEST_URI']));
+	define('script', $_SERVER['SCRIPT_NAME']);
 }
 
 if (!defined('url')) {
