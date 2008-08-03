@@ -100,10 +100,8 @@ class Database {
 
 				$value = $variables[$row['Field']];
 
-				if (is_number($value) || in_array($value, array('NOW()'))) { $updates[] = '`' . $row['Field'] . '` = ' . $value . ''; } else {
-
+				if (is_number($value) || $value == 'NOW()') { $updates[] = '`' . $row['Field'] . '` = ' . $value . ''; } else {
 					$updates[] = '`' . $row['Field'] . '` = "' . $value . '"';
-
 				}
 
 			} else if ($row['Key'] == 'PRI') { $primary_key = $row['Field']; }

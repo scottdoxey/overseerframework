@@ -11,6 +11,8 @@ class OpenID {
 
 	function Request($url = '', $options = array(), $canonize = false, $query = '') {
 
+		$url = (!strpos($url, '://'))?'http://'.$url:$url;
+
 		if ($canonize) { $url = preg_replace(array('/([^:])\/+/', '/\/$/'), array('\1/', ''), $url); }
 
 		if (function_exists('stream_get_contents')) { $contents = @stream_get_contents(@fopen($url, 'rb')); }
@@ -22,6 +24,10 @@ class OpenID {
 		if (isset($delegate[1])) { return OpenID::Request($delegate[1]); } else if (!isset($server[1])) { return false; }
 
 		setcookie('openid', $server[1], time() +3600, '/');
+
+		$server_info = parse_url($server[1]);
+
+		if (substr($url, 0, strpos($url, ':')) != $server_info['scheme']) { $url = str_replace(substr($url, 0, strpos($url, ':')), $server_info['scheme'], $url); }
 
 		if (!isset($options['openid.identity'])) { $options['openid.identity'] = $url; }
 		if (!isset($options['openid.mode'])) { $options['openid.mode'] = 'checkid_setup'; }

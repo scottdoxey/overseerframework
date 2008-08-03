@@ -83,8 +83,8 @@ if (!function_exists('array_walk_recursive')) {
 		reset($array);
 
 		while (list($key, $value) = each($array)) {
-			if (!is_array($array[$key])) { $array[$key] = call_user_func($func, $value, $key); }
-			else { $array[$key] = array_walk_recursive($array[$key], $func); }
+			if (is_array($array[$key])) { $array[$key] = array_walk_recursive($array[$key], $func); }
+			else { $array[$key] = call_user_func($func, $value, $key); }
 		}
 
 		return $array;
@@ -182,7 +182,7 @@ if (!function_exists('error')) {
 		}
 
 		if (constant('error_reporting')) {
-			echo '<p>' . preg_replace('/(^[[:alpha:] ]+:)/', '<strong>\1</strong>', strip_tags($text)) . '</p>';
+			echo '<p>' . preg_replace('/(^[[:alpha:] ]+:)/', '<strong>\1</strong>', strip_tags($text)) . '</p>' . PHP_EOL;
 		}
 
 		return false;
@@ -239,7 +239,7 @@ if (!function_exists('field_type')) {
 	function field_type($table, $field) {
 
 		$results = mysql_fetch_results('SHOW COLUMNS FROM `' . $table . '` WHERE `Field` = "' . $field . '"');
-		preg_match('/^[a-z]+/', $results[0]['Type'], $matches);
+		preg_match('/^[a-z]+/i', $results[0]['Type'], $matches);
 		return $matches[0];
 
 	}
@@ -482,9 +482,7 @@ if (!function_exists('sanitize_data')) {
 		reset($data);
 
 		while (list($key, $value) = each($data)) {
-
 			$data[$key] = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($value):$value);
-
 		}
 
 		return $data;
@@ -532,7 +530,8 @@ if (!function_exists('timeago')) {
 		else if (round($diff / 3600) < 24) { $output = 'about ' . round($diff / 3600) . ' hour(s) ago'; }
 		else if (round($diff / 86400) < 7) { $output = round($diff / 86400) . ' day(s) ago'; }
 		else if (round($diff / 604800) < 4) { $output = round($diff / 604800) . ' week(s) ago'; }
-		else if (round($diff / 2419200)) { $output = round($diff / 2419200) . ' month(s) ago'; }
+		else if (round($diff / 2419200) < 12) { $output = round($diff / 2419200) . ' month(s) ago'; }
+		else if (round($diff / 29030400)) { $output = round($diff / 29030400) . ' years(s) ago'; }
 
 		preg_match('/[0-9]+/', $output, $matches);
 
@@ -563,22 +562,18 @@ if (!function_exists('url_query')) {
 		$output = array();
 
 		while (list($key, $value) = each($replacements)) {
-
 			if (is_empty($value) && isset($_GET[$key])) { unset($replacements[$key]); }
-
 		}
 
 		$url_querys = array_merge($_GET, $replacements);
 
 		while (list($key, $value) = each($url_querys)) {
-
 			if ($value) { $output[] = $key . '=' . $value; }
-
 		}
 
-		if ($return == 'string') { $output = '?' . implode($output, '&amp;'); }
+		if ($return == 'string' && count($output)) { $output = '?' . implode($output, '&amp;'); }
 
-		return strlen($output)!=1?$output:'';
+		return $output?$output:'';
 
 	}
 

@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build277
+# Version: 0.2beta r2 build280
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-07-16 18:37:55
+# Timestamp: 2008-08-03 01:03:10
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -168,8 +168,8 @@ if (!function_exists('array_walk_recursive')) {
 		reset($array);
 
 		while (list($key, $value) = each($array)) {
-			if (!is_array($array[$key])) { $array[$key] = call_user_func($func, $value, $key); }
-			else { $array[$key] = array_walk_recursive($array[$key], $func); }
+			if (is_array($array[$key])) { $array[$key] = array_walk_recursive($array[$key], $func); }
+			else { $array[$key] = call_user_func($func, $value, $key); }
 		}
 
 		return $array;
@@ -267,7 +267,7 @@ if (!function_exists('error')) {
 		}
 
 		if (constant('error_reporting')) {
-			echo '<p>' . preg_replace('/(^[[:alpha:] ]+:)/', '<strong>\1</strong>', strip_tags($text)) . '</p>';
+			echo '<p>' . preg_replace('/(^[[:alpha:] ]+:)/', '<strong>\1</strong>', strip_tags($text)) . '</p>' . PHP_EOL;
 		}
 
 		return false;
@@ -324,7 +324,7 @@ if (!function_exists('field_type')) {
 	function field_type($table, $field) {
 
 		$results = mysql_fetch_results('SHOW COLUMNS FROM `' . $table . '` WHERE `Field` = "' . $field . '"');
-		preg_match('/^[a-z]+/', $results[0]['Type'], $matches);
+		preg_match('/^[a-z]+/i', $results[0]['Type'], $matches);
 		return $matches[0];
 
 	}
@@ -567,9 +567,7 @@ if (!function_exists('sanitize_data')) {
 		reset($data);
 
 		while (list($key, $value) = each($data)) {
-
 			$data[$key] = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($value):$value);
-
 		}
 
 		return $data;
@@ -617,7 +615,8 @@ if (!function_exists('timeago')) {
 		else if (round($diff / 3600) < 24) { $output = 'about ' . round($diff / 3600) . ' hour(s) ago'; }
 		else if (round($diff / 86400) < 7) { $output = round($diff / 86400) . ' day(s) ago'; }
 		else if (round($diff / 604800) < 4) { $output = round($diff / 604800) . ' week(s) ago'; }
-		else if (round($diff / 2419200)) { $output = round($diff / 2419200) . ' month(s) ago'; }
+		else if (round($diff / 2419200) < 12) { $output = round($diff / 2419200) . ' month(s) ago'; }
+		else if (round($diff / 29030400)) { $output = round($diff / 29030400) . ' years(s) ago'; }
 
 		preg_match('/[0-9]+/', $output, $matches);
 
@@ -648,22 +647,18 @@ if (!function_exists('url_query')) {
 		$output = array();
 
 		while (list($key, $value) = each($replacements)) {
-
 			if (is_empty($value) && isset($_GET[$key])) { unset($replacements[$key]); }
-
 		}
 
 		$url_querys = array_merge($_GET, $replacements);
 
 		while (list($key, $value) = each($url_querys)) {
-
 			if ($value) { $output[] = $key . '=' . $value; }
-
 		}
 
-		if ($return == 'string') { $output = '?' . implode($output, '&amp;'); }
+		if ($return == 'string' && count($output)) { $output = '?' . implode($output, '&amp;'); }
 
-		return strlen($output)!=1?$output:'';
+		return $output?$output:'';
 
 	}
 
@@ -694,10 +689,10 @@ function ob_template($buffer) {
 	$regs[1] = preg_replace('/<title>(.*)<\/title>/si', $regs[1]);
 	$ob_template = str_replace('%HEAD%', trim($regs[1]), $ob_template);
 
-	preg_match('/<body>(.*)(<\/body>)/si', $buffer, $regs);
+	preg_match('/<body>(.*)(<\/body>)?/si', $buffer, $regs);
 	$ob_template = str_replace('%BODY%', trim($regs[1]), $ob_template);
 
-	// $ob_template = ereg_replace('%+[[:alnum:]_]+%', '', $ob_template);
+	$ob_template = ereg_replace('%+[[:alnum:]_]+%', '', $ob_template);
 
 	return $ob_template;
 
@@ -887,10 +882,8 @@ class Database {
 
 				$value = $variables[$row['Field']];
 
-				if (is_number($value) || in_array($value, array('NOW()'))) { $updates[] = '`' . $row['Field'] . '` = ' . $value . ''; } else {
-
+				if (is_number($value) || $value == 'NOW()') { $updates[] = '`' . $row['Field'] . '` = ' . $value . ''; } else {
 					$updates[] = '`' . $row['Field'] . '` = "' . $value . '"';
-
 				}
 
 			} else if ($row['Key'] == 'PRI') { $primary_key = $row['Field']; }
@@ -999,9 +992,7 @@ class Template {
 		preg_match('/<!--{footer:start}-->(.*)<!--{footer:end}-->/si', $template, $matches['footer']);
 
 		while (list($key, $value) = each($matches)) {
-
 			$matches[$key] = isset($matches[$key][1])?$matches[$key][1]:'';
-
 		}
 
 		return $matches;
@@ -1016,12 +1007,7 @@ class Template {
 
 		$output = '';
 
-		if (!is_array($template) || is_file($template)) {
-
-			$template = $this->Parse($template);
-
-		}
-
+		if (!is_array($template)) { $template = $this->Parse($template); }
 		if (!is_array($template)) { return false; }
 
 		if (isset($data_header)) {
@@ -1104,14 +1090,10 @@ class Template {
 
 		while (list($key, $value) = each($data[0])) {
 
-			$tmp_url = url_query(array('db_sort_by'=>$key, 'db_sort_order'=>$db_sort_order));
-
-			if ($db_sort_by == $key) { $tmp_class = 'sort_' . $db_sort_order; } else { $tmp_class = ''; }
-
 			if ($sortable) {
 
 				$output .= '<th>';
-				$output .= '<a href="' . $tmp_url . '">' . $key . '</a>';
+				$output .= '<a href="' . url_query(array('db_sort_by'=>$key, 'db_sort_order'=>$db_sort_order)) . '">' . $key . '</a>';
 
 				if ($db_sort_by == $key && $db_sort_order == 'asc') { $output .= ' <span class="sort_desc">&darr;</span>'; }
 				else if ($db_sort_by == $key && $db_sort_order == 'desc') { $output .= ' <span class="sort_asc">&uarr;</span>'; }
@@ -1125,9 +1107,7 @@ class Template {
 		reset($this->tools);
 
 		while (list($key, $value) = each($this->tools)) {
-
 			$output .= '<th>' . $value[0] . '</th>' . PHP_EOL;
-
 		}
 
 		$output .= '</tr>' . str_repeat(PHP_EOL, 2);
@@ -1141,17 +1121,13 @@ class Template {
 		reset($data[0]);
 
 		while (list($key, $value) = each($data[0])) {
-
 			$output .= '<td>%' . strtoupper($key) . '%</td>' . PHP_EOL;
-
 		}
 
 		reset($this->tools);
 
 		while (list($key, $value) = each($this->tools)) {
-
 			$output .= '<td class="tools">' . $value[1] . '</td>' . PHP_EOL;
-
 		}
 
 		$output .= '</tr>' . str_repeat(PHP_EOL, 2);
@@ -1180,7 +1156,7 @@ class Template {
 
 		$output .= '<strong>Page:</strong> ' . PHP_EOL;
 
-		if (!is_number($total_rows)) { $total_rows = count($total_rows); }
+		if (is_array($total_rows)) { $total_rows = count($total_rows); }
 
 		$db_start = (isset($_GET['db_start']) && is_simple_number($_GET['db_start']))?$_GET['db_start']:0;
 		$db_limit = (isset($_GET['db_limit']) && is_simple_number($_GET['db_limit']))?$_GET['db_limit']:constant('maxview');
@@ -1221,7 +1197,7 @@ class Template {
 
 		while ($row = @mysql_fetch_assoc($columns)) {
 
-			preg_match('/[a-zA-Z]+/', $row['Type'], $type);
+			preg_match('/([a-z]+)(?:(?:\()(.*)(?:\)))?/si', $row['Type'], $type);
 
 			if (count($fields) && !in_array($row['Field'], $fields) && $row['Key'] != 'PRI') { continue; }
 
@@ -1232,10 +1208,26 @@ class Template {
 
 				$output .= '<label for="txt_' . $row['Field'] . '">' . ucwords(str_replace('_', ' ', $row['Field'])) . ':</label> ' . PHP_EOL;
 
-				if (in_array($type[0], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
+				if (in_array($type[1], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
 
 					$output .= '<textarea name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
+				} else if ($type[1] == 'int' && $type[2] == 1) {
+
+					$output .= '<select name="' . $row['Field'] . '" id="lst_' . $row['Field'] . '">' . PHP_EOL;
+					$output .= '<option value="1"' . ($value?' selected="selected"':'') . '>True</option>' . PHP_EOL;
+					$output .= '<option value="0"' . (!$value?' selected="selected"':'') . '>False</option>' . PHP_EOL;
+					$output .= '</select><br />' . str_repeat(PHP_EOL, 2);
+
+				} else if (in_array($type[1], array('enum', 'set')) && isset($type[2])) {
+
+					preg_match_all('/\'(.*)\'/U', $type[2], $matches);
+
+					$output .= '<select name="' . $row['Field'] . '" id="lst_' . $row['Field'] . '">' . PHP_EOL;
+					foreach ($matches[1] as $option) {
+						$output .= '<option value="' . $option . '"' . ($value==$option?' selected="selected"':'') . '>' . $option . '</option>' . PHP_EOL;
+					}
+					$output .= '</select><br />' . str_repeat(PHP_EOL, 2);
 
 				} else {
 
