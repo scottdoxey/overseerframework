@@ -21,9 +21,7 @@ class Template {
 		preg_match('/<!--{footer:start}-->(.*)<!--{footer:end}-->/si', $template, $matches['footer']);
 
 		while (list($key, $value) = each($matches)) {
-
 			$matches[$key] = isset($matches[$key][1])?$matches[$key][1]:'';
-
 		}
 
 		return $matches;
@@ -38,12 +36,7 @@ class Template {
 
 		$output = '';
 
-		if (!is_array($template) || is_file($template)) {
-
-			$template = $this->Parse($template);
-
-		}
-
+		if (!is_array($template)) { $template = $this->Parse($template); }
 		if (!is_array($template)) { return false; }
 
 		if (isset($data_header)) {
@@ -126,14 +119,10 @@ class Template {
 
 		while (list($key, $value) = each($data[0])) {
 
-			$tmp_url = url_query(array('db_sort_by'=>$key, 'db_sort_order'=>$db_sort_order));
-
-			if ($db_sort_by == $key) { $tmp_class = 'sort_' . $db_sort_order; } else { $tmp_class = ''; }
-
 			if ($sortable) {
 
 				$output .= '<th>';
-				$output .= '<a href="' . $tmp_url . '">' . $key . '</a>';
+				$output .= '<a href="' . url_query(array('db_sort_by'=>$key, 'db_sort_order'=>$db_sort_order)) . '">' . $key . '</a>';
 
 				if ($db_sort_by == $key && $db_sort_order == 'asc') { $output .= ' <span class="sort_desc">&darr;</span>'; }
 				else if ($db_sort_by == $key && $db_sort_order == 'desc') { $output .= ' <span class="sort_asc">&uarr;</span>'; }
@@ -147,9 +136,7 @@ class Template {
 		reset($this->tools);
 
 		while (list($key, $value) = each($this->tools)) {
-
 			$output .= '<th>' . $value[0] . '</th>' . PHP_EOL;
-
 		}
 
 		$output .= '</tr>' . str_repeat(PHP_EOL, 2);
@@ -163,17 +150,13 @@ class Template {
 		reset($data[0]);
 
 		while (list($key, $value) = each($data[0])) {
-
 			$output .= '<td>%' . strtoupper($key) . '%</td>' . PHP_EOL;
-
 		}
 
 		reset($this->tools);
 
 		while (list($key, $value) = each($this->tools)) {
-
 			$output .= '<td class="tools">' . $value[1] . '</td>' . PHP_EOL;
-
 		}
 
 		$output .= '</tr>' . str_repeat(PHP_EOL, 2);
@@ -202,7 +185,7 @@ class Template {
 
 		$output .= '<strong>Page:</strong> ' . PHP_EOL;
 
-		if (!is_number($total_rows)) { $total_rows = count($total_rows); }
+		if (is_array($total_rows)) { $total_rows = count($total_rows); }
 
 		$db_start = (isset($_GET['db_start']) && is_simple_number($_GET['db_start']))?$_GET['db_start']:0;
 		$db_limit = (isset($_GET['db_limit']) && is_simple_number($_GET['db_limit']))?$_GET['db_limit']:constant('maxview');
@@ -243,7 +226,7 @@ class Template {
 
 		while ($row = @mysql_fetch_assoc($columns)) {
 
-			preg_match('/[a-zA-Z]+/', $row['Type'], $type);
+			preg_match('/([a-z]+)(?:(?:\()(.*)(?:\)))?/si', $row['Type'], $type);
 
 			if (count($fields) && !in_array($row['Field'], $fields) && $row['Key'] != 'PRI') { continue; }
 
@@ -254,10 +237,26 @@ class Template {
 
 				$output .= '<label for="txt_' . $row['Field'] . '">' . ucwords(str_replace('_', ' ', $row['Field'])) . ':</label> ' . PHP_EOL;
 
-				if (in_array($type[0], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
+				if (in_array($type[1], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
 
 					$output .= '<textarea name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
+				} else if ($type[1] == 'int' && $type[2] == 1) {
+
+					$output .= '<select name="' . $row['Field'] . '" id="lst_' . $row['Field'] . '">' . PHP_EOL;
+					$output .= '<option value="1"' . ($value?' selected="selected"':'') . '>True</option>' . PHP_EOL;
+					$output .= '<option value="0"' . (!$value?' selected="selected"':'') . '>False</option>' . PHP_EOL;
+					$output .= '</select><br />' . str_repeat(PHP_EOL, 2);
+
+				} else if (in_array($type[1], array('enum', 'set')) && isset($type[2])) {
+
+					preg_match_all('/\'(.*)\'/U', $type[2], $matches);
+
+					$output .= '<select name="' . $row['Field'] . '" id="lst_' . $row['Field'] . '">' . PHP_EOL;
+					foreach ($matches[1] as $option) {
+						$output .= '<option value="' . $option . '"' . ($value==$option?' selected="selected"':'') . '>' . $option . '</option>' . PHP_EOL;
+					}
+					$output .= '</select><br />' . str_repeat(PHP_EOL, 2);
 
 				} else {
 
