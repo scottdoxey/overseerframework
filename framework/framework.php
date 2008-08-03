@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build280
+# Version: 0.2beta r2 build288
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-08-03 01:03:10
+# Timestamp: 2008-08-03 03:24:34
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1191,30 +1191,36 @@ class Template {
 
 		$columns = $DB->Query('SHOW COLUMNS FROM `' . $database . '`.`' . $table . '`', $DB->resource, 'resource', false);
 
+		while ($row = @mysql_fetch_assoc($columns)) {
+			if ($row['Key'] == 'PRI') { array_unshift($fields, $row); }
+			else if (!@func_get_arg(3)) { $fields[] = $row; }
+			else if (in_array($row['Field'], $fields)) { $fields[array_search($row['Field'], $fields)] = $row; }
+		}
+
 		$action = str_replace('&', '&amp;', substr($_SERVER['REQUEST_URI'], strrpos($_SERVER['REQUEST_URI'], '/') +1));
 
 		$output .= '<form action="' . $action . '" method="post">' . str_repeat(PHP_EOL, 2);
 
-		while ($row = @mysql_fetch_assoc($columns)) {
+		foreach ($fields as $field) {
 
-			preg_match('/([a-z]+)(?:(?:\()(.*)(?:\)))?/si', $row['Type'], $type);
+			if (!is_array($field)) { continue; }
 
-			if (count($fields) && !in_array($row['Field'], $fields) && $row['Key'] != 'PRI') { continue; }
+			preg_match('/([a-z]+)(?:(?:\()(.*)(?:\)))?/si', $field['Type'], $type);
 
-			if (count($data) && isset($data[0][$row['Field']])) { $value = $data[0][$row['Field']]; }
-			else { $value = isset($row['Default'])?$row['Default']:''; }
+			if (count($data) && isset($data[0][$field['Field']])) { $value = $data[0][$field['Field']]; }
+			else { $value = isset($field['Default'])?$field['Default']:''; }
 
-			if ($row['Key'] != 'PRI') {
+			if ($field['Key'] != 'PRI') {
 
-				$output .= '<label for="txt_' . $row['Field'] . '">' . ucwords(str_replace('_', ' ', $row['Field'])) . ':</label> ' . PHP_EOL;
+				$output .= '<label for="txt_' . $field['Field'] . '">' . ucwords(str_replace('_', ' ', $field['Field'])) . ':</label> ' . PHP_EOL;
 
 				if (in_array($type[1], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
 
-					$output .= '<textarea name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
+					$output .= '<textarea name="' . $field['Field'] . '" id="txt_' . $field['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
 				} else if ($type[1] == 'int' && $type[2] == 1) {
 
-					$output .= '<select name="' . $row['Field'] . '" id="lst_' . $row['Field'] . '">' . PHP_EOL;
+					$output .= '<select name="' . $field['Field'] . '" id="lst_' . $field['Field'] . '">' . PHP_EOL;
 					$output .= '<option value="1"' . ($value?' selected="selected"':'') . '>True</option>' . PHP_EOL;
 					$output .= '<option value="0"' . (!$value?' selected="selected"':'') . '>False</option>' . PHP_EOL;
 					$output .= '</select><br />' . str_repeat(PHP_EOL, 2);
@@ -1223,7 +1229,7 @@ class Template {
 
 					preg_match_all('/\'(.*)\'/U', $type[2], $matches);
 
-					$output .= '<select name="' . $row['Field'] . '" id="lst_' . $row['Field'] . '">' . PHP_EOL;
+					$output .= '<select name="' . $field['Field'] . '" id="lst_' . $field['Field'] . '">' . PHP_EOL;
 					foreach ($matches[1] as $option) {
 						$output .= '<option value="' . $option . '"' . ($value==$option?' selected="selected"':'') . '>' . $option . '</option>' . PHP_EOL;
 					}
@@ -1231,15 +1237,15 @@ class Template {
 
 				} else {
 
-					$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="text" value="' . htmlspecialchars($value) . '" size="40" /><br />' . str_repeat(PHP_EOL, 2);
+					$output .= '<input name="' . $field['Field'] . '" id="txt_' . $field['Field'] . '" type="text" value="' . htmlspecialchars($value) . '" size="40" /><br />' . str_repeat(PHP_EOL, 2);
 
 				}
 
 			} else {
 
-				$output .= '<input name="' . $row['Field'] . '" id="txt_' . $row['Field'] . '" type="hidden" value="' . ($value?$value:0) . '" />' . str_repeat(PHP_EOL, 2);
+				$output .= '<input name="' . $field['Field'] . '" id="txt_' . $field['Field'] . '" type="hidden" value="' . ($value?$value:0) . '" />' . str_repeat(PHP_EOL, 2);
 
-				$primary_key = array('name'=>$row['Field'], 'value'=>$value);
+				$primary_key = array('name'=>$field['Field'], 'value'=>$value);
 
 			}
 
