@@ -241,15 +241,15 @@ class Template {
 
 			if ($field['Key'] != 'PRI') {
 
-				$output .= '<label for="txt_' . $field['Field'] . '">' . ucwords(str_replace('_', ' ', $field['Field'])) . ':</label> ' . PHP_EOL;
+				$output .= '<label for="inpt_' . $field['Field'] . '">' . ucwords(str_replace('_', ' ', $field['Field'])) . ':</label> ' . PHP_EOL;
 
 				if (in_array($type[1], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
 
-					$output .= '<textarea name="' . $field['Field'] . '" id="txt_' . $field['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
+					$output .= '<textarea name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
 				} else if ($type[1] == 'int' && $type[2] == 1) {
 
-					$output .= '<select name="' . $field['Field'] . '" id="lst_' . $field['Field'] . '">' . PHP_EOL;
+					$output .= '<select name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '">' . PHP_EOL;
 					$output .= '<option value="1"' . ($value?' selected="selected"':'') . '>True</option>' . PHP_EOL;
 					$output .= '<option value="0"' . (!$value?' selected="selected"':'') . '>False</option>' . PHP_EOL;
 					$output .= '</select><br />' . str_repeat(PHP_EOL, 2);
@@ -258,7 +258,7 @@ class Template {
 
 					preg_match_all('/\'(.*)\'/U', $type[2], $matches);
 
-					$output .= '<select name="' . $field['Field'] . '" id="lst_' . $field['Field'] . '">' . PHP_EOL;
+					$output .= '<select name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '">' . PHP_EOL;
 					foreach ($matches[1] as $option) {
 						$output .= '<option value="' . $option . '"' . ($value==$option?' selected="selected"':'') . '>' . $option . '</option>' . PHP_EOL;
 					}
@@ -266,13 +266,13 @@ class Template {
 
 				} else {
 
-					$output .= '<input name="' . $field['Field'] . '" id="txt_' . $field['Field'] . '" type="text" value="' . htmlspecialchars($value) . '" size="40" /><br />' . str_repeat(PHP_EOL, 2);
+					$output .= '<input name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '" type="text" value="' . htmlspecialchars($value) . '" size="40" /><br />' . str_repeat(PHP_EOL, 2);
 
 				}
 
 			} else {
 
-				$output .= '<input name="' . $field['Field'] . '" id="txt_' . $field['Field'] . '" type="hidden" value="' . ($value?$value:0) . '" />' . str_repeat(PHP_EOL, 2);
+				$output .= '<input name="' . $field['Field'] . '" type="hidden" value="' . ($value?$value:0) . '" />' . str_repeat(PHP_EOL, 2);
 
 				$primary_key = array('name'=>$field['Field'], 'value'=>$value);
 
