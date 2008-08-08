@@ -7,7 +7,7 @@
 ###############################################################
 
 if (!defined('error_log')) {
-	define('error_log', true);
+	define('error_log', false);
 }
 
 if (!defined('error_reporting')) {

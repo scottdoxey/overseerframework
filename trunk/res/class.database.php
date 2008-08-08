@@ -58,10 +58,6 @@ class Database {
 
 		global $DB;
 
-		if (is_resource($this->resource)) { $resource = $this->resource; }
-		else if (is_resource($DB->resource)) { $resource = $DB->resource; }
-		else { return error('MySQL Error: Cannot connect to MySQL server. Please advise.');}
-
 		$db_sort_by = (isset($_GET['db_sort_by']) && is_simple($_GET['db_sort_by']))?$_GET['db_sort_by']:'';
 		$db_sort_order = (isset($_GET['db_sort_order']) && is_simple($_GET['db_sort_order']))?$_GET['db_sort_order']:'asc';
 		$db_start = (isset($_GET['db_start']) && is_simple_number($_GET['db_start']))?$_GET['db_start']:0;
@@ -72,7 +68,9 @@ class Database {
 		if ($db_sort_by) { $sql .= ' ORDER BY `' . $db_sort_by . '` ' . ucwords($db_sort_order) . ''; }
 		if ($db_limit) { $sql .= ' LIMIT ' . $db_start . ', ' . $db_limit; }
 
-		$results = $DB->Query($sql, $resource, 'array', false);
+		if (is_resource($this->resource)) { $results = $DB->Query($sql, $this->resource, 'array', false); }
+		else if (is_resource($DB->resource)) { $results = $DB->Query($sql, $DB->resource, 'array', false); }
+		else { return error('MySQL Error: Cannot connect to MySQL server. Please advise.'); }
 
 		$this->results = $results;
 
@@ -92,19 +90,19 @@ class Database {
 
 		$updates = array();
 
-		$columns = $DB->Query('SHOW COLUMNS FROM `' . $database . '`.`' . $table . '`', $resource, 'resource', false);
+		$columns = $DB->Query('SHOW COLUMNS FROM `' . $database . '`.`' . $table . '`', $resource, 'array', false);
 
-		while ($row = @mysql_fetch_assoc($columns)) {
+		foreach ($columns as $column) {
 
-			if (isset($variables[$row['Field']]) && $row['Key'] != 'PRI') {
+			if (isset($variables[$column['Field']]) && $column['Key'] != 'PRI') {
 
-				$value = $variables[$row['Field']];
+				$value = $variables[$column['Field']];
 
-				if (is_number($value) || $value == 'NOW()') { $updates[] = '`' . $row['Field'] . '` = ' . $value . ''; } else {
-					$updates[] = '`' . $row['Field'] . '` = "' . $value . '"';
+				if (is_number($value) || $value == 'NOW()') { $updates[] = '`' . $column['Field'] . '` = ' . $value . ''; } else {
+					$updates[] = '`' . $column['Field'] . '` = "' . $value . '"';
 				}
 
-			} else if ($row['Key'] == 'PRI') { $primary_key = $row['Field']; }
+			} else if ($column['Key'] == 'PRI') { $primary_key = $column['Field']; }
 
 		}
 
@@ -114,11 +112,8 @@ class Database {
 			$results = $DB->Query('SELECT `' . $primary_key . '` FROM `' . $database . '`.`' . $table . '` WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . '', $resource, 'array', false);
 		}
 
-		if (!isset($results) || !count($results)) {
-			$sql = 'INSERT INTO ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ');
-		} else {
-			$sql = 'UPDATE ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ') . ' WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . '';
-		}
+		if (!isset($results) || !count($results)) { $sql = 'INSERT INTO ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', '); }
+		else { $sql = 'UPDATE ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ') . ' WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . ''; }
 
 		return $DB->Query($sql, $resource, 'boolean', false);
 

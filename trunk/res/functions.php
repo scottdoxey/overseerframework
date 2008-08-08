@@ -16,12 +16,12 @@ if (!function_exists('array_clean')) {
 		reset($array);
 
 		while (list($key, $value) = each($array)) {
-
 			if (is_array($value)) { $array[$key] = array_clean($value); }
 			else if (!$value && $method == 'empty') { unset($array[$key]); }
 			else { $array[$key] = trim($value); }
-
 		}
+
+		reset($array);
 
 		return $array;
 
@@ -87,6 +87,8 @@ if (!function_exists('array_walk_recursive')) {
 			else { $array[$key] = call_user_func($func, $value, $key); }
 		}
 
+		reset($array);
+
 		return $array;
 
 	}
@@ -143,7 +145,7 @@ if (!function_exists('dir_get_contents')) {
 
 		while (list($key, $value) = each($structure)) { $type[$key] = $value['type']; }
 
-		array_multisort($type, SORT_DESC, $structure);
+		array_multisort($type, $sort, $structure);
 
 		return $structure;
 
@@ -423,7 +425,7 @@ if (!function_exists('path_info')) {
 
 			$path_info = explode('/', substr($_SERVER['PATH_INFO'], 1));
 
-			if (isset($offset, $path_info[$offset])) { return $path_info[$offset]; }
+			if (isset($path_info[$offset])) { return $path_info[$offset]; }
 
 		}
 
@@ -461,9 +463,7 @@ if (!function_exists('print_array')) {
 
 	function print_array() {
 		$arrays = func_get_args();
-		echo '<pre>';
-		foreach ($arrays as $array) { echo print_r($array, true); }
-		echo '</pre>';
+		foreach ($arrays as $array) { echo '<pre>' . print_r($array, true) . '</pre>'; }
 	}
 
 }
@@ -485,6 +485,8 @@ if (!function_exists('sanitize_data')) {
 			$data[$key] = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($value):$value);
 		}
 
+		reset($data);
+
 		return $data;
 
 	}
@@ -502,9 +504,7 @@ if (!function_exists('set_location')) {
 
 	function set_location($url) {
 
-		if (!headers_sent()) {
-			header('Location: ' . $url); exit;
-		}
+		if (!headers_sent()) { header('Location: ' . $url); exit; }
 
 		return false;
 
@@ -527,16 +527,14 @@ if (!function_exists('timeago')) {
 
 		if ($diff < 60) { $output = $diff . ' seconds ago'; }
 		else if (round($diff / 60) < 60) { $output = round($diff / 60) . ' minute(s) ago'; }
-		else if (round($diff / 3600) < 24) { $output = 'about ' . round($diff / 3600) . ' hour(s) ago'; }
+		else if (round($diff / 3600) < 24) { $output = round($diff / 3600) . ' hour(s) ago'; }
 		else if (round($diff / 86400) < 7) { $output = round($diff / 86400) . ' day(s) ago'; }
 		else if (round($diff / 604800) < 4) { $output = round($diff / 604800) . ' week(s) ago'; }
 		else if (round($diff / 2419200) < 12) { $output = round($diff / 2419200) . ' month(s) ago'; }
 		else if (round($diff / 29030400)) { $output = round($diff / 29030400) . ' years(s) ago'; }
 
-		preg_match('/[0-9]+/', $output, $matches);
-
-		if ($matches[0] == 1) { $output = str_replace('(s)', '', $output); }
-		else { $output = str_replace('(s)', 's', $output); }
+		if (preg_match('/[2-9]+/', $output, $matches)) { $output = str_replace('(s)', 's', $output); }
+		else { $output = str_replace('(s)', '', $output); }
 
 		return $output;
 
@@ -562,7 +560,7 @@ if (!function_exists('url_query')) {
 		$output = array();
 
 		while (list($key, $value) = each($replacements)) {
-			if (is_empty($value) && isset($_GET[$key])) { unset($replacements[$key]); }
+			if (!$value && isset($_GET[$key])) { unset($replacements[$key]); }
 		}
 
 		$url_querys = array_merge($_GET, $replacements);
