@@ -638,7 +638,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 
 
 <dt id="const_page" class="constant"><strong>page</strong> <a href="#">&uarr; top</a></dt>
-<dd><p>The default value of <code>page</code> is the value of <code>$_SERVER['SCRIPT_NAME']</code> plus <code>$_SERVER['PATH_INFO']</code> if it exists.</p></dd>
+<dd><p>The default value of <code>page</code> is the value of <code>$_SERVER['PHP_SELF']</code>.</p></dd>
 
 <dd class="alert">The preset value of this constant should not be changed!</dd>
 
@@ -647,7 +647,7 @@ echo $Template-&gt;Render('template.tpl', $data);</pre></dd>
 
 
 <dt id="const_script" class="constant"><strong>script</strong> <a href="#">&uarr; top</a></dt>
-<dd><p>The default value of <code>script</code> is the value of <code>$_SERVER['REQUEST_URI']</code> minus <code>$_SERVER['PATH_INFO']</code> if it exists and any GET data.</p></dd>
+<dd><p>The default value of <code>script</code> is the value of <code>$_SERVER['SCRIPT_NAME']</code>.</p></dd>
 
 <dd class="alert">The preset value of this constant should not be changed!</dd>
 

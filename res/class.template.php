@@ -37,7 +37,6 @@ class Template {
 		$output = '';
 
 		if (!is_array($template)) { $template = $this->Parse($template); }
-		if (!is_array($template)) { return false; }
 
 		if (isset($data_header)) {
 
@@ -117,6 +116,8 @@ class Template {
 
 		$output .= '<tr>' . PHP_EOL;
 
+		reset($data);
+
 		while (list($key, $value) = each($data[0])) {
 
 			if ($sortable) {
@@ -175,14 +176,11 @@ class Template {
 
 	public function Pagination($total_rows = 0, $single_page_display = true) {
 
-		global $DB;
-
 		$output = '';
 
 		if (!$total_rows) { return false; }
 
 		$output .= '<p class="pagination">' . PHP_EOL;
-
 		$output .= '<strong>Page:</strong> ' . PHP_EOL;
 
 		if (is_array($total_rows)) { $total_rows = count($total_rows); }
@@ -214,8 +212,6 @@ class Template {
 
 		global $DB;
 
-		$primary_key = '';
-
 		$output = '';
 
 		$columns = $DB->Query('SHOW COLUMNS FROM `' . $database . '`.`' . $table . '`', $DB->resource, 'resource', false);
@@ -229,6 +225,8 @@ class Template {
 		$action = str_replace('&', '&amp;', substr($_SERVER['REQUEST_URI'], strrpos($_SERVER['REQUEST_URI'], '/') +1));
 
 		$output .= '<form action="' . $action . '" method="post">' . str_repeat(PHP_EOL, 2);
+		
+		$output .= '<fieldset>' . str_repeat(PHP_EOL, 2);
 
 		foreach ($fields as $field) {
 
@@ -284,6 +282,8 @@ class Template {
 		if (isset($primary_key['value']) && $primary_key['value'] != 0) { $output .= '<button type="submit">Save</button> '; }
 		else { $output .= '<button type="submit">Add</button> '; }
 		$output .= '<button type="reset">Reset</button>' . str_repeat(PHP_EOL, 2);
+		
+		$output .= '</fieldset>' . str_repeat(PHP_EOL, 2);
 
 		$output .= '</form>' . str_repeat(PHP_EOL, 2);
 

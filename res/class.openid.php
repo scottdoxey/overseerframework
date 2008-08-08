@@ -15,8 +15,7 @@ class OpenID {
 
 		if ($canonize) { $url = preg_replace(array('/([^:])\/+/', '/\/$/'), array('\1/', ''), $url); }
 
-		if (function_exists('stream_get_contents')) { $contents = @stream_get_contents(@fopen($url, 'rb')); }
-		else { $contents = file_get_contents($url); }
+		if (function_exists('stream_get_contents')) { $contents = @stream_get_contents(@fopen($url, 'rb')); } else { $contents = file_get_contents($url); }
 
 		preg_match('/<link.*(?:rel=["\']openid.server["\'].*href=["\'](.*)["\']|href=["\'](.*)["\'].*rel=["\']openid.server["\']).*>/U', $contents, $server);
 		preg_match('/<link.*(?:rel=["\']openid.delegate["\'].*href=["\'](.*)["\']|href=["\'](.*)["\'].*rel=["\']openid.delegate["\']).*>/U', $contents, $delegate);

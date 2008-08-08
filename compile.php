@@ -29,7 +29,7 @@ $files[] = 'res/template.php';
 $files[] = 'res/class.db.php';
 $files[] = 'res/class.database.php';
 $files[] = 'res/class.gfx.php';
-#$files[] = 'res/class.openid.php';
+$files[] = 'res/class.openid.php';
 $files[] = 'res/class.template.php';
 
 preg_match_all('/build([0-9]+)/', file_get_contents('framework.php'), $matches);

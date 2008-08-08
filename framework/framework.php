@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build289
+# Version: 0.2beta r2 build291
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-08-03 22:03:14
+# Timestamp: 2008-08-08 12:59:10
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 ###############################################################
 
 if (!defined('error_log')) {
-	define('error_log', true);
+	define('error_log', false);
 }
 
 if (!defined('error_reporting')) {
@@ -101,12 +101,12 @@ if (!function_exists('array_clean')) {
 		reset($array);
 
 		while (list($key, $value) = each($array)) {
-
 			if (is_array($value)) { $array[$key] = array_clean($value); }
 			else if (!$value && $method == 'empty') { unset($array[$key]); }
 			else { $array[$key] = trim($value); }
-
 		}
+
+		reset($array);
 
 		return $array;
 
@@ -172,6 +172,8 @@ if (!function_exists('array_walk_recursive')) {
 			else { $array[$key] = call_user_func($func, $value, $key); }
 		}
 
+		reset($array);
+
 		return $array;
 
 	}
@@ -228,7 +230,7 @@ if (!function_exists('dir_get_contents')) {
 
 		while (list($key, $value) = each($structure)) { $type[$key] = $value['type']; }
 
-		array_multisort($type, SORT_DESC, $structure);
+		array_multisort($type, $sort, $structure);
 
 		return $structure;
 
@@ -508,7 +510,7 @@ if (!function_exists('path_info')) {
 
 			$path_info = explode('/', substr($_SERVER['PATH_INFO'], 1));
 
-			if (isset($offset, $path_info[$offset])) { return $path_info[$offset]; }
+			if (isset($path_info[$offset])) { return $path_info[$offset]; }
 
 		}
 
@@ -546,9 +548,7 @@ if (!function_exists('print_array')) {
 
 	function print_array() {
 		$arrays = func_get_args();
-		echo '<pre>';
-		foreach ($arrays as $array) { echo print_r($array, true); }
-		echo '</pre>';
+		foreach ($arrays as $array) { echo '<pre>' . print_r($array, true) . '</pre>'; }
 	}
 
 }
@@ -570,6 +570,8 @@ if (!function_exists('sanitize_data')) {
 			$data[$key] = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($value):$value);
 		}
 
+		reset($data);
+
 		return $data;
 
 	}
@@ -587,9 +589,7 @@ if (!function_exists('set_location')) {
 
 	function set_location($url) {
 
-		if (!headers_sent()) {
-			header('Location: ' . $url); exit;
-		}
+		if (!headers_sent()) { header('Location: ' . $url); exit; }
 
 		return false;
 
@@ -612,16 +612,14 @@ if (!function_exists('timeago')) {
 
 		if ($diff < 60) { $output = $diff . ' seconds ago'; }
 		else if (round($diff / 60) < 60) { $output = round($diff / 60) . ' minute(s) ago'; }
-		else if (round($diff / 3600) < 24) { $output = 'about ' . round($diff / 3600) . ' hour(s) ago'; }
+		else if (round($diff / 3600) < 24) { $output = round($diff / 3600) . ' hour(s) ago'; }
 		else if (round($diff / 86400) < 7) { $output = round($diff / 86400) . ' day(s) ago'; }
 		else if (round($diff / 604800) < 4) { $output = round($diff / 604800) . ' week(s) ago'; }
 		else if (round($diff / 2419200) < 12) { $output = round($diff / 2419200) . ' month(s) ago'; }
 		else if (round($diff / 29030400)) { $output = round($diff / 29030400) . ' years(s) ago'; }
 
-		preg_match('/[0-9]+/', $output, $matches);
-
-		if ($matches[0] == 1) { $output = str_replace('(s)', '', $output); }
-		else { $output = str_replace('(s)', 's', $output); }
+		if (preg_match('/[2-9]+/', $output, $matches)) { $output = str_replace('(s)', 's', $output); }
+		else { $output = str_replace('(s)', '', $output); }
 
 		return $output;
 
@@ -647,7 +645,7 @@ if (!function_exists('url_query')) {
 		$output = array();
 
 		while (list($key, $value) = each($replacements)) {
-			if (is_empty($value) && isset($_GET[$key])) { unset($replacements[$key]); }
+			if (!$value && isset($_GET[$key])) { unset($replacements[$key]); }
 		}
 
 		$url_querys = array_merge($_GET, $replacements);
@@ -680,19 +678,17 @@ function ob_template($buffer) {
 
 	global $ob_template;
 
-	$regs = array();
-
 	preg_match('/<title>(.*)<\/title>/si', $buffer, $regs);
-	$ob_template = str_replace('%TITLE%', trim($regs[1]), $ob_template);
+	$ob_template = preg_replace('/%title%/si', trim($regs[1]), $ob_template);
 
 	preg_match('/<head>(.*)<\/head>/si', $buffer, $regs);
 	$regs[1] = preg_replace('/<title>(.*)<\/title>/si', $regs[1]);
-	$ob_template = str_replace('%HEAD%', trim($regs[1]), $ob_template);
+	$ob_template = preg_replace('/%head%/si', trim($regs[1]), $ob_template);
 
-	preg_match('/<body>(.*)(<\/body>)?/si', $buffer, $regs);
-	$ob_template = str_replace('%BODY%', trim($regs[1]), $ob_template);
+	preg_match('/<body>(.*)<\/body>/si', $buffer, $regs);
+	$ob_template = preg_replace('/%body%/si', trim($regs[1]), $ob_template);
 
-	$ob_template = ereg_replace('%+[[:alnum:]_]+%', '', $ob_template);
+	$ob_template = preg_replace('/%([a-z_]+)%/si', '', $ob_template);
 
 	return $ob_template;
 
@@ -840,10 +836,6 @@ class Database {
 
 		global $DB;
 
-		if (is_resource($this->resource)) { $resource = $this->resource; }
-		else if (is_resource($DB->resource)) { $resource = $DB->resource; }
-		else { return error('MySQL Error: Cannot connect to MySQL server. Please advise.');}
-
 		$db_sort_by = (isset($_GET['db_sort_by']) && is_simple($_GET['db_sort_by']))?$_GET['db_sort_by']:'';
 		$db_sort_order = (isset($_GET['db_sort_order']) && is_simple($_GET['db_sort_order']))?$_GET['db_sort_order']:'asc';
 		$db_start = (isset($_GET['db_start']) && is_simple_number($_GET['db_start']))?$_GET['db_start']:0;
@@ -854,7 +846,9 @@ class Database {
 		if ($db_sort_by) { $sql .= ' ORDER BY `' . $db_sort_by . '` ' . ucwords($db_sort_order) . ''; }
 		if ($db_limit) { $sql .= ' LIMIT ' . $db_start . ', ' . $db_limit; }
 
-		$results = $DB->Query($sql, $resource, 'array', false);
+		if (is_resource($this->resource)) { $results = $DB->Query($sql, $this->resource, 'array', false); }
+		else if (is_resource($DB->resource)) { $results = $DB->Query($sql, $DB->resource, 'array', false); }
+		else { return error('MySQL Error: Cannot connect to MySQL server. Please advise.'); }
 
 		$this->results = $results;
 
@@ -874,19 +868,19 @@ class Database {
 
 		$updates = array();
 
-		$columns = $DB->Query('SHOW COLUMNS FROM `' . $database . '`.`' . $table . '`', $resource, 'resource', false);
+		$columns = $DB->Query('SHOW COLUMNS FROM `' . $database . '`.`' . $table . '`', $resource, 'array', false);
 
-		while ($row = @mysql_fetch_assoc($columns)) {
+		foreach ($columns as $column) {
 
-			if (isset($variables[$row['Field']]) && $row['Key'] != 'PRI') {
+			if (isset($variables[$column['Field']]) && $column['Key'] != 'PRI') {
 
-				$value = $variables[$row['Field']];
+				$value = $variables[$column['Field']];
 
-				if (is_number($value) || $value == 'NOW()') { $updates[] = '`' . $row['Field'] . '` = ' . $value . ''; } else {
-					$updates[] = '`' . $row['Field'] . '` = "' . $value . '"';
+				if (is_number($value) || $value == 'NOW()') { $updates[] = '`' . $column['Field'] . '` = ' . $value . ''; } else {
+					$updates[] = '`' . $column['Field'] . '` = "' . $value . '"';
 				}
 
-			} else if ($row['Key'] == 'PRI') { $primary_key = $row['Field']; }
+			} else if ($column['Key'] == 'PRI') { $primary_key = $column['Field']; }
 
 		}
 
@@ -896,11 +890,8 @@ class Database {
 			$results = $DB->Query('SELECT `' . $primary_key . '` FROM `' . $database . '`.`' . $table . '` WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . '', $resource, 'array', false);
 		}
 
-		if (!isset($results) || !count($results)) {
-			$sql = 'INSERT INTO ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ');
-		} else {
-			$sql = 'UPDATE ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ') . ' WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . '';
-		}
+		if (!isset($results) || !count($results)) { $sql = 'INSERT INTO ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', '); }
+		else { $sql = 'UPDATE ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ') . ' WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . ''; }
 
 		return $DB->Query($sql, $resource, 'boolean', false);
 
@@ -932,7 +923,7 @@ class GFX
 
 		$properties = getimagesize($image);
 
-		$cache = md5(serialize(func_get_args()) . serialize($properties)) . '.' . substr($properties['mime'], 6);
+		$cache = md5(serialize(array_merge(func_get_args(), $properties))) . '.' . substr($properties['mime'], 6);
 
 		if (is_dir($output) && is_file($output . $cache)) { return $output . $cache; }
 
@@ -944,14 +935,19 @@ class GFX
 
 		$ratio = $properties[0]/$properties[1];
 
-		if ($width/$height < $ratio) { $width = $height*$ratio; } else { $height = $width/$ratio; }
-
-		$offset_x = ($width-func_get_arg(1)) / 2;
-		$offset_y = ($height-func_get_arg(2)) / 2;
+		if ($width/$height < $ratio) {
+			$offset_x = ($width-$height) / 2;
+			$offset_y = 0;
+			$width = $height*$ratio;
+		} else {
+			$offset_x = 0;
+			$offset_y = ($height-$width) / 2;
+			$height = $width/$ratio;
+		}
 
 		imagecopyresampled($new, $original, -$offset_x, -$offset_y, 0, 0, $width, $height, $properties[0], $properties[1]);
 
-		if (!$output) { header('Content-type: ' . $properties['mime']); } else if (is_dir($output)) { $output .= $cache; }
+		if (!$output && !headers_sent()) { header('Content-type: ' . $properties['mime']); } else if (is_dir($output)) { $output .= $cache; }
 
 		if ($properties['mime'] == 'image/jpeg') { imagejpeg($new, $output, 100); }
 		else if ($properties['mime'] == 'image/gif') { imagegif($new, $output); }
@@ -968,6 +964,71 @@ class GFX
 $GFX = new GFX;
 
 ###############################################################
+
+
+
+###############################################################
+#
+# Class: OpenID
+# Author: Neo Geek (NG)
+#
+###############################################################
+
+class OpenID {
+
+	function Request($url = '', $options = array(), $canonize = false, $query = '') {
+
+		$url = (!strpos($url, '://'))?'http://'.$url:$url;
+
+		if ($canonize) { $url = preg_replace(array('/([^:])\/+/', '/\/$/'), array('\1/', ''), $url); }
+
+		if (function_exists('stream_get_contents')) { $contents = @stream_get_contents(@fopen($url, 'rb')); } else { $contents = file_get_contents($url); }
+
+		preg_match('/<link.*(?:rel=["\']openid.server["\'].*href=["\'](.*)["\']|href=["\'](.*)["\'].*rel=["\']openid.server["\']).*>/U', $contents, $server);
+		preg_match('/<link.*(?:rel=["\']openid.delegate["\'].*href=["\'](.*)["\']|href=["\'](.*)["\'].*rel=["\']openid.delegate["\']).*>/U', $contents, $delegate);
+
+		if (isset($delegate[1])) { return OpenID::Request($delegate[1]); } else if (!isset($server[1])) { return false; }
+
+		setcookie('openid', $server[1], time() +3600, '/');
+
+		$server_info = parse_url($server[1]);
+
+		if (substr($url, 0, strpos($url, ':')) != $server_info['scheme']) { $url = str_replace(substr($url, 0, strpos($url, ':')), $server_info['scheme'], $url); }
+
+		if (!isset($options['openid.identity'])) { $options['openid.identity'] = $url; }
+		if (!isset($options['openid.mode'])) { $options['openid.mode'] = 'checkid_setup'; }
+		if (!isset($options['openid.trust_root'])) { $options['openid.trust_root'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; }
+		if (!isset($options['openid.return_to'])) { $options['openid.return_to'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; }
+
+		while (list($key, $value) = each($options)) { $query .= $key . '=' . $value . '&'; }
+
+		header('Location: ' . $server[1] . (preg_match('/\?/', $server[1])?'&':'?') . $query); exit;
+
+		return false;
+
+	}
+
+	function Verify($query = '') {
+
+		$_GET['openid_mode'] = 'check_authentication';
+
+		while (list($key, $value) = each($_GET)) { $query .= preg_replace('/(openid|sreg)_/', '\1.', $key) . '=' . urlencode($value) . '&'; }
+
+		if (function_exists('stream_get_contents')) {
+			$results = @stream_get_contents(@fopen($_COOKIE['openid'], 'rb', false, @stream_context_create(array('http'=>array('method'=>'POST', 'content'=>$query)))));
+		} else {
+			$results = @file_get_contents($_COOKIE['openid'] . (preg_match('/\?/', $_COOKIE['openid'])?'&':'?') . $query);
+		}
+
+		if (preg_match('/true/', $results)) { return $_GET; }
+
+		return false;
+
+	}
+
+}
+
+$OpenID = new OpenID;
 
 
 
@@ -1008,7 +1069,6 @@ class Template {
 		$output = '';
 
 		if (!is_array($template)) { $template = $this->Parse($template); }
-		if (!is_array($template)) { return false; }
 
 		if (isset($data_header)) {
 
@@ -1088,6 +1148,8 @@ class Template {
 
 		$output .= '<tr>' . PHP_EOL;
 
+		reset($data);
+
 		while (list($key, $value) = each($data[0])) {
 
 			if ($sortable) {
@@ -1146,14 +1208,11 @@ class Template {
 
 	function Pagination($total_rows = 0, $single_page_display = true) {
 
-		global $DB;
-
 		$output = '';
 
 		if (!$total_rows) { return false; }
 
 		$output .= '<p class="pagination">' . PHP_EOL;
-
 		$output .= '<strong>Page:</strong> ' . PHP_EOL;
 
 		if (is_array($total_rows)) { $total_rows = count($total_rows); }
@@ -1185,8 +1244,6 @@ class Template {
 
 		global $DB;
 
-		$primary_key = '';
-
 		$output = '';
 
 		$columns = $DB->Query('SHOW COLUMNS FROM `' . $database . '`.`' . $table . '`', $DB->resource, 'resource', false);
@@ -1200,6 +1257,8 @@ class Template {
 		$action = str_replace('&', '&amp;', substr($_SERVER['REQUEST_URI'], strrpos($_SERVER['REQUEST_URI'], '/') +1));
 
 		$output .= '<form action="' . $action . '" method="post">' . str_repeat(PHP_EOL, 2);
+		
+		$output .= '<fieldset>' . str_repeat(PHP_EOL, 2);
 
 		foreach ($fields as $field) {
 
@@ -1255,6 +1314,8 @@ class Template {
 		if (isset($primary_key['value']) && $primary_key['value'] != 0) { $output .= '<button type="submit">Save</button> '; }
 		else { $output .= '<button type="submit">Add</button> '; }
 		$output .= '<button type="reset">Reset</button>' . str_repeat(PHP_EOL, 2);
+		
+		$output .= '</fieldset>' . str_repeat(PHP_EOL, 2);
 
 		$output .= '</form>' . str_repeat(PHP_EOL, 2);
 

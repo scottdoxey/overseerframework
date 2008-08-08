@@ -16,7 +16,7 @@ class GFX
 
 		$properties = getimagesize($image);
 
-		$cache = md5(serialize(func_get_args()) . serialize($properties)) . '.' . substr($properties['mime'], 6);
+		$cache = md5(serialize(array_merge(func_get_args(), $properties))) . '.' . substr($properties['mime'], 6);
 
 		if (is_dir($output) && is_file($output . $cache)) { return $output . $cache; }
 
@@ -28,14 +28,19 @@ class GFX
 
 		$ratio = $properties[0]/$properties[1];
 
-		if ($width/$height < $ratio) { $width = $height*$ratio; } else { $height = $width/$ratio; }
-
-		$offset_x = ($width-func_get_arg(1)) / 2;
-		$offset_y = ($height-func_get_arg(2)) / 2;
+		if ($width/$height < $ratio) {
+			$offset_x = ($width-$height) / 2;
+			$offset_y = 0;
+			$width = $height*$ratio;
+		} else {
+			$offset_x = 0;
+			$offset_y = ($height-$width) / 2;
+			$height = $width/$ratio;
+		}
 
 		imagecopyresampled($new, $original, -$offset_x, -$offset_y, 0, 0, $width, $height, $properties[0], $properties[1]);
 
-		if (!$output) { header('Content-type: ' . $properties['mime']); } else if (is_dir($output)) { $output .= $cache; }
+		if (!$output && !headers_sent()) { header('Content-type: ' . $properties['mime']); } else if (is_dir($output)) { $output .= $cache; }
 
 		if ($properties['mime'] == 'image/jpeg') { imagejpeg($new, $output, 100); }
 		else if ($properties['mime'] == 'image/gif') { imagegif($new, $output); }
