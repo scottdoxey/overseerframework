@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build292
+# Version: 0.2beta r2 build293
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-08-13 22:29:04
+# Timestamp: 2008-08-14 00:55:19
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1273,7 +1273,7 @@ class Template {
 
 					$output .= '<textarea name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
-				} else if ($type[1] == 'int' && $type[2] == 1) {
+				} else if ($type[1] == 'tinyint' && $type[2] == 1) {
 
 					$output .= '<select name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '">' . PHP_EOL;
 					$output .= '<option value="1"' . ($value?' selected="selected"':'') . '>True</option>' . PHP_EOL;

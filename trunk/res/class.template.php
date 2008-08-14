@@ -243,7 +243,7 @@ class Template {
 
 					$output .= '<textarea name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
-				} else if ($type[1] == 'int' && $type[2] == 1) {
+				} else if ($type[1] == 'tinyint' && $type[2] == 1) {
 
 					$output .= '<select name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '">' . PHP_EOL;
 					$output .= '<option value="1"' . ($value?' selected="selected"':'') . '>True</option>' . PHP_EOL;
