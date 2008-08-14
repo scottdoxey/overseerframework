@@ -37,8 +37,6 @@ class OpenID {
 
 		header('Location: ' . $server[1] . (preg_match('/\?/', $server[1])?'&':'?') . $query); exit;
 
-		return false;
-
 	}
 
 	function Verify($query = '') {

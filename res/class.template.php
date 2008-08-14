@@ -106,8 +106,6 @@ class Template {
 
 		$db_sort_by = (isset($_GET['db_sort_by']) && is_simple($_GET['db_sort_by']))?$_GET['db_sort_by']:'';
 		$db_sort_order = (isset($_GET['db_sort_order']) && is_simple($_GET['db_sort_order']))?strtolower($_GET['db_sort_order']):'asc';
-		$db_start = (isset($_GET['db_start']) && is_simple_number($_GET['db_start']))?$_GET['db_start']:0;
-		$db_limit = (isset($_GET['db_limit']) && is_simple_number($_GET['db_limit']))?$_GET['db_limit']:constant('maxview');
 
 		if ($db_sort_order == 'asc') { $db_sort_order = 'desc'; } else { $db_sort_order = 'asc'; }
 

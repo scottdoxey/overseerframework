@@ -533,7 +533,7 @@ if (!function_exists('timeago')) {
 		else if (round($diff / 2419200) < 12) { $output = round($diff / 2419200) . ' month(s) ago'; }
 		else if (round($diff / 29030400)) { $output = round($diff / 29030400) . ' years(s) ago'; }
 
-		if (preg_match('/[2-9]+/', $output, $matches)) { $output = str_replace('(s)', 's', $output); }
+		if (preg_match('/[2-9]+/', $output)) { $output = str_replace('(s)', 's', $output); }
 		else { $output = str_replace('(s)', '', $output); }
 
 		return $output;
