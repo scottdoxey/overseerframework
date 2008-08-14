@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build291
+# Version: 0.2beta r2 build292
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-08-08 12:59:10
+# Timestamp: 2008-08-13 22:29:04
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -618,7 +618,7 @@ if (!function_exists('timeago')) {
 		else if (round($diff / 2419200) < 12) { $output = round($diff / 2419200) . ' month(s) ago'; }
 		else if (round($diff / 29030400)) { $output = round($diff / 29030400) . ' years(s) ago'; }
 
-		if (preg_match('/[2-9]+/', $output, $matches)) { $output = str_replace('(s)', 's', $output); }
+		if (preg_match('/[2-9]+/', $output)) { $output = str_replace('(s)', 's', $output); }
 		else { $output = str_replace('(s)', '', $output); }
 
 		return $output;
@@ -1004,8 +1004,6 @@ class OpenID {
 
 		header('Location: ' . $server[1] . (preg_match('/\?/', $server[1])?'&':'?') . $query); exit;
 
-		return false;
-
 	}
 
 	function Verify($query = '') {
@@ -1138,8 +1136,6 @@ class Template {
 
 		$db_sort_by = (isset($_GET['db_sort_by']) && is_simple($_GET['db_sort_by']))?$_GET['db_sort_by']:'';
 		$db_sort_order = (isset($_GET['db_sort_order']) && is_simple($_GET['db_sort_order']))?strtolower($_GET['db_sort_order']):'asc';
-		$db_start = (isset($_GET['db_start']) && is_simple_number($_GET['db_start']))?$_GET['db_start']:0;
-		$db_limit = (isset($_GET['db_limit']) && is_simple_number($_GET['db_limit']))?$_GET['db_limit']:constant('maxview');
 
 		if ($db_sort_order == 'asc') { $db_sort_order = 'desc'; } else { $db_sort_order = 'asc'; }
 
