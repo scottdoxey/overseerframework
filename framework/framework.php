@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build293
+# Version: 0.2beta r2 build294
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-08-14 00:55:19
+# Timestamp: 2008-08-14 23:34:36
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1236,7 +1236,7 @@ class Template {
 
 	}
 
-	function Form($database, $table, $data = array(), $fields = array()) {
+	function Form($database, $table, $data = array(), $fields = array(), $autoformat = true) {
 
 		global $DB;
 
@@ -1269,18 +1269,18 @@ class Template {
 
 				$output .= '<label for="inpt_' . $field['Field'] . '">' . ucwords(str_replace('_', ' ', $field['Field'])) . ':</label> ' . PHP_EOL;
 
-				if (in_array($type[1], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
+				if ($autoformat && in_array($type[1], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'tinytext', 'text', 'mediumtext', 'longtext'))) {
 
 					$output .= '<textarea name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '" cols="40" rows="5">' . htmlspecialchars($value) . '</textarea><br />' . str_repeat(PHP_EOL, 2);
 
-				} else if ($type[1] == 'tinyint' && $type[2] == 1) {
+				} else if ($autoformat && $type[1] == 'tinyint' && $type[2] == 1) {
 
 					$output .= '<select name="' . $field['Field'] . '" id="inpt_' . $field['Field'] . '">' . PHP_EOL;
 					$output .= '<option value="1"' . ($value?' selected="selected"':'') . '>True</option>' . PHP_EOL;
 					$output .= '<option value="0"' . (!$value?' selected="selected"':'') . '>False</option>' . PHP_EOL;
 					$output .= '</select><br />' . str_repeat(PHP_EOL, 2);
 
-				} else if (in_array($type[1], array('enum', 'set')) && isset($type[2])) {
+				} else if ($autoformat && in_array($type[1], array('enum', 'set')) && isset($type[2])) {
 
 					preg_match_all('/\'(.*)\'/U', $type[2], $matches);
 
