@@ -1534,7 +1534,7 @@ echo $Template-&gt;Generate($results, true, true);</pre></dd>
 echo $Template-&gt;Pagination(count($results), false);</pre></dd>
 
 
-<dt id="class_template_form" class="class">$<strong>Template</strong>-&gt;<strong>Form</strong>(string $database, string $table <span class="optional">[, array $data, array $fields]</span>); <a href="#">&uarr; top</a></dt>
+<dt id="class_template_form" class="class">$<strong>Template</strong>-&gt;<strong>Form</strong>(string $database, string $table <span class="optional">[, array $data, array $fields, boolean $autoformat]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Creates a form based on the table specified. Optional predefined data and fields can also be passed through the function.</p></dd>
 
 <dd class="dh">Example:</dd>
@@ -1549,6 +1549,7 @@ echo $Template-&gt;Pagination(count($results), false);</pre></dd>
 <strong>$table</strong> - The name of the table you are building a form with.<br />
 <strong>$data</strong> - Predefined values for displayed fields.<br />
 <strong>$fields</strong> - An array which can allow for only certain fields to display.<br />
+<strong>$autoformat</strong> - Automatically formats the input fields to fit the field type in the database.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
