@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build294
+# Version: 0.2beta r2 build295
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-08-14 23:34:36
+# Timestamp: 2008-08-20 02:20:22
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -682,7 +682,7 @@ function ob_template($buffer) {
 	$ob_template = preg_replace('/%title%/si', trim($regs[1]), $ob_template);
 
 	preg_match('/<head>(.*)<\/head>/si', $buffer, $regs);
-	$regs[1] = preg_replace('/<title>(.*)<\/title>/si', $regs[1]);
+	$regs[1] = preg_replace('/<title>(.*)<\/title>/si', '', $regs[1]);
 	$ob_template = preg_replace('/%head%/si', trim($regs[1]), $ob_template);
 
 	preg_match('/<body>(.*)<\/body>/si', $buffer, $regs);
@@ -1253,7 +1253,7 @@ class Template {
 		$action = str_replace('&', '&amp;', substr($_SERVER['REQUEST_URI'], strrpos($_SERVER['REQUEST_URI'], '/') +1));
 
 		$output .= '<form action="' . $action . '" method="post">' . str_repeat(PHP_EOL, 2);
-		
+
 		$output .= '<fieldset>' . str_repeat(PHP_EOL, 2);
 
 		foreach ($fields as $field) {
@@ -1310,7 +1310,7 @@ class Template {
 		if (isset($primary_key['value']) && $primary_key['value'] != 0) { $output .= '<button type="submit">Save</button> '; }
 		else { $output .= '<button type="submit">Add</button> '; }
 		$output .= '<button type="reset">Reset</button>' . str_repeat(PHP_EOL, 2);
-		
+
 		$output .= '</fieldset>' . str_repeat(PHP_EOL, 2);
 
 		$output .= '</form>' . str_repeat(PHP_EOL, 2);
