@@ -16,7 +16,7 @@ function ob_template($buffer) {
 	$ob_template = preg_replace('/%title%/si', trim($regs[1]), $ob_template);
 
 	preg_match('/<head>(.*)<\/head>/si', $buffer, $regs);
-	$regs[1] = preg_replace('/<title>(.*)<\/title>/si', $regs[1]);
+	$regs[1] = preg_replace('/<title>(.*)<\/title>/si', '', $regs[1]);
 	$ob_template = preg_replace('/%head%/si', trim($regs[1]), $ob_template);
 
 	preg_match('/<body>(.*)<\/body>/si', $buffer, $regs);
