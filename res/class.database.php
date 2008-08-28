@@ -78,7 +78,7 @@ class Database {
 
 	}
 
-	public function Process($database, $table, $variables = array()) {
+	public function Process($database, $table, $variables = array(), $clause = null) {
 
 		global $DB;
 
@@ -113,7 +113,7 @@ class Database {
 		}
 
 		if (!isset($results) || !count($results)) { $sql = 'INSERT INTO ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', '); }
-		else { $sql = 'UPDATE ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ') . ' WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . ''; }
+		else { $sql = 'UPDATE ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ') . ' WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . '' . $clause; }
 
 		return $DB->Query($sql, $resource, 'boolean', false);
 

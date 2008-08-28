@@ -1284,7 +1284,7 @@ Array
 )</pre></dd>
 
 
-<dt id="class_database_process" class="class">$<strong>Database</strong>-&gt;<strong>Process</strong>(string $database, string $table, array $variables); <a href="#">&uarr; top</a></dt>
+<dt id="class_database_process" class="class">$<strong>Database</strong>-&gt;<strong>Process</strong>(string $database, string $table, array $variables, <span class="optional">[, string $clause]</span>); <a href="#">&uarr; top</a></dt>
 <dd><p>Saves information to a specific table with varaibles passed through <code>$variables</code> as an array.</p></dd>
 
 <dd class="notice">The $variables attribute must contain the primary key of the table being modified if processing an update. If not, the values will be added as a new database record.</dd>
@@ -1295,6 +1295,7 @@ Array
 <strong>$database</strong> - The name of the database you are connecting to.<br />
 <strong>$table</strong> - The name of the table you are querying.<br />
 <strong>$variables</strong> - The values (including tables primary key) that you want to update.<br />
+<strong>$clause (optional)</strong> - The conditional used when running an update query rather than an insert.<br />
 </p></dd>
 
 <dd class="dh">Example:</dd>
