@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build295
+# Version: 0.2beta r2 build296
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-08-20 02:20:22
+# Timestamp: 2008-08-28 11:19:44
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -856,7 +856,7 @@ class Database {
 
 	}
 
-	function Process($database, $table, $variables = array()) {
+	function Process($database, $table, $variables = array(), $clause = null) {
 
 		global $DB;
 
@@ -891,7 +891,7 @@ class Database {
 		}
 
 		if (!isset($results) || !count($results)) { $sql = 'INSERT INTO ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', '); }
-		else { $sql = 'UPDATE ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ') . ' WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . ''; }
+		else { $sql = 'UPDATE ' . '`' . $database . '`.`' . $table . '` SET ' . implode($updates, ', ') . ' WHERE `' . $primary_key . '` = ' . $variables[$primary_key] . '' . $clause; }
 
 		return $DB->Query($sql, $resource, 'boolean', false);
 
