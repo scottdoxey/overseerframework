@@ -560,7 +560,7 @@ if (!function_exists('url_query')) {
 		$output = array();
 
 		while (list($key, $value) = each($replacements)) {
-			if (!$value && isset($_GET[$key])) { unset($replacements[$key]); }
+			if (!$value && isset($_GET[$key])) { unset($_GET[$key]); unset($replacements[$key]); }
 		}
 
 		$url_querys = array_merge($_GET, $replacements);

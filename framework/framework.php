@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build296
+# Version: 0.2beta r2 build297
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-08-28 11:19:44
+# Timestamp: 2008-08-28 22:36:29
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -645,7 +645,7 @@ if (!function_exists('url_query')) {
 		$output = array();
 
 		while (list($key, $value) = each($replacements)) {
-			if (!$value && isset($_GET[$key])) { unset($replacements[$key]); }
+			if (!$value && isset($_GET[$key])) { unset($_GET[$key]); unset($replacements[$key]); }
 		}
 
 		$url_querys = array_merge($_GET, $replacements);
