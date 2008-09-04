@@ -283,7 +283,7 @@ if (!function_exists('file_put_contents')) {
 if (!function_exists('is_date')) {
 
 	function is_date($value) {
-		if (preg_match('/^([0-9]{2})(-|/)([0-9]{2})(-|/)([0-9]{2,4})$/', (string)$value)) { return true; } else { return false; }
+		if (preg_match('/^([0-9]{2})([-\/ ])([0-9]{2})([-\/ ])([0-9]{2,4})$/', (string)$value)) { return true; } else { return false; }
 	}
 
 }
@@ -298,7 +298,7 @@ if (!function_exists('is_date')) {
 if (!function_exists('is_email')) {
 
 	function is_email($value) {
-		if (preg_match('/^[[:alnum:].]+@[[:alnum:]]+\.[[:alnum:].]+$/', (string)$value)) { return true; } else { return false; }
+		if (preg_match('/^[[:alnum:]-.]+@[[:alnum:]-]+\.[[:alnum:]]{2,}+$/', (string)$value)) { return true; } else { return false; }
 	}
 
 }
@@ -388,7 +388,7 @@ if (!function_exists('is_simple_number')) {
 if (!function_exists('is_web_address')) {
 
 	function is_web_address($value) {
-		if (preg_match('/^(http://)+[[:alnum:]]+\.+[[:alnum:]]/', (string)$value)) { return true; } else { return false; }
+		if (preg_match('/^((http|https):\/\/)?+[[:alnum:]-]+\.+[[:alnum:]]/', (string)$value)) { return true; } else { return false; }
 	}
 
 }
