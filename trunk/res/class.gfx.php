@@ -46,6 +46,9 @@ class GFX
 		else if ($properties['mime'] == 'image/gif') { imagegif($new, $output); }
 		else if ($properties['mime'] == 'image/png') { imagepng($new, $output); }
 
+		imagedestroy($original);
+		imagedestroy($new);
+
 		return $output;
 
 	}
