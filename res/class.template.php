@@ -211,6 +211,8 @@ class Template {
 		global $DB;
 
 		$output = '';
+		
+		if (!is_array($fields)) { $fields = array_clean(explode(',', $fields)); }
 
 		$columns = $DB->Query('SHOW COLUMNS FROM `' . $database . '`.`' . $table . '`', $DB->resource, 'resource', false);
 

@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build299
+# Version: 0.2beta r2 build300
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-09-05 13:24:31
+# Timestamp: 2008-09-22 18:21:49
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1244,6 +1244,8 @@ class Template {
 		global $DB;
 
 		$output = '';
+		
+		if (!is_array($fields)) { $fields = array_clean(explode(',', $fields)); }
 
 		$columns = $DB->Query('SHOW COLUMNS FROM `' . $database . '`.`' . $table . '`', $DB->resource, 'resource', false);
 
