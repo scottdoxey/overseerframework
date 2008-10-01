@@ -479,13 +479,17 @@ if (!function_exists('sanitize_data')) {
 
 	function sanitize_data(&$data) {
 
-		reset($data);
+		if (is_array($data)) {
 
-		while (list($key, $value) = each($data)) {
-			$data[$key] = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($value):$value);
-		}
+			reset($data);
 
-		reset($data);
+			while (list($key, $value) = each($data)) {
+				$data[$key] = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($value):$value);
+			}
+
+			reset($data);
+
+		} else { $data = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($data):$data); }
 
 		return $data;
 
