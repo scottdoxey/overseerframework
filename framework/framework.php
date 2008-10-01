@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build300
+# Version: 0.2beta r2 build301
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-09-22 18:21:49
+# Timestamp: 2008-10-01 07:42:43
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -564,13 +564,17 @@ if (!function_exists('sanitize_data')) {
 
 	function sanitize_data(&$data) {
 
-		reset($data);
+		if (is_array($data)) {
 
-		while (list($key, $value) = each($data)) {
-			$data[$key] = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($value):$value);
-		}
+			reset($data);
 
-		reset($data);
+			while (list($key, $value) = each($data)) {
+				$data[$key] = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($value):$value);
+			}
+
+			reset($data);
+
+		} else { $data = mysql_real_escape_string(get_magic_quotes_gpc()?stripslashes($data):$data); }
 
 		return $data;
 
