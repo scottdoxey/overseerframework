@@ -418,21 +418,22 @@ if (!function_exists('mysql_fetch_results')) {
 ###############################################################
 
 if (!function_exists('path_info')) {
-
+	
 	function path_info($offset = 0) {
-
-		if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO'] != $_SERVER['SCRIPT_NAME']) {
-
-			$path_info = explode('/', substr($_SERVER['PATH_INFO'], 1));
-
+		
+		$pathinfo = isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:(isset($_SERVER['ORIG_PATH_INFO'])?$_SERVER['ORIG_PATH_INFO']:null);
+		
+		if ($pathinfo && $pathinfo != $_SERVER['SCRIPT_NAME']) {
+		
+			$path_info = explode('/', substr($pathinfo, 1));
 			if (isset($path_info[$offset])) { return $path_info[$offset]; }
-
+		
 		}
-
+		
 		return false;
-
+	
 	}
-
+	
 }
 
 ###############################################################

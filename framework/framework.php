@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build301
+# Version: 0.2beta r2 build302
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-10-01 07:42:43
+# Timestamp: 2008-12-07 08:20:14
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -503,21 +503,22 @@ if (!function_exists('mysql_fetch_results')) {
 ###############################################################
 
 if (!function_exists('path_info')) {
-
+	
 	function path_info($offset = 0) {
-
-		if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO'] != $_SERVER['SCRIPT_NAME']) {
-
-			$path_info = explode('/', substr($_SERVER['PATH_INFO'], 1));
-
+		
+		$pathinfo = isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:(isset($_SERVER['ORIG_PATH_INFO'])?$_SERVER['ORIG_PATH_INFO']:null);
+		
+		if ($pathinfo && $pathinfo != $_SERVER['SCRIPT_NAME']) {
+		
+			$path_info = explode('/', substr($pathinfo, 1));
 			if (isset($path_info[$offset])) { return $path_info[$offset]; }
-
+		
 		}
-
+		
 		return false;
-
+	
 	}
-
+	
 }
 
 ###############################################################
