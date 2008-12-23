@@ -22,7 +22,7 @@ class OpenID {
 
 		if (isset($delegate[1])) { return OpenID::Request($delegate[1]); } else if (!isset($server[1])) { return false; }
 
-		setcookie('openid', $server[1], time() +3600, '/');
+		setcookie('fopenid', $server[1], time() +3600, '/');
 
 		$server_info = parse_url($server[1]);
 
@@ -46,9 +46,9 @@ class OpenID {
 		while (list($key, $value) = each($_GET)) { $query .= preg_replace('/(openid|sreg)_/', '\1.', $key) . '=' . urlencode($value) . '&'; }
 
 		if (function_exists('stream_get_contents')) {
-			$results = @stream_get_contents(@fopen($_COOKIE['openid'], 'rb', false, @stream_context_create(array('http'=>array('method'=>'POST', 'content'=>$query)))));
+			$results = @stream_get_contents(@fopen($_COOKIE['fopenid'], 'rb', false, @stream_context_create(array('http'=>array('method'=>'POST', 'content'=>$query)))));
 		} else {
-			$results = @file_get_contents($_COOKIE['openid'] . (preg_match('/\?/', $_COOKIE['openid'])?'&':'?') . $query);
+			$results = @file_get_contents($_COOKIE['fopenid'] . (preg_match('/\?/', $_COOKIE['fopenid'])?'&':'?') . $query);
 		}
 
 		if (preg_match('/true/', $results)) { return $_GET; }
