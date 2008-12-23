@@ -3,12 +3,12 @@
 ###############################################################
 #
 # Name: Overseer Framework
-# Version: 0.2beta r2 build302
+# Version: 0.2beta r2 build303
 # Author: Neo Geek {neo@neo-geek.net}
 # Author's Website: http://neo-geek.net/
 # Framework's Website: http://overseercms.com/framework/
 # Copyright: (c) 2008 Neo Geek, Neo Geek Labs
-# Timestamp: 2008-12-07 08:20:14
+# Timestamp: 2008-12-23 17:30:59
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -280,20 +280,25 @@ if (!function_exists('error')) {
 
 ###############################################################
 #
-# Function: fetch_remote_file(string $file);
+# Function: fetch_remote_file(string $file [, string $query]);
 # Author: Neo Geek (NG)
 #
 ###############################################################
 
 if (!function_exists('fetch_remote_file')) {
 
-	function fetch_remote_file($file) {
+	function fetch_remote_file($file, $query = '') {
 
 		$path = parse_url($file);
 
 		if ($fs = @fsockopen($path['host'], isset($path['port'])?$path['port']:80)) {
 
-			$header = "GET " . $path['path'] . " HTTP/1.0\r\nHost: " . $path['host'] . "\r\n\r\n";
+			$header = ($query?'POST':'GET') . ' ' . $path['path'] . ' HTTP/1.0' . "\r\n" . 'Host: ' . $path['host'] . "\r\n";
+			
+			if ($query){
+				$header .= 'Content-type: application/x-www-form-urlencoded' . "\r\n";
+				$header .= 'Content-length: ' . strlen($query) . "\r\n" . 'Connection: close' . "\r\n\r\n" . $query;
+			} else { $header .= "\r\n"; }
 
 			fwrite($fs, $header);
 
@@ -997,7 +1002,7 @@ class OpenID {
 
 		if (isset($delegate[1])) { return OpenID::Request($delegate[1]); } else if (!isset($server[1])) { return false; }
 
-		setcookie('openid', $server[1], time() +3600, '/');
+		setcookie('fopenid', $server[1], time() +3600, '/');
 
 		$server_info = parse_url($server[1]);
 
@@ -1021,9 +1026,9 @@ class OpenID {
 		while (list($key, $value) = each($_GET)) { $query .= preg_replace('/(openid|sreg)_/', '\1.', $key) . '=' . urlencode($value) . '&'; }
 
 		if (function_exists('stream_get_contents')) {
-			$results = @stream_get_contents(@fopen($_COOKIE['openid'], 'rb', false, @stream_context_create(array('http'=>array('method'=>'POST', 'content'=>$query)))));
+			$results = @stream_get_contents(@fopen($_COOKIE['fopenid'], 'rb', false, @stream_context_create(array('http'=>array('method'=>'POST', 'content'=>$query)))));
 		} else {
-			$results = @file_get_contents($_COOKIE['openid'] . (preg_match('/\?/', $_COOKIE['openid'])?'&':'?') . $query);
+			$results = @file_get_contents($_COOKIE['fopenid'] . (preg_match('/\?/', $_COOKIE['fopenid'])?'&':'?') . $query);
 		}
 
 		if (preg_match('/true/', $results)) { return $_GET; }

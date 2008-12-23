@@ -195,20 +195,25 @@ if (!function_exists('error')) {
 
 ###############################################################
 #
-# Function: fetch_remote_file(string $file);
+# Function: fetch_remote_file(string $file [, string $query]);
 # Author: Neo Geek (NG)
 #
 ###############################################################
 
 if (!function_exists('fetch_remote_file')) {
 
-	function fetch_remote_file($file) {
+	function fetch_remote_file($file, $query = '') {
 
 		$path = parse_url($file);
 
 		if ($fs = @fsockopen($path['host'], isset($path['port'])?$path['port']:80)) {
 
-			$header = "GET " . $path['path'] . " HTTP/1.0\r\nHost: " . $path['host'] . "\r\n\r\n";
+			$header = ($query?'POST':'GET') . ' ' . $path['path'] . ' HTTP/1.0' . "\r\n" . 'Host: ' . $path['host'] . "\r\n";
+			
+			if ($query){
+				$header .= 'Content-type: application/x-www-form-urlencoded' . "\r\n";
+				$header .= 'Content-length: ' . strlen($query) . "\r\n" . 'Connection: close' . "\r\n\r\n" . $query;
+			} else { $header .= "\r\n"; }
 
 			fwrite($fs, $header);
 
